@@ -1,0 +1,15 @@
+{
+  "name": "crypto-kombat",
+  "version": "1.0.0",
+  "description": "Telegram clicker game",
+  "scripts": {
+    "dev": "serve public",
+    "start": "serve public"
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
