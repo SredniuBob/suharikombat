@@ -2,12 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <title>₿ CRYPTO KOMBAT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* ====== ОСНОВНЫЕ СТИЛИ ====== */
         * {
             margin: 0;
             padding: 0;
@@ -25,82 +24,16 @@
             --danger: #ff4444;
             --warning: #ff9800;
             --dark: #121212;
-            --light: #f8f9fa;
-            --gray: #757575;
         }
 
         body {
             background: linear-gradient(135deg, #0a1929, #1a237e);
             color: white;
             min-height: 100vh;
-            padding: 0;
-            overflow-x: hidden;
-            margin: 0;
-        }
-
-        /* ====== НАВИГАЦИЯ ====== */
-        .nav-tabs {
-            display: flex;
-            overflow-x: auto;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-tabs button {
-            flex: 1;
-            min-width: 70px;
-            padding: 12px 8px;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-            white-space: nowrap;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-            margin: 0 2px;
-        }
-
-        .nav-tabs button:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-tabs button.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3);
-        }
-
-        .nav-tabs button span {
-            font-size: 1.4rem;
-        }
-
-        /* ====== СЕКЦИИ ====== */
-        .section {
-            display: none;
             padding: 20px;
-            animation: fadeIn 0.3s ease;
-            min-height: calc(100vh - 70px);
+            overflow-x: hidden;
         }
 
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ====== ОБЩИЕ ЭЛЕМЕНТЫ ====== */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -164,7 +97,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin: 0 auto;
+            margin: 0 auto 30px auto;
             box-shadow: 0 10px 30px rgba(26, 115, 232, 0.4);
         }
 
@@ -173,7 +106,7 @@
             box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
         }
 
-        .buy-btn, .action-btn {
+        .buy-btn {
             width: 100%;
             padding: 12px;
             background: linear-gradient(135deg, #00c853, #00e676);
@@ -186,7 +119,7 @@
             margin-top: 10px;
         }
 
-        .buy-btn:hover:not(:disabled), .action-btn:hover:not(:disabled) {
+        .buy-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
         }
@@ -197,7 +130,56 @@
             background: #666;
         }
 
-        /* ====== АДАПТИВНОСТЬ ====== */
+        .upgrade-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: -20px -20px 20px -20px;
+        }
+
+        .nav-tabs button {
+            flex: 1;
+            min-width: 70px;
+            padding: 12px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin: 0 2px;
+        }
+
+        .nav-tabs button.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr; }
             .click-btn { width: 150px; height: 150px; font-size: 1.3rem; }
@@ -205,31 +187,21 @@
     </style>
 </head>
 <body>
-    <!-- ====== НАВИГАЦИЯ ====== -->
     <div class="nav-tabs">
-        <button onclick="showSection('main')" class="active">
-            <span>🎮</span> Игра
-        </button>
-        <button onclick="showSection('arena')">
-            <span>⚔️</span> PvP
-        </button>
-        <button onclick="showSection('nft')">
-            <span>🎴</span> NFT
-        </button>
-        <button onclick="showSection('leaderboard')">
-            <span>🏆</span> Топ
-        </button>
+        <button onclick="showSection('main')" class="active">🎮 Игра</button>
+        <button onclick="showSection('upgrades')">⚡ Улучшения</button>
+        <button onclick="showSection('nft')">🎴 NFT</button>
+        <button onclick="showSection('pvp')">⚔️ PvP</button>
     </div>
 
-    <!-- ====== ГЛАВНАЯ СТРАНИЦА ====== -->
-    <div id="main-section" class="section active">
-        <div class="container">
+    <div class="container">
+        <!-- Главный экран -->
+        <div id="main-section" class="section active">
             <div class="header">
                 <h1>₿ CRYPTO KOMBAT</h1>
                 <p>Кликай, майни и стань крипто-королём!</p>
             </div>
 
-            <!-- Статистика -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>БАЛАНС</h3>
@@ -249,241 +221,130 @@
                 </div>
             </div>
 
-            <!-- Кнопка клика -->
-            <div style="text-align: center; margin: 30px 0;">
-                <button class="click-btn" id="click-btn">
-                    ⛏️ МАЙНИТЬ
-                    <div style="font-size: 1rem; opacity: 0.9; margin-top: 10px; color: #00e676;">
-                        +<span id="click-value">1</span> ₿ за клик
-                    </div>
+            <button class="click-btn" id="click-btn">
+                ⛏️ МАЙНИТЬ
+                <div style="font-size: 1rem; margin-top: 10px; color: #00e676;">
+                    +<span id="click-value">1</span> ₿ за клик
+                </div>
+            </button>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="buy-btn" onclick="showSection('upgrades')">
+                    ⚡ СМОТРЕТЬ УЛУЧШЕНИЯ
                 </button>
             </div>
+        </div>
 
-            <!-- Улучшения -->
-            <div style="margin-top: 40px;">
-                <h2 style="text-align: center; margin-bottom: 20px; color: #4fc3f7;">⚡ УЛУЧШЕНИЯ</h2>
-                <div class="upgrades-grid" id="upgrades-container">
-                    <!-- Улучшения будут загружены через JS -->
-                </div>
+        <!-- Улучшения -->
+        <div id="upgrades-section" class="section">
+            <div class="header">
+                <h1>⚡ УЛУЧШЕНИЯ</h1>
+                <p>Улучшай свою ферму!</p>
+            </div>
+            <div id="upgrades-container"></div>
+        </div>
+
+        <!-- NFT -->
+        <div id="nft-section" class="section">
+            <div class="header">
+                <h1>🎴 NFT КОЛЛЕКЦИЯ</h1>
+                <p>Коллекционируй уникальные предметы!</p>
+            </div>
+            <div style="text-align: center; padding: 40px;">
+                <p>Раздел в разработке...</p>
+                <button class="buy-btn" onclick="showSection('main')">← НАЗАД</button>
             </div>
         </div>
-    </div>
 
-    <!-- ====== PvP АРЕНА ====== -->
-    <div id="arena-section" class="section">
-        <div class="container">
+        <!-- PvP -->
+        <div id="pvp-section" class="section">
             <div class="header">
                 <h1>⚔️ PvP АРЕНА</h1>
                 <p>Сражайся с другими игроками!</p>
             </div>
-            <p style="text-align: center; padding: 40px;">В разработке...</p>
-        </div>
-    </div>
-
-    <!-- ====== NFT СИСТЕМА ====== -->
-    <div id="nft-section" class="section">
-        <div class="container">
-            <div class="header">
-                <h1>🎴 NFT ОБОРУДОВАНИЕ</h1>
-                <p>Коллекционируй уникальное оборудование!</p>
+            <div style="text-align: center; padding: 40px;">
+                <p>Раздел в разработке...</p>
+                <button class="buy-btn" onclick="showSection('main')">← НАЗАД</button>
             </div>
-            <p style="text-align: center; padding: 40px;">В разработке...</p>
-        </div>
-    </div>
-
-    <!-- ====== ТАБЛИЦА ЛИДЕРОВ ====== -->
-    <div id="leaderboard-section" class="section">
-        <div class="container">
-            <div class="header">
-                <h1>🏆 ТАБЛИЦА ЛИДЕРОВ</h1>
-                <p>Соревнуйся с лучшими игроками!</p>
-            </div>
-            <p style="text-align: center; padding: 40px;">В разработке...</p>
         </div>
     </div>
 
     <script>
         // ====== ИНИЦИАЛИЗАЦИЯ TELEGRAM ======
-        let tg = null;
-        let userData = {};
+        let tg = window.Telegram?.WebApp || null;
         
-        function initTelegram() {
-            try {
-                if (window.Telegram && Telegram.WebApp) {
-                    tg = Telegram.WebApp;
-                    tg.ready();
-                    tg.expand();
-                    
-                    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                        userData = {
-                            id: tg.initDataUnsafe.user.id,
-                            username: tg.initDataUnsafe.user.username || `user${tg.initDataUnsafe.user.id}`,
-                            firstName: tg.initDataUnsafe.user.first_name || 'Игрок'
-                        };
-                    } else {
-                        userData = {
-                            id: Date.now(),
-                            username: 'TestUser',
-                            firstName: 'Тестовый'
-                        };
-                    }
-                    
-                    // Устанавливаем цвет фона Telegram
-                    tg.setBackgroundColor('#0a1929');
-                    tg.setHeaderColor('#0a1929');
-                    
-                    return true;
-                }
-            } catch (error) {
-                console.error('Ошибка Telegram:', error);
-            }
-            
-            userData = {
-                id: Date.now(),
-                username: 'TestUser',
-                firstName: 'Тестовый'
-            };
-            
-            return false;
-        }
-
-        // ====== СИСТЕМА СОХРАНЕНИЯ ======
-        // ФИКС: Правильное сохранение в CloudStorage
-        async function saveGame() {
-            try {
-                const saveData = {
-                    balance: gameState.balance,
-                    per_click: gameState.per_click,
-                    level: gameState.level,
-                    experience: gameState.experience,
-                    total_clicks: gameState.total_clicks,
-                    upgrades: gameState.upgrades,
-                    nfts: gameState.nfts,
-                    passive_per_sec: gameState.passive_per_sec,
-                    click_limit: gameState.click_limit,
-                    click_limit_used: gameState.click_limit_used,
-                    click_limit_reset: gameState.click_limit_reset,
-                    referral_code: gameState.referral_code,
-                    referrals_count: gameState.referrals_count,
-                    referral_earnings: gameState.referral_earnings,
-                    daily_quests: gameState.daily_quests,
-                    clan: gameState.clan,
-                    version: '1.0'
-                };
-                
-                const saveString = JSON.stringify(saveData);
-                
-                // Пробуем сохранить в Telegram CloudStorage
-                if (tg && tg.CloudStorage) {
-                    try {
-                        // CloudStorage требует строку ключ-значение
-                        await tg.CloudStorage.setItem('game_save', saveString);
-                        console.log('Сохранено в Telegram CloudStorage');
-                        return;
-                    } catch (cloudError) {
-                        console.log('CloudStorage error:', cloudError);
-                    }
-                }
-                
-                // Fallback на localStorage
-                localStorage.setItem('cryptoKombatSave', saveString);
-                console.log('Сохранено в localStorage');
-            } catch (error) {
-                console.error('Ошибка сохранения:', error);
-            }
-        }
-
-        async function loadGame() {
-            try {
-                // Пробуем загрузить из Telegram CloudStorage
-                if (tg && tg.CloudStorage) {
-                    try {
-                        const saved = await tg.CloudStorage.getItem('game_save');
-                        if (saved) {
-                            const parsed = JSON.parse(saved);
-                            Object.assign(gameState, parsed);
-                            console.log('Загружено из Telegram CloudStorage');
-                            return;
-                        }
-                    } catch (cloudError) {
-                        console.log('CloudStorage load error:', cloudError);
-                    }
-                }
-                
-                // Пробуем загрузить из localStorage
-                const saved = localStorage.getItem('cryptoKombatSave');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    Object.assign(gameState, parsed);
-                    console.log('Загружено из localStorage');
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки:', error);
-                // Используем дефолтные значения
-            }
+        if (tg) {
+            tg.ready();
+            tg.expand();
+            tg.setBackgroundColor('#0a1929');
+            tg.setHeaderColor('#0a1929');
         }
 
         // ====== СОСТОЯНИЕ ИГРЫ ======
         let gameState = {
-            balance: 10000,  // ФИКС: Начинаем с 10000, а не с 0!
+            balance: 10000,  // НАЧИНАЕМ С 10000!
             per_click: 1,
             passive_per_sec: 0,
             level: 1,
             experience: 0,
-            total_clicks: 0,
-            click_limit: 50,
-            click_limit_used: 0,
-            click_limit_reset: Date.now() + 120000,
-            daily_streak: 0,
-            referrals_count: 0,
-            referral_earnings: 0,
-            clan: null,
             upgrades: {
                 basic_rig: 0,
                 gpu_farm: 0,
                 asic_miner: 0,
                 mining_pool: 0
             },
-            nfts: [],
-            daily_quests: [],
-            referral_code: generateReferralCode()
+            total_clicks: 0
         };
 
-        // ФИКС: Генерация реферального кода
-        function generateReferralCode() {
-            return 'CRYPTO' + Math.floor(Math.random() * 10000);
-        }
-
-        let upgrades = [
+        // Улучшения
+        const upgrades = [
             { id: 'basic_rig', name: '📱 Базовый риг', desc: 'Простая видеокарта', cost: 100, click: 1, passive: 0.1 },
             { id: 'gpu_farm', name: '💻 GPU Ферма', desc: 'Несколько видеокарт', cost: 500, click: 5, passive: 0.5 },
             { id: 'asic_miner', name: '⚡ ASIC Майнер', desc: 'Специализированный процессор', cost: 2000, click: 20, passive: 2 },
             { id: 'mining_pool', name: '🏊‍♂️ Майнинг-пул', desc: 'Объединенная мощность', cost: 5000, click: 50, passive: 5 }
         ];
 
-        // ====== ОСНОВНЫЕ ФУНКЦИИ ======
-        async function initGame() {
-            // Инициализируем Telegram
-            const isTelegram = initTelegram();
-            
-            // Загружаем сохранение
-            await loadGame();
-            
-            // Обновляем интерфейс
-            updateUI();
-            renderUpgrades();
-            
-            // Запускаем таймеры
-            startPassiveIncome();
-            startAutoSave();
-            
-            console.log('Игра инициализирована');
-            console.log('Баланс:', gameState.balance);
-            console.log('В Telegram:', isTelegram);
+        // ====== СОХРАНЕНИЕ ДАННЫХ ======
+        function saveGame() {
+            try {
+                // Пробуем Telegram CloudStorage
+                if (tg?.CloudStorage) {
+                    tg.CloudStorage.setItem('game_save', JSON.stringify(gameState));
+                }
+                // Всегда сохраняем в localStorage как fallback
+                localStorage.setItem('cryptoKombat', JSON.stringify(gameState));
+            } catch (e) {
+                console.log('Ошибка сохранения:', e);
+            }
         }
 
+        function loadGame() {
+            try {
+                // Сначала пробуем Telegram CloudStorage
+                if (tg?.CloudStorage) {
+                    tg.CloudStorage.getItem('game_save').then(saved => {
+                        if (saved) {
+                            const loaded = JSON.parse(saved);
+                            Object.assign(gameState, loaded);
+                            updateUI();
+                            renderUpgrades();
+                        }
+                    });
+                }
+                
+                // Затем localStorage
+                const saved = localStorage.getItem('cryptoKombat');
+                if (saved) {
+                    const loaded = JSON.parse(saved);
+                    Object.assign(gameState, loaded);
+                }
+            } catch (e) {
+                console.log('Ошибка загрузки:', e);
+            }
+        }
+
+        // ====== ОСНОВНЫЕ ФУНКЦИИ ======
         function updateUI() {
-            // ФИКС: Правильное отображение баланса
             document.getElementById('balance').textContent = formatNumber(gameState.balance) + ' ₿';
             document.getElementById('per-click').textContent = formatNumber(gameState.per_click) + ' ₿';
             document.getElementById('click-value').textContent = gameState.per_click;
@@ -495,33 +356,39 @@
             return Math.floor(num).toLocaleString('ru-RU');
         }
 
-        // ====== СИСТЕМА КЛИКОВ ======
-        document.getElementById('click-btn').addEventListener('click', async () => {
+        // ====== КЛИКЕР ======
+        document.getElementById('click-btn').addEventListener('click', function() {
             // Анимация
-            const btn = document.getElementById('click-btn');
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => btn.style.transform = 'scale(1)', 100);
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => this.style.transform = 'scale(1)', 100);
             
             // Тактильная отдача в Telegram
-            if (tg && tg.HapticFeedback) {
-                try {
-                    tg.HapticFeedback.impactOccurred('light');
-                } catch (e) {}
+            if (tg?.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
             }
             
-            // Начисляем монеты
+            // Начисляем деньги
             gameState.balance += gameState.per_click;
             gameState.total_clicks++;
+            gameState.experience++;
             
-            // Обновляем интерфейс
+            // Проверяем уровень
+            if (gameState.experience >= gameState.level * 100) {
+                gameState.level++;
+                gameState.experience = 0;
+                gameState.per_click += Math.floor(gameState.level / 2);
+                if (tg?.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('heavy');
+                }
+                alert(`🎉 Уровень ${gameState.level}! +${Math.floor(gameState.level / 2)} к клику`);
+            }
+            
             updateUI();
-            
-            // Сохраняем игру
-            await saveGame();
+            saveGame();
         });
 
         // ====== УЛУЧШЕНИЯ ======
-        async function buyUpgrade(upgradeId) {
+        function buyUpgrade(upgradeId) {
             const upgrade = upgrades.find(u => u.id === upgradeId);
             if (!upgrade) return;
             
@@ -529,29 +396,29 @@
             const cost = Math.floor(upgrade.cost * Math.pow(1.5, currentLevel));
             
             if (gameState.balance < cost) {
-                alert('Недостаточно средств!');
+                alert('❌ Недостаточно средств!');
                 return;
             }
             
             gameState.balance -= cost;
             gameState.upgrades[upgradeId] = currentLevel + 1;
+            gameState.per_click += upgrade.click;
+            gameState.passive_per_sec += upgrade.passive;
             
-            if (upgrade.click) {
-                gameState.per_click += upgrade.click;
-                gameState.passive_per_sec += upgrade.passive || 0;
+            // Тактильная отдача
+            if (tg?.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
             }
             
             updateUI();
             renderUpgrades();
-            await saveGame();
+            saveGame();
             
-            alert(`Куплено: ${upgrade.name}`);
+            alert(`✅ Куплено: ${upgrade.name}`);
         }
 
         function renderUpgrades() {
             const container = document.getElementById('upgrades-container');
-            if (!container) return;
-            
             container.innerHTML = '';
             
             upgrades.forEach(upgrade => {
@@ -561,18 +428,12 @@
                 
                 const card = document.createElement('div');
                 card.className = 'upgrade-card';
-                card.style.background = 'rgba(255, 255, 255, 0.08)';
-                card.style.padding = '15px';
-                card.style.borderRadius = '10px';
-                card.style.margin = '10px 0';
-                card.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-                
                 card.innerHTML = `
                     <h3 style="color: #4fc3f7; margin-bottom: 10px;">${upgrade.name} (${currentLevel})</h3>
                     <p style="opacity: 0.8; margin-bottom: 10px;">${upgrade.desc}</p>
                     <div style="color: #00e676; margin: 10px 0;">
-                        ${upgrade.click ? `+${upgrade.click} к клику` : ''}
-                        ${upgrade.passive ? `<br>+${upgrade.passive} ₿/сек` : ''}
+                        +${upgrade.click} к клику
+                        <br>+${upgrade.passive} ₿/сек
                     </div>
                     <button class="buy-btn" onclick="buyUpgrade('${upgrade.id}')" ${!canBuy ? 'disabled' : ''}>
                         ${currentLevel === 0 ? 'КУПИТЬ' : 'УЛУЧШИТЬ'} ЗА ${formatNumber(cost)} ₿
@@ -593,33 +454,50 @@
             }, 100);
         }
 
-        // ====== АВТОСОХРАНЕНИЕ ======
-        function startAutoSave() {
-            setInterval(() => {
-                saveGame();
-            }, 30000); // Сохраняем каждые 30 секунд
-        }
-
-        // ====== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ======
+        // ====== НАВИГАЦИЯ ======
         function showSection(sectionId) {
+            // Скрываем все секции
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
-            document.getElementById(`${sectionId}-section`).classList.add('active');
             
+            // Показываем выбранную
+            document.getElementById(sectionId + '-section').classList.add('active');
+            
+            // Обновляем активную кнопку
             document.querySelectorAll('.nav-tabs button').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
+            
+            // Если открыли улучшения - рендерим их
+            if (sectionId === 'upgrades') {
+                renderUpgrades();
+            }
         }
 
         // ====== ГЛОБАЛЬНЫЕ ФУНКЦИИ ======
         window.buyUpgrade = buyUpgrade;
         window.showSection = showSection;
 
-        // ====== ЗАПУСК ======
-        document.addEventListener('DOMContentLoaded', () => {
-            initGame();
+        // ====== ЗАПУСК ИГРЫ ======
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем сохранение
+            loadGame();
+            
+            // Обновляем интерфейс
+            updateUI();
+            
+            // Запускаем пассивный доход
+            startPassiveIncome();
+            
+            // Автосохранение каждые 30 секунд
+            setInterval(saveGame, 30000);
+            
+            // Выводим отладочную информацию
+            console.log('Crypto Kombat запущен!');
+            console.log('Telegram Web App:', tg ? '✅ Да' : '❌ Нет');
+            console.log('Начальный баланс:', gameState.balance);
         });
     </script>
 </body>
