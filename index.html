@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>₿ CRYPTO KOMBAT</title>
+    <title> SUHARI KOMBAT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -388,7 +388,7 @@
     <!-- Модальные окна -->
     <div class="modal" id="promocode-modal">
         <div class="modal-content">
-            <h3>🎁 Активировать промокод</h3>
+            <h3> Активировать промокод</h3>
             <input type="text" id="promocode-input" placeholder="Введите промокод" class="modal-input">
             <div style="display:flex;gap:10px;">
                 <button class="btn" onclick="activatePromocode()">Активировать</button>
@@ -410,7 +410,7 @@
 
     <div class="modal" id="create-clan-modal">
         <div class="modal-content">
-            <h3>🏰 Создать клан</h3>
+            <h3> Создать клан</h3>
             <input type="text" id="clan-name-input" placeholder="Название клана" class="modal-input">
             <input type="text" id="clan-tag-input" placeholder="Тег клана (3-5 символов)" class="modal-input">
             <textarea id="clan-description-input" placeholder="Описание клана" class="modal-input" rows="3"></textarea>
@@ -423,7 +423,7 @@
 
     <div class="modal" id="join-clan-modal">
         <div class="modal-content">
-            <h3>🏰 Вступить в клан</h3>
+            <h3> Вступить в клан</h3>
             <input type="text" id="join-clan-input" placeholder="Введите тег клана" class="modal-input">
             <div style="display:flex;gap:10px;">
                 <button class="btn" onclick="joinClan()">Вступить</button>
@@ -434,27 +434,27 @@
 
     <!-- Навигация -->
     <div class="nav-tabs">
-        <button onclick="showSection('main')" class="active">🎮 Игра</button>
+        <button onclick="showSection('main')" class="active"> Тапать</button>
         <button onclick="showSection('upgrades')">⚡ Улучшения</button>
-        <button onclick="showSection('nft')">🎴 NFT</button>
-        <button onclick="showSection('pvp')">⚔️ PvP</button>
-        <button onclick="showSection('minigames')">🎯 Мини-игры</button>
-        <button onclick="showSection('clans')">🏰 Кланы</button>
-        <button onclick="showSection('referral')">👥 Рефералы</button>
+        <button onclick="showSection('nft')"> NFT</button>
+        <button onclick="showSection('pvp')"> PvP</button>
+        <button onclick="showSection('minigames')"> Мини-игры</button>
+        <button onclick="showSection('clans')"> Кланы</button>
+        <button onclick="showSection('referral')"> Рефералы</button>
     </div>
 
     <div class="container">
         <!-- Главный экран -->
         <div id="main-section" class="section active">
             <div class="header">
-                <h1>₿ CRYPTO KOMBAT</h1>
-                <p>Кликай, майни и стань крипто-королём!</p>
+                <h1> SUHARI KOMBAT</h1>
+                <p>Кликай, майни и стань богати!</p>
                 <div style="margin-top: 10px;">
                     <button class="btn btn-warning" onclick="openModal('promocode-modal')" style="width:auto;padding:8px 15px;margin-right:10px;">
-                        🎁 Промокод
+                         Промокод
                     </button>
                     <button class="btn btn-warning" onclick="openModal('referral-input-modal')" style="width:auto;padding:8px 15px;">
-                        👥 Ввести код
+                         Ввести реферал
                     </button>
                 </div>
             </div>
@@ -488,12 +488,12 @@
                     <span id="reset-time">Восстановление: 2:00</span>
                 </div>
                 <button class="btn btn-warning" id="reset-btn" onclick="resetClickLimit()" style="display:none;">
-                    🔄 Восстановить лимит (100 ₿)
+                     Восстановить лимит (100 ₿)
                 </button>
             </div>
 
             <button class="click-btn" id="click-btn">
-                ⛏️ МАЙНИТЬ
+                Тыкать
                 <div style="font-size: 1rem; margin-top: 10px; color: #00e676;">
                     +<span id="click-value">1</span> ₿ за клик
                 </div>
@@ -518,19 +518,19 @@
         <!-- NFT -->
         <div id="nft-section" class="section">
             <div class="header">
-                <h1>🎴 NFT КОЛЛЕКЦИЯ</h1>
+                <h1> NFT КОЛЛЕКЦИЯ</h1>
                 <p>Коллекционируй уникальные предметы!</p>
             </div>
             
             <div class="nft-grid" id="nft-shop">
                 <div class="nft-card" onclick="buyNftBox('basic')">
-                    <h3>🥉 БАЗОВЫЙ</h3>
+                    <h3> БАЗОВЫЙ</h3>
                     <div class="nft-rarity common">обычный</div>
                     <p>Стоимость: 1,000 ₿</p>
                     <button class="btn">Купить</button>
                 </div>
                 <div class="nft-card" onclick="buyNftBox('premium')">
-                    <h3>🥈 ПРЕМИУМ</h3>
+                    <h3> ПРЕМИУМ</h3>
                     <div class="nft-rarity rare">редкий</div>
                     <p>Стоимость: 5,000 ₿</p>
                     <button class="btn">Купить</button>
@@ -550,12 +550,12 @@
         <!-- PvP Арена -->
         <div id="pvp-section" class="section">
             <div class="header">
-                <h1>⚔️ PvP АРЕНА</h1>
-                <p>Сражайся с другими игроками!</p>
+                <h1> PvP АРЕНА</h1>
+                <p>Сражайся с другими челами!</p>
             </div>
 
             <div class="pvp-arena" id="battle-arena" style="display:none;">
-                <h2 id="battle-title">Бой с Ботом</h2>
+                <h2 id="battle-title">Бой с Ботиком</h2>
                 <div class="players">
                     <div class="player">
                         <div>Вы</div>
@@ -568,12 +568,12 @@
                     </div>
                 </div>
                 <div id="battle-timer" style="font-size: 3rem; color: #ff4444; margin: 20px 0;">60</div>
-                <button class="btn btn-danger" onclick="pvpClick()" id="pvp-click-btn">⚔️ КЛИКАТЬ!</button>
+                <button class="btn btn-danger" onclick="pvpClick()" id="pvp-click-btn"> КЛИКАТЬ!</button>
             </div>
 
             <div id="pvp-menu">
                 <div class="upgrade-card">
-                    <h3>🤖 Бой с ботом</h3>
+                    <h3> Бой с ботиком</h3>
                     <p>Сразитесь с ИИ-ботом. Ставка: 10 ₿</p>
                     <button class="btn" onclick="startPvPBattle('bot')">Начать бой</button>
                 </div>
@@ -588,28 +588,28 @@
         <!-- Мини-игры -->
         <div id="minigames-section" class="section">
             <div class="header">
-                <h1>🎯 МИНИ-ИГРЫ</h1>
-                <p>Зарабатывай дополнительные токены!</p>
+                <h1> МИНИ-ИГРЫ</h1>
+                <p>Зарабатывай токени!</p>
             </div>
 
             <div class="minigame-container">
                 <div class="minigame" onclick="startMinigame('clicker')">
-                    <h3>⚡ Клик-челлендж</h3>
+                    <h3>⚡ Кликай</h3>
                     <p>Кликай как можно быстрее за 10 секунд!</p>
                     <div style="color: #00e676; margin-top: 10px;">Приз: до 100 ₿</div>
                 </div>
                 <div class="minigame" onclick="startMinigame('number')">
-                    <h3>🔢 Угадай число</h3>
+                    <h3> Угадай число</h3>
                     <p>Угадай число от 1 до 100 за 5 попыток</p>
                     <div style="color: #00e676; margin-top: 10px;">Приз: до 200 ₿</div>
                 </div>
                 <div class="minigame" onclick="startMinigame('memory')">
-                    <h3>🧠 Память</h3>
+                    <h3> Запоминай суко</h3>
                     <p>Запомни последовательность чисел</p>
                     <div style="color: #00e676; margin-top: 10px;">Приз: до 300 ₿</div>
                 </div>
                 <div class="minigame" onclick="startMinigame('slots')">
-                    <h3>🎰 Слоты</h3>
+                    <h3> Казино</h3>
                     <p>Испытай удачу на игровых автоматах</p>
                     <div style="color: #00e676; margin-top: 10px;">Приз: до 500 ₿</div>
                 </div>
@@ -621,8 +621,8 @@
         <!-- Кланы -->
         <div id="clans-section" class="section">
             <div class="header">
-                <h1>🏰 КЛАНЫ</h1>
-                <p>Объединяйся с другими игроками!</p>
+                <h1> КЛАНЫ</h1>
+                <p>Объединяйся с другими чуваками!</p>
             </div>
 
             <div id="clan-info" style="display:none;">
@@ -675,7 +675,7 @@
         <!-- Реферальная система -->
         <div id="referral-section" class="section">
             <div class="header">
-                <h1>👥 РЕФЕРАЛЬНАЯ СИСТЕМА</h1>
+                <h1> РЕФЕРАЛЬНАЯ СИСТЕМА</h1>
                 <p>Приглашай друзей и получай бонусы!</p>
             </div>
 
@@ -686,7 +686,7 @@
                 </div>
                 <button class="btn" onclick="copyReferralCode()">📋 Копировать код</button>
                 <button class="btn btn-warning" onclick="openModal('referral-input-modal')" style="margin-top: 10px;">
-                    👥 Ввести код друга
+                     Ввести код друга
                 </button>
             </div>
 
@@ -702,7 +702,7 @@
             </div>
 
             <div class="upgrade-card">
-                <h3>💎 Бонусы за приглашения:</h3>
+                <h3> Бонусы за приглашения:</h3>
                 <ul style="padding-left: 20px; margin-top: 10px;">
                     <li>1 друг: +10% к доходу за клик</li>
                     <li>3 друга: +1 к лимиту кликов</li>
@@ -798,22 +798,22 @@
 
         // Улучшения (стоимость снижена, т.к. начинаем с 1 токена)
         const upgrades = [
-            { id: 'basic_rig', name: '📱 Базовый риг', desc: 'Простая видеокарта', cost: 10, click: 1, passive: 0.01 },
-            { id: 'gpu_farm', name: '💻 GPU Ферма', desc: 'Несколько видеокарт', cost: 50, click: 5, passive: 0.05 },
-            { id: 'asic_miner', name: '⚡ ASIC Майнер', desc: 'Специализированный процессор', cost: 200, click: 20, passive: 0.2 },
-            { id: 'mining_pool', name: '🏊‍♂️ Майнинг-пул', desc: 'Объединенная мощность', cost: 500, click: 50, passive: 0.5 },
-            { id: 'click_limit_boost', name: '⚡ Улучшение лимита', desc: '+10 к лимиту кликов', cost: 100, limit_bonus: 10 },
-            { id: 'click_speed', name: '🚀 Скорость клика', desc: '+5 к силе клика', cost: 500, click: 5 },
-            { id: 'referral_boost', name: '👥 Реферальный буст', desc: '+10% к реферальному доходу', cost: 300, referral_bonus: 0.1 }
+            { id: 'basic_rig', name: ' Базовый минимум', desc: 'Простая видеокарта', cost: 10, click: 1, passive: 0.01 },
+            { id: 'gpu_farm', name: ' GPU Ферма', desc: 'Несколько видеокарт', cost: 50, click: 5, passive: 0.05 },
+            { id: 'asic_miner', name: ' Майнер', desc: 'Специализированный процессор', cost: 200, click: 20, passive: 0.2 },
+            { id: 'mining_pool', name: ' Супер ферма', desc: 'Объединенная мощность', cost: 500, click: 50, passive: 0.5 },
+            { id: 'click_limit_boost', name: ' Улучшение лимита', desc: '+10 к лимиту кликов', cost: 100, limit_bonus: 10 },
+            { id: 'click_speed', name: ' Скорость клика', desc: '+5 к силе клика', cost: 500, click: 5 },
+            { id: 'referral_boost', name: ' Реферальный буст', desc: '+10% к реферальному доходу', cost: 300, referral_bonus: 0.1 }
         ];
 
         // NFT предметы (стоимость снижена)
         const nftItems = [
-            { id: 'golden_rig', name: '🔥 Золотой Риг', rarity: 'legendary', price: 10000, bonus: 2.0 },
-            { id: 'quantum_miner', name: '⚛️ Квантовый Майнер', rarity: 'epic', price: 5000, bonus: 1.5 },
-            { id: 'ai_trader', name: '🧠 AI Трейдер', rarity: 'rare', price: 2000, bonus: 1.3 },
-            { id: 'crypto_cpu', name: '💎 Крипто-Процессор', rarity: 'uncommon', price: 1000, bonus: 1.2 },
-            { id: 'basic_gpu', name: '📊 Базовая GPU', rarity: 'common', price: 500, bonus: 1.1 }
+            { id: 'golden_rig', name: ' Золотой NFT', rarity: 'legendary', price: 10000, bonus: 2.0 },
+            { id: 'quantum_miner', name: ' Квантовый Майнер', rarity: 'epic', price: 5000, bonus: 1.5 },
+            { id: 'ai_trader', name: ' Тест', rarity: 'rare', price: 2000, bonus: 1.3 },
+            { id: 'crypto_cpu', name: ' Процессор', rarity: 'uncommon', price: 1000, bonus: 1.2 },
+            { id: 'basic_gpu', name: ' Видеокарта', rarity: 'common', price: 500, bonus: 1.1 }
         ];
 
         // Промокоды
@@ -998,7 +998,7 @@
                 gameState.level++;
                 gameState.experience = 0;
                 gameState.per_click += Math.floor(gameState.level / 2);
-                showNotification(`🎉 Уровень ${gameState.level}! +${Math.floor(gameState.level / 2)} к клику`, 'success');
+                showNotification(` Уровень ${gameState.level}! +${Math.floor(gameState.level / 2)} к клику`, 'success');
                 
                 if (tg?.HapticFeedback && gameState.settings.vibration) {
                     tg.HapticFeedback.impactOccurred('heavy');
@@ -1103,7 +1103,7 @@
             renderUpgrades();
             saveGame();
             
-            showNotification(`✅ Куплено: ${upgrade.name}`, 'success');
+            showNotification(` Куплено: ${upgrade.name}`, 'success');
         }
 
         function renderUpgrades() {
@@ -1187,7 +1187,7 @@
             saveGame();
             
             const rarityNames = ['обычный', 'необычный', 'редкий', 'эпический', 'легендарный'];
-            showNotification(`🎉 Получен NFT: ${nft.name} (${rarityNames[rarityIndex]})! Бонус: ×${nft.bonus}`, 'success');
+            showNotification(` Получен NFT: ${nft.name} (${rarityNames[rarityIndex]})! Бонус: ×${nft.bonus}`, 'success');
         }
 
         function equipNft(nftId) {
@@ -1226,7 +1226,7 @@
                     <h4>${nft.name}</h4>
                     <p>Бонус: ×${nft.bonus}</p>
                     <button class="btn ${nft.equipped ? 'btn-warning' : ''}" onclick="equipNft('${nft.id}')" ${nft.equipped ? 'disabled' : ''}>
-                        ${nft.equipped ? '✅ Экипирован' : '⚡ Экипировать'}
+                        ${nft.equipped ? ' Экипирован' : ' Экипировать'}
                     </button>
                 `;
                 container.appendChild(card);
@@ -1252,7 +1252,7 @@
                 type: type,
                 playerScore: 0,
                 opponentScore: 0,
-                opponent: type === 'bot' ? '🤖 Бот' : '👤 Игрок#' + Math.floor(Math.random() * 1000),
+                opponent: type === 'bot' ? ' Бот' : ' Игрок#' + Math.floor(Math.random() * 1000),
                 timeLeft: 60,
                 entryFee: entryFee
             };
@@ -1310,10 +1310,10 @@
                 gameState.balance += reward;
                 gameState.statistics.total_earned += reward;
                 gameState.pvp_wins++;
-                showNotification(`🎉 Победа! Вы выиграли ${reward} ₿`, 'success');
+                showNotification(` Ура Победааа! Вы выиграли ${reward} ₿`, 'success');
             } else {
                 gameState.pvp_losses++;
-                showNotification('😔 Поражение! Попробуйте еще раз', 'error');
+                showNotification(' Проиграл! Вы лох', 'error');
             }
             
             // Возвращаем меню через 3 секунды
@@ -1430,7 +1430,7 @@
             
             container.innerHTML = `
                 <div class="header">
-                    <h2>🔢 Угадай число</h2>
+                    <h2> Угадай число</h2>
                     <p>Угадай число от 1 до 100. Осталось попыток: <span id="attempts">${attempts}</span></p>
                     <input type="number" id="number-input" min="1" max="100" style="width:100px;padding:10px;font-size:1.5rem;text-align:center;margin:20px;background:rgba(255,255,255,0.1);color:white;border:2px solid #4fc3f7;border-radius:5px;">
                     <button class="btn" id="guess-btn">Угадать</button>
@@ -1466,7 +1466,7 @@
                     
                     container.innerHTML += `
                         <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                            <h3>🎉 Поздравляем!</h3>
+                            <h3> Поздравляем!</h3>
                             <p>Вы угадали число ${secretNumber}!</p>
                             <p>Выигрыш: ${reward} ₿</p>
                             <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
@@ -1479,7 +1479,7 @@
                     if (attempts <= 0) {
                         container.innerHTML += `
                             <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                                <h3>😔 Поражение!</h3>
+                                <h3> Поражение!</h3>
                                 <p>Загаданное число было: ${secretNumber}</p>
                                 <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
                             </div>
@@ -1498,12 +1498,12 @@
         }
 
         function startSlotsGame(container) {
-            const symbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '7️⃣'];
+            const symbols = ['1', '2', '3', '3', '4', '5'];
             let balance = 100;
             
             container.innerHTML = `
                 <div class="header">
-                    <h2>🎰 Слоты</h2>
+                    <h2>Казино</h2>
                     <p>Баланс: <span id="slots-balance">${balance}</span> ₿</p>
                     <div id="slots" style="font-size: 4rem; letter-spacing: 20px; margin: 30px 0;">❓ ❓ ❓</div>
                     <button class="btn" id="spin-btn">Крутить (10 ₿)</button>
@@ -1544,19 +1544,19 @@
                         
                         // Проверка выигрыша
                         if (slot1 === slot2 && slot2 === slot3) {
-                            const winAmount = slot1 === '7️⃣' ? 500 : 200;
+                            const winAmount = slot1 === '5' ? 500 : 200;
                             balance += winAmount;
                             balanceElement.textContent = balance;
-                            resultElement.textContent = `🎉 ДЖЕКПОТ! +${winAmount} ₿`;
+                            resultElement.textContent = ` ДЖЕКПОТ! +${winAmount} ₿`;
                             resultElement.style.color = '#00e676';
                             gameState.minigame_stats.slots.wins++;
                         } else if (slot1 === slot2 || slot2 === slot3 || slot1 === slot3) {
                             balance += 50;
                             balanceElement.textContent = balance;
-                            resultElement.textContent = `👍 Парочка! +50 ₿`;
+                            resultElement.textContent = ` Совпадение! +50 ₿`;
                             resultElement.style.color = '#4fc3f7';
                         } else {
-                            resultElement.textContent = '😔 Повезет в следующий раз!';
+                            resultElement.textContent = ' Повезет в следующий раз!';
                             resultElement.style.color = '#ff9800';
                         }
                     }
@@ -1569,7 +1569,7 @@
             if (totalWin > 0) {
                 gameState.balance += totalWin;
                 gameState.statistics.total_earned += totalWin;
-                showNotification(`Вы выиграли ${totalWin} ₿ в слотах!`, 'success');
+                showNotification(`Вы выиграли ${totalWin} ₿ в казино!`, 'success');
             }
             
             updateUI();
@@ -1589,7 +1589,7 @@
             
             container.innerHTML = `
                 <div class="header">
-                    <h2>🧠 Игра на память</h2>
+                    <h2> Тест</h2>
                     <p>Запомни последовательность чисел!</p>
                     <div id="memory-display" style="font-size: 4rem; margin: 30px 0;"></div>
                     <div id="memory-input" style="display:none;">
@@ -1643,7 +1643,7 @@
                         
                         container.innerHTML += `
                             <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                                <h3>🎉 Победа!</h3>
+                                <h3> Победа!</h3>
                                 <p>Вы запомнили всю последовательность!</p>
                                 <p>Выигрыш: ${reward} ₿</p>
                                 <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
@@ -1661,7 +1661,7 @@
                     
                     container.innerHTML += `
                         <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                            <h3>😔 Игра окончена</h3>
+                            <h3> Игра окончена</h3>
                             <p>Правильная последовательность: ${sequence.join(', ')}</p>
                             <p>Ваш результат: ${currentStep} из ${sequence.length}</p>
                             <p>Выигрыш: ${reward} ₿</p>
@@ -1872,7 +1872,7 @@
                         <strong>${member.name}</strong>
                         <div style="font-size:0.8rem;opacity:0.7;">${formatNumber(member.power)} ₿</div>
                     </div>
-                    <div class="clan-role">${member.role === 'owner' ? '👑 Создатель' : '👤 Участник'}</div>
+                    <div class="clan-role">${member.role === 'owner' ? ' Создатель' : ' Участник'}</div>
                 `;
                 container.appendChild(memberEl);
             });
@@ -2048,7 +2048,7 @@
             input.value = '';
             closeModal('promocode-modal');
             
-            showNotification(`🎉 Промокод активирован! +${reward} ₿`, 'success');
+            showNotification(` Промокод активирован! +${reward} ₿`, 'success');
             updateUI();
             saveGame();
         }
@@ -2066,7 +2066,7 @@
                 localStorage.setItem('cryptoKombat_last_bonus', today);
                 
                 setTimeout(() => {
-                    showNotification(`🎁 Ежедневный бонус! +${bonus} ₿ (серия: ${gameState.daily_streak} дней)`, 'success');
+                    showNotification(` Ежедневный бонус! +${bonus} ₿ (серия: ${gameState.daily_streak} дней)`, 'success');
                     updateUI();
                     saveGame();
                 }, 1000);
