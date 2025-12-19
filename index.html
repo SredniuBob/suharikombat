@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>SUHARI KOMBAT</title>
+    <title>₿ CRYPTO KOMBAT</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -55,19 +55,71 @@
             text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
         }
 
+        /* Навигация */
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin: -20px -20px 20px -20px;
+            gap: 5px;
+        }
+
+        .nav-tabs button {
+            flex: 1;
+            min-width: 70px;
+            padding: 12px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .nav-tabs button.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        /* Секции */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Карточки */
+        .stat-card, .upgrade-card, .nft-card, .game-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 18px 15px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-card h3 {
@@ -82,6 +134,7 @@
             color: #00e676;
         }
 
+        /* Кнопки */
         .click-btn {
             width: 180px;
             height: 180px;
@@ -103,13 +156,12 @@
 
         .click-btn:active {
             transform: scale(0.95);
-            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.3);
         }
 
-        .buy-btn {
+        .btn {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #00c853, #00e676);
+            background: linear-gradient(135deg, var(--accent), #00e676);
             border: none;
             border-radius: 10px;
             color: white;
@@ -119,87 +171,223 @@
             margin-top: 10px;
         }
 
-        .buy-btn:hover:not(:disabled) {
+        .btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
         }
 
-        .buy-btn:disabled {
+        .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             background: #666;
         }
 
-        .upgrade-card {
-            background: rgba(255, 255, 255, 0.08);
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #ff6b6b);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #ffb74d);
+        }
+
+        /* Прогресс-бар лимита */
+        .limit-container {
+            background: rgba(0, 0, 0, 0.3);
             padding: 15px;
             border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .limit-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .limit-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00c853, #00e676);
+            transition: width 0.3s;
+        }
+
+        /* PvP арена */
+        .pvp-arena {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .players {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .player {
+            text-align: center;
+            padding: 20px;
+            min-width: 120px;
+        }
+
+        .player-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00e676;
             margin: 10px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .section {
-            display: none;
+        /* Мини-игры */
+        .minigame-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .section.active {
-            display: block;
-        }
-
-        .nav-tabs {
-            display: flex;
-            overflow-x: auto;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin: -20px -20px 20px -20px;
-        }
-
-        .nav-tabs button {
-            flex: 1;
-            min-width: 70px;
-            padding: 12px 8px;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.9rem;
+        .minigame {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            transition: all 0.3s;
+        }
+
+        .minigame:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* NFT */
+        .nft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .nft-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .nft-rarity {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .common { background: rgba(117, 117, 117, 0.3); color: #fff; }
+        .uncommon { background: rgba(76, 175, 80, 0.3); color: #4caf50; }
+        .rare { background: rgba(33, 150, 243, 0.3); color: #2196f3; }
+        .epic { background: rgba(156, 39, 176, 0.3); color: #9c27b0; }
+        .legendary { background: rgba(255, 215, 0, 0.3); color: #ffd700; }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             align-items: center;
-            gap: 5px;
-            margin: 0 2px;
+            justify-content: center;
         }
 
-        .nav-tabs button.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .modal-content {
+            background: #1a237e;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            border: 2px solid #4fc3f7;
         }
 
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: rgba(0, 200, 83, 0.9);
+            color: white;
+            border-radius: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s;
+            z-index: 1001;
+            font-weight: bold;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 152, 0, 0.9);
+        }
+
+        /* Адаптивность */
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr; }
             .click-btn { width: 150px; height: 150px; font-size: 1.3rem; }
+            .nav-tabs button { min-width: 60px; font-size: 0.8rem; }
+            .minigame-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <!-- Уведомления -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Модальные окна -->
+    <div class="modal" id="promocode-modal">
+        <div class="modal-content">
+            <h3>🎁 Активировать промокод</h3>
+            <input type="text" id="promocode-input" placeholder="Введите промокод" style="width:100%;padding:10px;margin:15px 0;border-radius:5px;background:rgba(255,255,255,0.1);color:white;border:1px solid #4fc3f7;">
+            <div style="display:flex;gap:10px;">
+                <button class="btn" onclick="activatePromocode()">Активировать</button>
+                <button class="btn btn-danger" onclick="closeModal('promocode-modal')">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигация -->
     <div class="nav-tabs">
         <button onclick="showSection('main')" class="active">🎮 Игра</button>
         <button onclick="showSection('upgrades')">⚡ Улучшения</button>
         <button onclick="showSection('nft')">🎴 NFT</button>
         <button onclick="showSection('pvp')">⚔️ PvP</button>
+        <button onclick="showSection('minigames')">🎯 Мини-игры</button>
+        <button onclick="showSection('referral')">👥 Рефералы</button>
     </div>
 
     <div class="container">
         <!-- Главный экран -->
         <div id="main-section" class="section active">
             <div class="header">
-                <h1>SUHARI KOMBAT</h1>
-                <p>Кликай и стань крутiм!</p>
+                <h1>₿ CRYPTO KOMBAT</h1>
+                <p>Кликай, майни и стань крипто-королём!</p>
+                <div style="margin-top: 10px;">
+                    <button class="btn btn-warning" onclick="openModal('promocode-modal')" style="width:auto;padding:8px 15px;">
+                        🎁 Промокод
+                    </button>
+                </div>
             </div>
 
             <div class="stats-grid">
@@ -221,15 +409,29 @@
                 </div>
             </div>
 
+            <!-- Лимит кликов -->
+            <div class="limit-container">
+                <div class="limit-bar">
+                    <div class="limit-fill" id="limit-fill" style="width: 100%"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <span>Кликов: <strong id="current-clicks">50</strong>/<strong id="max-clicks">50</strong></span>
+                    <span id="reset-time">Восстановление: 2:00</span>
+                </div>
+                <button class="btn btn-warning" id="reset-btn" onclick="resetClickLimit()" style="display:none;">
+                    🔄 Восстановить лимит (100 ₿)
+                </button>
+            </div>
+
             <button class="click-btn" id="click-btn">
-                 Тыкай
+                ⛏️ МАЙНИТЬ
                 <div style="font-size: 1rem; margin-top: 10px; color: #00e676;">
                     +<span id="click-value">1</span> ₿ за клик
                 </div>
             </button>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="buy-btn" onclick="showSection('upgrades')">
+            <div style="text-align: center;">
+                <button class="btn" onclick="showSection('upgrades')">
                     ⚡ СМОТРЕТЬ УЛУЧШЕНИЯ
                 </button>
             </div>
@@ -239,7 +441,7 @@
         <div id="upgrades-section" class="section">
             <div class="header">
                 <h1>⚡ УЛУЧШЕНИЯ</h1>
-                <p>Улучшай свою ферму!</p>
+                <p>Улучшай свою ферму и лимиты!</p>
             </div>
             <div id="upgrades-container"></div>
         </div>
@@ -250,21 +452,137 @@
                 <h1>🎴 NFT КОЛЛЕКЦИЯ</h1>
                 <p>Коллекционируй уникальные предметы!</p>
             </div>
-            <div style="text-align: center; padding: 40px;">
-                <p>Раздел в разработке...</p>
-                <button class="buy-btn" onclick="showSection('main')">← НАЗАД</button>
+            
+            <div class="nft-grid" id="nft-shop">
+                <div class="nft-card" onclick="buyNftBox('basic')">
+                    <h3>🥉 БАЗОВЫЙ</h3>
+                    <div class="nft-rarity common">обычный</div>
+                    <p>Стоимость: 10,000 ₿</p>
+                    <button class="btn">Купить</button>
+                </div>
+                <div class="nft-card" onclick="buyNftBox('premium')">
+                    <h3>🥈 ПРЕМИУМ</h3>
+                    <div class="nft-rarity rare">редкий</div>
+                    <p>Стоимость: 50,000 ₿</p>
+                    <button class="btn">Купить</button>
+                </div>
+                <div class="nft-card" onclick="buyNftBox('legendary')">
+                    <h3>🥇 ЛЕГЕНДАРНЫЙ</h3>
+                    <div class="nft-rarity legendary">легендарный</div>
+                    <p>Стоимость: 100,000 ₿</p>
+                    <button class="btn">Купить</button>
+                </div>
             </div>
+
+            <h3 style="margin: 20px 0 10px 0;">Ваши NFT:</h3>
+            <div id="nft-inventory"></div>
         </div>
 
-        <!-- PvP -->
+        <!-- PvP Арена -->
         <div id="pvp-section" class="section">
             <div class="header">
                 <h1>⚔️ PvP АРЕНА</h1>
                 <p>Сражайся с другими игроками!</p>
             </div>
-            <div style="text-align: center; padding: 40px;">
-                <p>Раздел в разработке...</p>
-                <button class="buy-btn" onclick="showSection('main')">← НАЗАД</button>
+
+            <div class="pvp-arena" id="battle-arena" style="display:none;">
+                <h2 id="battle-title">Бой с Ботом</h2>
+                <div class="players">
+                    <div class="player">
+                        <div>Вы</div>
+                        <div class="player-score" id="player1-score">0</div>
+                    </div>
+                    <div style="font-size: 2rem; display: flex; align-items: center;">VS</div>
+                    <div class="player">
+                        <div id="opponent-name">Бот</div>
+                        <div class="player-score" id="player2-score">0</div>
+                    </div>
+                </div>
+                <div id="battle-timer" style="font-size: 3rem; color: #ff4444; margin: 20px 0;">60</div>
+                <button class="btn btn-danger" onclick="pvpClick()" id="pvp-click-btn">⚔️ КЛИКАТЬ!</button>
+            </div>
+
+            <div id="pvp-menu">
+                <div class="upgrade-card">
+                    <h3>🤖 Бой с ботом</h3>
+                    <p>Сразитесь с ИИ-ботом. Ставка: 100 ₿</p>
+                    <button class="btn" onclick="startPvPBattle('bot')">Начать бой</button>
+                </div>
+                <div class="upgrade-card">
+                    <h3>👤 Случайный противник</h3>
+                    <p>Найдите реального игрока. Ставка: 500 ₿</p>
+                    <button class="btn" onclick="startPvPBattle('player')">Найти бой</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мини-игры -->
+        <div id="minigames-section" class="section">
+            <div class="header">
+                <h1>🎯 МИНИ-ИГРЫ</h1>
+                <p>Зарабатывай дополнительные токены!</p>
+            </div>
+
+            <div class="minigame-container">
+                <div class="minigame" onclick="startMinigame('clicker')">
+                    <h3>⚡ Клик-челлендж</h3>
+                    <p>Кликай как можно быстрее за 10 секунд!</p>
+                    <div style="color: #00e676; margin-top: 10px;">Приз: до 1,000 ₿</div>
+                </div>
+                <div class="minigame" onclick="startMinigame('number')">
+                    <h3>🔢 Угадай число</h3>
+                    <p>Угадай число от 1 до 100 за 5 попыток</p>
+                    <div style="color: #00e676; margin-top: 10px;">Приз: до 2,000 ₿</div>
+                </div>
+                <div class="minigame" onclick="startMinigame('memory')">
+                    <h3>🧠 Память</h3>
+                    <p>Запомни последовательность чисел</p>
+                    <div style="color: #00e676; margin-top: 10px;">Приз: до 3,000 ₿</div>
+                </div>
+                <div class="minigame" onclick="startMinigame('slots')">
+                    <h3>🎰 Слоты</h3>
+                    <p>Испытай удачу на игровых автоматах</p>
+                    <div style="color: #00e676; margin-top: 10px;">Приз: до 5,000 ₿</div>
+                </div>
+            </div>
+
+            <div id="minigame-container" style="display:none;"></div>
+        </div>
+
+        <!-- Реферальная система -->
+        <div id="referral-section" class="section">
+            <div class="header">
+                <h1>👥 РЕФЕРАЛЬНАЯ СИСТЕМА</h1>
+                <p>Приглашай друзей и получай бонусы!</p>
+            </div>
+
+            <div class="upgrade-card">
+                <h3>Ваш реферальный код:</h3>
+                <div style="font-size: 2rem; letter-spacing: 3px; background: rgba(79, 195, 247, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px dashed #4fc3f7;">
+                    <span id="referral-code">CRYPTO123</span>
+                </div>
+                <button class="btn" onclick="copyReferralCode()">📋 Копировать код</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Приглашено друзей</h3>
+                    <div class="value" id="referrals-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Заработано с рефералов</h3>
+                    <div class="value" id="referral-earnings">0 ₿</div>
+                </div>
+            </div>
+
+            <div class="upgrade-card">
+                <h3>💎 Бонусы за приглашения:</h3>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                    <li>1 друг: +10% к доходу за клик</li>
+                    <li>3 друга: +1 к лимиту кликов</li>
+                    <li>5 друзей: +25% к доходу за клик</li>
+                    <li>10 друзей: ×2 к призам в мини-играх</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -282,18 +600,52 @@
 
         // ====== СОСТОЯНИЕ ИГРЫ ======
         let gameState = {
-            balance: 10000,  // НАЧИНАЕМ С 10000!
+            balance: 10000,
             per_click: 1,
             passive_per_sec: 0,
             level: 1,
             experience: 0,
+            total_clicks: 0,
+            
+            // Лимит кликов система
+            click_limit: 50,
+            click_limit_used: 0,
+            click_limit_reset: Date.now() + 120000,
+            
+            // Улучшения
             upgrades: {
                 basic_rig: 0,
                 gpu_farm: 0,
                 asic_miner: 0,
-                mining_pool: 0
+                mining_pool: 0,
+                click_limit_boost: 0,
+                click_speed: 0,
+                referral_boost: 0
             },
-            total_clicks: 0
+            
+            // NFT система
+            nfts: [],
+            nft_boost: 1,
+            
+            // Реферальная система
+            referral_code: generateReferralCode(),
+            referrals: [],
+            referral_earnings: 0,
+            
+            // PvP система
+            pvp_wins: 0,
+            pvp_losses: 0,
+            
+            // Промокоды
+            used_promocodes: [],
+            
+            // Мини-игры
+            minigame_stats: {
+                clicker: { played: 0, best: 0 },
+                number: { played: 0, wins: 0 },
+                memory: { played: 0, best: 0 },
+                slots: { played: 0, wins: 0 }
+            }
         };
 
         // Улучшения
@@ -301,91 +653,205 @@
             { id: 'basic_rig', name: '📱 Базовый риг', desc: 'Простая видеокарта', cost: 100, click: 1, passive: 0.1 },
             { id: 'gpu_farm', name: '💻 GPU Ферма', desc: 'Несколько видеокарт', cost: 500, click: 5, passive: 0.5 },
             { id: 'asic_miner', name: '⚡ ASIC Майнер', desc: 'Специализированный процессор', cost: 2000, click: 20, passive: 2 },
-            { id: 'mining_pool', name: '🏊‍♂️ Майнинг-пул', desc: 'Объединенная мощность', cost: 5000, click: 50, passive: 5 }
+            { id: 'mining_pool', name: '🏊‍♂️ Майнинг-пул', desc: 'Объединенная мощность', cost: 5000, click: 50, passive: 5 },
+            { id: 'click_limit_boost', name: '⚡ Улучшение лимита', desc: '+10 к лимиту кликов', cost: 1000, limit_bonus: 10 },
+            { id: 'click_speed', name: '🚀 Скорость клика', desc: '+5 к силе клика', cost: 5000, click: 5 },
+            { id: 'referral_boost', name: '👥 Реферальный буст', desc: '+10% к реферальному доходу', cost: 3000, referral_bonus: 0.1 }
         ];
+
+        // NFT предметы
+        const nftItems = [
+            { id: 'golden_rig', name: '🔥 Золотой Риг', rarity: 'legendary', price: 100000, bonus: 2.0 },
+            { id: 'quantum_miner', name: '⚛️ Квантовый Майнер', rarity: 'epic', price: 50000, bonus: 1.5 },
+            { id: 'ai_trader', name: '🧠 AI Трейдер', rarity: 'rare', price: 20000, bonus: 1.3 },
+            { id: 'crypto_cpu', name: '💎 Крипто-Процессор', rarity: 'uncommon', price: 10000, bonus: 1.2 },
+            { id: 'basic_gpu', name: '📊 Базовая GPU', rarity: 'common', price: 5000, bonus: 1.1 }
+        ];
+
+        // Промокоды
+        const promocodes = {
+            'CRYPTO1000': { reward: 1000, uses: 9999 },
+            'WELCOME500': { reward: 500, uses: 9999 },
+            'VIP2000': { reward: 2000, uses: 9999 },
+            'BONUS3000': { reward: 3000, uses: 9999 }
+        };
+
+        // Таймеры
+        let pvpTimer = null;
+        let battleTime = 60;
+        let minigameTimer = null;
 
         // ====== СОХРАНЕНИЕ ДАННЫХ ======
         function saveGame() {
             try {
-                // Пробуем Telegram CloudStorage
+                gameState.last_save = Date.now();
+                const saveData = JSON.stringify(gameState);
+                
                 if (tg?.CloudStorage) {
-                    tg.CloudStorage.setItem('game_save', JSON.stringify(gameState));
+                    tg.CloudStorage.setItem('game_save', saveData);
                 }
-                // Всегда сохраняем в localStorage как fallback
-                localStorage.setItem('cryptoKombat', JSON.stringify(gameState));
+                
+                localStorage.setItem('cryptoKombat', saveData);
+                localStorage.setItem('cryptoKombat_last_save', Date.now().toString());
             } catch (e) {
-                console.log('Ошибка сохранения:', e);
+                console.error('Ошибка сохранения:', e);
             }
         }
 
         function loadGame() {
             try {
-                // Сначала пробуем Telegram CloudStorage
+                // Пробуем загрузить из Telegram
                 if (tg?.CloudStorage) {
                     tg.CloudStorage.getItem('game_save').then(saved => {
                         if (saved) {
                             const loaded = JSON.parse(saved);
                             Object.assign(gameState, loaded);
-                            updateUI();
-                            renderUpgrades();
+                            initGame();
                         }
-                    });
-                }
-                
-                // Затем localStorage
-                const saved = localStorage.getItem('cryptoKombat');
-                if (saved) {
-                    const loaded = JSON.parse(saved);
-                    Object.assign(gameState, loaded);
+                    }).catch(() => loadFromLocalStorage());
+                } else {
+                    loadFromLocalStorage();
                 }
             } catch (e) {
-                console.log('Ошибка загрузки:', e);
+                console.error('Ошибка загрузки:', e);
+                initGame();
             }
         }
 
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('cryptoKombat');
+            if (saved) {
+                const loaded = JSON.parse(saved);
+                Object.assign(gameState, loaded);
+            }
+            initGame();
+        }
+
         // ====== ОСНОВНЫЕ ФУНКЦИИ ======
+        function initGame() {
+            updateUI();
+            renderUpgrades();
+            loadNFTInventory();
+            updateReferralUI();
+            startPassiveIncome();
+            startClickLimitTimer();
+            
+            // Ежедневный бонус
+            checkDailyBonus();
+            
+            console.log('Игра загружена. Баланс:', gameState.balance);
+        }
+
         function updateUI() {
             document.getElementById('balance').textContent = formatNumber(gameState.balance) + ' ₿';
-            document.getElementById('per-click').textContent = formatNumber(gameState.per_click) + ' ₿';
-            document.getElementById('click-value').textContent = gameState.per_click;
+            document.getElementById('per-click').textContent = formatNumber(gameState.per_click * gameState.nft_boost) + ' ₿';
+            document.getElementById('click-value').textContent = Math.floor(gameState.per_click * gameState.nft_boost);
             document.getElementById('level').textContent = gameState.level;
             document.getElementById('passive-income').textContent = gameState.passive_per_sec.toFixed(1) + ' ₿/сек';
+            
+            updateClickLimitUI();
         }
 
         function formatNumber(num) {
             return Math.floor(num).toLocaleString('ru-RU');
         }
 
-        // ====== КЛИКЕР ======
+        // ====== СИСТЕМА КЛИКОВ ======
         document.getElementById('click-btn').addEventListener('click', function() {
+            if (gameState.click_limit_used >= gameState.click_limit) {
+                showNotification('Лимит кликов исчерпан!', 'error');
+                return;
+            }
+            
             // Анимация
             this.style.transform = 'scale(0.95)';
             setTimeout(() => this.style.transform = 'scale(1)', 100);
             
-            // Тактильная отдача в Telegram
+            // Тактильная отдача
             if (tg?.HapticFeedback) {
                 tg.HapticFeedback.impactOccurred('light');
             }
             
-            // Начисляем деньги
-            gameState.balance += gameState.per_click;
+            // Начисляем деньги с учетом NFT буста
+            const clickValue = Math.floor(gameState.per_click * gameState.nft_boost);
+            gameState.balance += clickValue;
             gameState.total_clicks++;
+            gameState.click_limit_used++;
             gameState.experience++;
             
-            // Проверяем уровень
+            // Уровень
             if (gameState.experience >= gameState.level * 100) {
                 gameState.level++;
                 gameState.experience = 0;
                 gameState.per_click += Math.floor(gameState.level / 2);
+                showNotification(`🎉 Уровень ${gameState.level}! +${Math.floor(gameState.level / 2)} к клику`, 'success');
+                
                 if (tg?.HapticFeedback) {
                     tg.HapticFeedback.impactOccurred('heavy');
                 }
-                alert(`🎉 Уровень ${gameState.level}! +${Math.floor(gameState.level / 2)} к клику`);
             }
             
             updateUI();
             saveGame();
         });
+
+        // ====== ЛИМИТ КЛИКОВ ======
+        function updateClickLimitUI() {
+            const used = gameState.click_limit_used;
+            const total = gameState.click_limit;
+            const percentage = Math.max(0, ((total - used) / total) * 100);
+            
+            document.getElementById('limit-fill').style.width = percentage + '%';
+            document.getElementById('current-clicks').textContent = total - used;
+            document.getElementById('max-clicks').textContent = total;
+            
+            const resetBtn = document.getElementById('reset-btn');
+            if (used >= total) {
+                resetBtn.style.display = 'block';
+                document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #ff4444, #ff9800)';
+            } else {
+                resetBtn.style.display = 'none';
+                document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #00c853, #00e676)';
+            }
+        }
+
+        function startClickLimitTimer() {
+            setInterval(() => {
+                const now = Date.now();
+                if (now >= gameState.click_limit_reset) {
+                    gameState.click_limit_used = 0;
+                    gameState.click_limit_reset = now + 120000; // 2 минуты
+                    updateClickLimitUI();
+                }
+                
+                const timeLeft = Math.max(0, gameState.click_limit_reset - now);
+                const minutes = Math.floor(timeLeft / 60000);
+                const seconds = Math.floor((timeLeft % 60000) / 1000);
+                document.getElementById('reset-time').textContent = 
+                    `Восстановление: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function resetClickLimit() {
+            if (gameState.click_limit_used < gameState.click_limit) {
+                showNotification('Лимит еще не исчерпан!', 'warning');
+                return;
+            }
+            
+            const cost = 100;
+            if (gameState.balance < cost) {
+                showNotification(`Недостаточно средств! Нужно ${cost} ₿`, 'error');
+                return;
+            }
+            
+            gameState.balance -= cost;
+            gameState.click_limit_used = 0;
+            gameState.click_limit_reset = Date.now() + 120000;
+            updateClickLimitUI();
+            updateUI();
+            saveGame();
+            showNotification('Лимит кликов восстановлен!', 'success');
+        }
 
         // ====== УЛУЧШЕНИЯ ======
         function buyUpgrade(upgradeId) {
@@ -396,25 +862,28 @@
             const cost = Math.floor(upgrade.cost * Math.pow(1.5, currentLevel));
             
             if (gameState.balance < cost) {
-                alert('❌ Недостаточно средств!');
+                showNotification('Недостаточно средств!', 'error');
                 return;
             }
             
             gameState.balance -= cost;
             gameState.upgrades[upgradeId] = currentLevel + 1;
-            gameState.per_click += upgrade.click;
-            gameState.passive_per_sec += upgrade.passive;
             
-            // Тактильная отдача
-            if (tg?.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('medium');
+            if (upgrade.click) {
+                gameState.per_click += upgrade.click;
+            }
+            if (upgrade.passive) {
+                gameState.passive_per_sec += upgrade.passive;
+            }
+            if (upgrade.limit_bonus) {
+                gameState.click_limit += upgrade.limit_bonus;
             }
             
             updateUI();
             renderUpgrades();
             saveGame();
             
-            alert(`✅ Куплено: ${upgrade.name}`);
+            showNotification(`✅ Куплено: ${upgrade.name}`, 'success');
         }
 
         function renderUpgrades() {
@@ -429,18 +898,633 @@
                 const card = document.createElement('div');
                 card.className = 'upgrade-card';
                 card.innerHTML = `
-                    <h3 style="color: #4fc3f7; margin-bottom: 10px;">${upgrade.name} (${currentLevel})</h3>
-                    <p style="opacity: 0.8; margin-bottom: 10px;">${upgrade.desc}</p>
+                    <h3>${upgrade.name} (${currentLevel})</h3>
+                    <p>${upgrade.desc}</p>
                     <div style="color: #00e676; margin: 10px 0;">
-                        +${upgrade.click} к клику
-                        <br>+${upgrade.passive} ₿/сек
+                        ${upgrade.click ? `+${upgrade.click} к клику` : ''}
+                        ${upgrade.passive ? `<br>+${upgrade.passive} ₿/сек` : ''}
+                        ${upgrade.limit_bonus ? `<br>+${upgrade.limit_bonus} к лимиту` : ''}
+                        ${upgrade.referral_bonus ? `<br>+${upgrade.referral_bonus * 100}% к рефералам` : ''}
                     </div>
-                    <button class="buy-btn" onclick="buyUpgrade('${upgrade.id}')" ${!canBuy ? 'disabled' : ''}>
+                    <button class="btn" onclick="buyUpgrade('${upgrade.id}')" ${!canBuy ? 'disabled' : ''}>
                         ${currentLevel === 0 ? 'КУПИТЬ' : 'УЛУЧШИТЬ'} ЗА ${formatNumber(cost)} ₿
                     </button>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        // ====== NFT СИСТЕМА ======
+        function buyNftBox(type) {
+            let price, rarityWeights;
+            
+            switch(type) {
+                case 'basic':
+                    price = 10000;
+                    rarityWeights = [0.7, 0.2, 0.1, 0, 0]; // 70% common, 20% uncommon, 10% rare
+                    break;
+                case 'premium':
+                    price = 50000;
+                    rarityWeights = [0, 0.3, 0.4, 0.25, 0.05]; // 30% uncommon, 40% rare, 25% epic, 5% legendary
+                    break;
+                case 'legendary':
+                    price = 100000;
+                    rarityWeights = [0, 0, 0.3, 0.4, 0.3]; // 30% rare, 40% epic, 30% legendary
+                    break;
+                default:
+                    return;
+            }
+            
+            if (gameState.balance < price) {
+                showNotification('Недостаточно средств!', 'error');
+                return;
+            }
+            
+            gameState.balance -= price;
+            
+            // Выбираем редкость
+            const random = Math.random();
+            let cumulative = 0;
+            let rarityIndex = 0;
+            
+            for (let i = 0; i < rarityWeights.length; i++) {
+                cumulative += rarityWeights[i];
+                if (random <= cumulative) {
+                    rarityIndex = i;
+                    break;
+                }
+            }
+            
+            const nft = JSON.parse(JSON.stringify(nftItems[rarityIndex])); // Копируем объект
+            nft.id = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            nft.equipped = false;
+            
+            gameState.nfts.push(nft);
+            
+            updateUI();
+            loadNFTInventory();
+            saveGame();
+            
+            const rarityNames = ['обычный', 'необычный', 'редкий', 'эпический', 'легендарный'];
+            showNotification(`🎉 Получен NFT: ${nft.name} (${rarityNames[rarityIndex]})! Бонус: ×${nft.bonus}`, 'success');
+        }
+
+        function equipNft(nftId) {
+            // Снимаем все NFT
+            gameState.nfts.forEach(nft => nft.equipped = false);
+            
+            // Надеваем выбранный
+            const nft = gameState.nfts.find(n => n.id === nftId);
+            if (nft) {
+                nft.equipped = true;
+                gameState.nft_boost = nft.bonus;
+            }
+            
+            updateUI();
+            loadNFTInventory();
+            saveGame();
+            
+            showNotification(`NFT "${nft.name}" экипирован!`, 'success');
+        }
+
+        function loadNFTInventory() {
+            const container = document.getElementById('nft-inventory');
+            if (!container) return;
+            
+            if (gameState.nfts.length === 0) {
+                container.innerHTML = '<p style="text-align:center;opacity:0.7;">У вас пока нет NFT</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            gameState.nfts.forEach(nft => {
+                const card = document.createElement('div');
+                card.className = 'nft-card';
+                card.innerHTML = `
+                    <div class="nft-rarity ${nft.rarity}">${nft.rarity}</div>
+                    <h4>${nft.name}</h4>
+                    <p>Бонус: ×${nft.bonx}</p>
+                    <button class="btn ${nft.equipped ? 'btn-warning' : ''}" onclick="equipNft('${nft.id}')" ${nft.equipped ? 'disabled' : ''}>
+                        ${nft.equipped ? '✅ Экипирован' : '⚡ Экипировать'}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ====== PvP СИСТЕМА ======
+        let pvpBattle = null;
+        let pvpInterval = null;
+
+        function startPvPBattle(type) {
+            const entryFee = type === 'bot' ? 100 : 500;
+            
+            if (gameState.balance < entryFee) {
+                showNotification(`Недостаточно средств! Нужно ${entryFee} ₿`, 'error');
+                return;
+            }
+            
+            gameState.balance -= entryFee;
+            
+            pvpBattle = {
+                type: type,
+                playerScore: 0,
+                opponentScore: 0,
+                opponent: type === 'bot' ? '🤖 Бот' : '👤 Игрок#' + Math.floor(Math.random() * 1000),
+                timeLeft: 60,
+                entryFee: entryFee
+            };
+            
+            document.getElementById('pvp-menu').style.display = 'none';
+            document.getElementById('battle-arena').style.display = 'block';
+            document.getElementById('battle-title').textContent = type === 'bot' ? 'Бой с Ботом' : 'PvP Бой';
+            document.getElementById('opponent-name').textContent = pvpBattle.opponent;
+            
+            battleTime = 60;
+            document.getElementById('battle-timer').textContent = battleTime;
+            
+            // Запускаем таймер
+            pvpInterval = setInterval(() => {
+                battleTime--;
+                document.getElementById('battle-timer').textContent = battleTime;
+                
+                // Бот кликает (если бой с ботом)
+                if (type === 'bot' && Math.random() > 0.7) {
+                    pvpBattle.opponentScore += Math.floor(Math.random() * 10) + 1;
+                    document.getElementById('player2-score').textContent = pvpBattle.opponentScore;
+                }
+                
+                if (battleTime <= 0) {
+                    endPvPBattle();
+                }
+            }, 1000);
+            
+            updateUI();
+        }
+
+        function pvpClick() {
+            if (!pvpBattle) return;
+            
+            pvpBattle.playerScore += Math.floor(gameState.per_click * gameState.nft_boost);
+            document.getElementById('player1-score').textContent = pvpBattle.playerScore;
+            
+            if (tg?.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
+            }
+        }
+
+        function endPvPBattle() {
+            clearInterval(pvpInterval);
+            
+            if (!pvpBattle) return;
+            
+            const playerWon = pvpBattle.playerScore > pvpBattle.opponentScore;
+            const reward = pvpBattle.entryFee * 2;
+            
+            if (playerWon) {
+                gameState.balance += reward;
+                gameState.pvp_wins++;
+                showNotification(`🎉 Победа! Вы выиграли ${reward} ₿`, 'success');
+            } else {
+                gameState.pvp_losses++;
+                showNotification('😔 Поражение! Попробуйте еще раз', 'error');
+            }
+            
+            // Возвращаем меню
+            setTimeout(() => {
+                document.getElementById('pvp-menu').style.display = 'block';
+                document.getElementById('battle-arena').style.display = 'none';
+                pvpBattle = null;
+                
+                updateUI();
+                saveGame();
+            }, 3000);
+        }
+
+        // ====== МИНИ-ИГРЫ ======
+        function startMinigame(type) {
+            const container = document.getElementById('minigame-container');
+            const gamesContainer = document.querySelector('.minigame-container');
+            
+            gamesContainer.style.display = 'none';
+            container.style.display = 'block';
+            container.innerHTML = '';
+            
+            switch(type) {
+                case 'clicker':
+                    startClickerGame(container);
+                    break;
+                case 'number':
+                    startNumberGame(container);
+                    break;
+                case 'memory':
+                    startMemoryGame(container);
+                    break;
+                case 'slots':
+                    startSlotsGame(container);
+                    break;
+            }
+            
+            gameState.minigame_stats[type].played++;
+        }
+
+        function startClickerGame(container) {
+            let clicks = 0;
+            let timeLeft = 10;
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h2>⚡ Клик-челлендж</h2>
+                    <p>Кликай как можно быстрее за 10 секунд!</p>
+                    <div id="clicker-timer" style="font-size: 2rem; color: #ff9800;">${timeLeft}</div>
+                    <div id="clicker-count" style="font-size: 3rem; color: #00e676; margin: 20px 0;">0</div>
+                    <button class="click-btn" id="clicker-btn">КЛИКАЙ!</button>
+                </div>
+            `;
+            
+            const timerElement = document.getElementById('clicker-timer');
+            const countElement = document.getElementById('clicker-count');
+            const button = document.getElementById('clicker-btn');
+            
+            button.onclick = () => {
+                clicks++;
+                countElement.textContent = clicks;
+                
+                if (tg?.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('light');
+                }
+            };
+            
+            const timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    button.disabled = true;
+                    
+                    const reward = Math.min(clicks * 10, 1000);
+                    gameState.balance += reward;
+                    
+                    if (clicks > gameState.minigame_stats.clicker.best) {
+                        gameState.minigame_stats.clicker.best = clicks;
+                    }
+                    
+                    container.innerHTML += `
+                        <div style="text-align:center; margin-top:20px;">
+                            <h3>Игра окончена!</h3>
+                            <p>Кликов: ${clicks}</p>
+                            <p>Выигрыш: ${reward} ₿</p>
+                            <button class="btn" onclick="showSection('minigames')">Назад к играм</button>
+                        </div>
+                    `;
+                    
+                    updateUI();
+                    saveGame();
+                }
+            }, 1000);
+        }
+
+        function startNumberGame(container) {
+            const secretNumber = Math.floor(Math.random() * 100) + 1;
+            let attempts = 5;
+            let guessed = false;
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h2>🔢 Угадай число</h2>
+                    <p>Угадай число от 1 до 100. Осталось попыток: <span id="attempts">${attempts}</span></p>
+                    <input type="number" id="number-input" min="1" max="100" style="width:100px;padding:10px;font-size:1.5rem;text-align:center;margin:20px;background:rgba(255,255,255,0.1);color:white;border:2px solid #4fc3f7;border-radius:5px;">
+                    <button class="btn" id="guess-btn">Угадать</button>
+                    <div id="number-hint" style="margin-top:20px;"></div>
+                </div>
+            `;
+            
+            const input = document.getElementById('number-input');
+            const hint = document.getElementById('number-hint');
+            const attemptsElement = document.getElementById('attempts');
+            
+            document.getElementById('guess-btn').onclick = () => {
+                const guess = parseInt(input.value);
+                
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    hint.textContent = 'Введите число от 1 до 100!';
+                    hint.style.color = '#ff4444';
+                    return;
+                }
+                
+                attempts--;
+                attemptsElement.textContent = attempts;
+                
+                if (guess === secretNumber) {
+                    guessed = true;
+                    const reward = attempts * 400; // Чем быстрее угадал, тем больше
+                    gameState.balance += reward;
+                    gameState.minigame_stats.number.wins++;
+                    
+                    container.innerHTML += `
+                        <div style="text-align:center; margin-top:20px;">
+                            <h3>🎉 Поздравляем!</h3>
+                            <p>Вы угадали число ${secretNumber}!</p>
+                            <p>Выигрыш: ${reward} ₿</p>
+                            <button class="btn" onclick="showSection('minigames')">Назад к играм</button>
+                        </div>
+                    `;
+                } else {
+                    hint.textContent = `Число ${guess} слишком ${guess < secretNumber ? 'маленькое' : 'большое'}`;
+                    hint.style.color = '#ff9800';
+                    
+                    if (attempts <= 0) {
+                        container.innerHTML += `
+                            <div style="text-align:center; margin-top:20px;">
+                                <h3>😔 Поражение!</h3>
+                                <p>Загаданное число было: ${secretNumber}</p>
+                                <button class="btn" onclick="showSection('minigames')">Назад к играм</button>
+                            </div>
+                        `;
+                    }
+                }
+                
+                input.value = '';
+                input.focus();
+                
+                if (guessed || attempts <= 0) {
+                    updateUI();
+                    saveGame();
+                }
+            };
+        }
+
+        function startSlotsGame(container) {
+            const symbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '7️⃣'];
+            let balance = 100;
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h2>🎰 Слоты</h2>
+                    <p>Баланс: <span id="slots-balance">${balance}</span> ₿</p>
+                    <div id="slots" style="font-size: 4rem; letter-spacing: 20px; margin: 30px 0;">❓ ❓ ❓</div>
+                    <button class="btn" id="spin-btn">Крутить (10 ₿)</button>
+                    <div id="slots-result" style="margin-top:20px;font-size:1.2rem;"></div>
+                </div>
+            `;
+            
+            const spinBtn = document.getElementById('spin-btn');
+            const resultElement = document.getElementById('slots-result');
+            const balanceElement = document.getElementById('slots-balance');
+            
+            spinBtn.onclick = () => {
+                if (balance < 10) {
+                    resultElement.textContent = 'Недостаточно средств!';
+                    resultElement.style.color = '#ff4444';
+                    return;
+                }
+                
+                balance -= 10;
+                balanceElement.textContent = balance;
+                
+                // Анимация вращения
+                let spins = 0;
+                const maxSpins = 10;
+                const spinInterval = setInterval(() => {
+                    const slot1 = symbols[Math.floor(Math.random() * symbols.length)];
+                    const slot2 = symbols[Math.floor(Math.random() * symbols.length)];
+                    const slot3 = symbols[Math.floor(Math.random() * symbols.length)];
+                    
+                    document.getElementById('slots').textContent = `${slot1} ${slot2} ${slot3}`;
+                    
+                    spins++;
+                    if (spins >= maxSpins) {
+                        clearInterval(spinInterval);
+                        
+                        // Проверка выигрыша
+                        if (slot1 === slot2 && slot2 === slot3) {
+                            const winAmount = slot1 === '7️⃣' ? 500 : 200;
+                            balance += winAmount;
+                            balanceElement.textContent = balance;
+                            resultElement.textContent = `🎉 ДЖЕКПОТ! +${winAmount} ₿`;
+                            resultElement.style.color = '#00e676';
+                            gameState.minigame_stats.slots.wins++;
+                        } else if (slot1 === slot2 || slot2 === slot3 || slot1 === slot3) {
+                            balance += 50;
+                            balanceElement.textContent = balance;
+                            resultElement.textContent = `👍 Парочка! +50 ₿`;
+                            resultElement.style.color = '#4fc3f7';
+                        } else {
+                            resultElement.textContent = '😔 Повезет в следующий раз!';
+                            resultElement.style.color = '#ff9800';
+                        }
+                        
+                        // Добавляем кнопку завершения
+                        if (balance <= 0 || Math.random() > 0.7) {
+                            setTimeout(() => {
+                                const totalWin = balance - 100;
+                                if (totalWin > 0) {
+                                    gameState.balance += totalWin;
+                                    showNotification(`Вы выиграли ${totalWin} ₿ в слотах!`, 'success');
+                                }
+                                
+                                container.innerHTML += `
+                                    <div style="text-align:center; margin-top:20px;">
+                                        <p>Итог: ${totalWin >= 0 ? '+' : ''}${totalWin} ₿</p>
+                                        <button class="btn" onclick="showSection('minigames')">Завершить игру</button>
+                                    </div>
+                                `;
+                                
+                                updateUI();
+                                saveGame();
+                            }, 2000);
+                        }
+                    }
+                }, 100);
+            };
+        }
+
+        function startMemoryGame(container) {
+            // Простая реализация игры на память
+            const sequence = [];
+            for (let i = 0; i < 5; i++) {
+                sequence.push(Math.floor(Math.random() * 9) + 1);
+            }
+            
+            let currentStep = 0;
+            let showingSequence = true;
+            
+            container.innerHTML = `
+                <div class="header">
+                    <h2>🧠 Игра на память</h2>
+                    <p>Запомни последовательность чисел!</p>
+                    <div id="memory-display" style="font-size: 4rem; margin: 30px 0;"></div>
+                    <div id="memory-input" style="display:none;">
+                        <input type="number" id="memory-guess" min="1" max="9" style="width:100px;padding:10px;font-size:2rem;text-align:center;">
+                        <button class="btn" id="memory-submit">Подтвердить</button>
+                    </div>
+                    <div id="memory-result"></div>
+                </div>
+            `;
+            
+            const display = document.getElementById('memory-display');
+            const inputContainer = document.getElementById('memory-input');
+            const resultElement = document.getElementById('memory-result');
+            
+            // Показываем последовательность
+            function showSequence() {
+                if (currentStep < sequence.length) {
+                    display.textContent = sequence[currentStep];
+                    currentStep++;
+                    setTimeout(() => {
+                        display.textContent = '';
+                        setTimeout(showSequence, 500);
+                    }, 1000);
+                } else {
+                    showingSequence = false;
+                    currentStep = 0;
+                    display.textContent = '?';
+                    inputContainer.style.display = 'block';
+                    document.getElementById('memory-guess').focus();
+                }
+            }
+            
+            showSequence();
+            
+            document.getElementById('memory-submit').onclick = () => {
+                const guess = parseInt(document.getElementById('memory-guess').value);
+                
+                if (guess === sequence[currentStep]) {
+                    currentStep++;
+                    resultElement.textContent = `Правильно! (${currentStep}/${sequence.length})`;
+                    resultElement.style.color = '#00e676';
+                    
+                    if (currentStep >= sequence.length) {
+                        const reward = 1000;
+                        gameState.balance += reward;
+                        gameState.minigame_stats.memory.best = Math.max(gameState.minigame_stats.memory.best, sequence.length);
+                        
+                        container.innerHTML += `
+                            <div style="text-align:center; margin-top:20px;">
+                                <h3>🎉 Победа!</h3>
+                                <p>Вы запомнили всю последовательность!</p>
+                                <p>Выигрыш: ${reward} ₿</p>
+                                <button class="btn" onclick="showSection('minigames')">Назад к играм</button>
+                            </div>
+                        `;
+                        
+                        updateUI();
+                        saveGame();
+                        return;
+                    }
+                } else {
+                    const reward = currentStep * 200;
+                    gameState.balance += reward;
+                    
+                    container.innerHTML += `
+                        <div style="text-align:center; margin-top:20px;">
+                            <h3>😔 Игра окончена</h3>
+                            <p>Правильная последовательность: ${sequence.join(', ')}</p>
+                            <p>Ваш результат: ${currentStep} из ${sequence.length}</p>
+                            <p>Выигрыш: ${reward} ₿</p>
+                            <button class="btn" onclick="showSection('minigames')">Назад к играм</button>
+                        </div>
+                    `;
+                    
+                    updateUI();
+                    saveGame();
+                    return;
+                }
+                
+                document.getElementById('memory-guess').value = '';
+                document.getElementById('memory-guess').focus();
+            };
+        }
+
+        // ====== РЕФЕРАЛЬНАЯ СИСТЕМА ======
+        function generateReferralCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function copyReferralCode() {
+            const code = document.getElementById('referral-code').textContent;
+            navigator.clipboard.writeText(code)
+                .then(() => showNotification('Реферальный код скопирован!', 'success'))
+                .catch(() => {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = code;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    showNotification('Реферальный код скопирован!', 'success');
+                });
+        }
+
+        function updateReferralUI() {
+            document.getElementById('referral-code').textContent = gameState.referral_code;
+            document.getElementById('referrals-count').textContent = gameState.referrals.length;
+            document.getElementById('referral-earnings').textContent = formatNumber(gameState.referral_earnings) + ' ₿';
+        }
+
+        // ====== ПРОМОКОДЫ ======
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function activatePromocode() {
+            const input = document.getElementById('promocode-input');
+            const code = input.value.trim().toUpperCase();
+            
+            if (!code) {
+                showNotification('Введите промокод!', 'error');
+                return;
+            }
+            
+            if (gameState.used_promocodes.includes(code)) {
+                showNotification('Этот промокод уже использован!', 'error');
+                return;
+            }
+            
+            if (!promocodes[code]) {
+                showNotification('Неверный промокод!', 'error');
+                return;
+            }
+            
+            const reward = promocodes[code].reward;
+            gameState.balance += reward;
+            gameState.used_promocodes.push(code);
+            
+            input.value = '';
+            closeModal('promocode-modal');
+            
+            showNotification(`🎉 Промокод активирован! +${reward} ₿`, 'success');
+            updateUI();
+            saveGame();
+        }
+
+        // ====== ЕЖЕДНЕВНЫЙ БОНУС ======
+        function checkDailyBonus() {
+            const today = new Date().toDateString();
+            const lastBonus = localStorage.getItem('cryptoKombat_last_bonus');
+            
+            if (lastBonus !== today) {
+                const bonus = 1000 + (gameState.daily_streak || 0) * 100;
+                gameState.balance += bonus;
+                gameState.daily_streak = (gameState.daily_streak || 0) + 1;
+                localStorage.setItem('cryptoKombat_last_bonus', today);
+                
+                setTimeout(() => {
+                    showNotification(`🎁 Ежедневный бонус! +${bonus} ₿ (серия: ${gameState.daily_streak} дней)`, 'success');
+                    updateUI();
+                    saveGame();
+                }, 1000);
+            }
         }
 
         // ====== ПАССИВНЫЙ ДОХОД ======
@@ -449,9 +1533,27 @@
                 if (gameState.passive_per_sec > 0) {
                     gameState.balance += gameState.passive_per_sec / 10;
                     updateUI();
-                    saveGame();
                 }
             }, 100);
+        }
+
+        // ====== УВЕДОМЛЕНИЯ ======
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            if (type === 'error') {
+                notification.classList.add('error');
+            } else if (type === 'warning') {
+                notification.classList.add('warning');
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
 
         // ====== НАВИГАЦИЯ ======
@@ -464,40 +1566,59 @@
             // Показываем выбранную
             document.getElementById(sectionId + '-section').classList.add('active');
             
-            // Обновляем активную кнопку
+            // Обновляем активные кнопки навигации
             document.querySelectorAll('.nav-tabs button').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            // Если открыли улучшения - рендерим их
-            if (sectionId === 'upgrades') {
-                renderUpgrades();
+            // Скрываем мини-игру если открыли другую секцию
+            if (sectionId !== 'minigames') {
+                const gamesContainer = document.querySelector('.minigame-container');
+                const gameContainer = document.getElementById('minigame-container');
+                if (gamesContainer && gameContainer) {
+                    gamesContainer.style.display = 'grid';
+                    gameContainer.style.display = 'none';
+                }
+            }
+            
+            // Обновляем контент секций
+            if (sectionId === 'upgrades') renderUpgrades();
+            if (sectionId === 'nft') loadNFTInventory();
+            if (sectionId === 'pvp') {
+                document.getElementById('pvp-menu').style.display = 'block';
+                document.getElementById('battle-arena').style.display = 'none';
             }
         }
 
         // ====== ГЛОБАЛЬНЫЕ ФУНКЦИИ ======
         window.buyUpgrade = buyUpgrade;
+        window.buyNftBox = buyNftBox;
+        window.equipNft = equipNft;
         window.showSection = showSection;
+        window.resetClickLimit = resetClickLimit;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.activatePromocode = activatePromocode;
+        window.copyReferralCode = copyReferralCode;
+        window.startPvPBattle = startPvPBattle;
+        window.pvpClick = pvpClick;
+        window.startMinigame = startMinigame;
 
         // ====== ЗАПУСК ИГРЫ ======
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем сохранение
+        document.addEventListener('DOMContentLoaded', () => {
             loadGame();
-            
-            // Обновляем интерфейс
-            updateUI();
-            
-            // Запускаем пассивный доход
-            startPassiveIncome();
             
             // Автосохранение каждые 30 секунд
             setInterval(saveGame, 30000);
             
-            // Выводим отладочную информацию
-            console.log('Crypto Kombat запущен!');
-            console.log('Telegram Web App:', tg ? '✅ Да' : '❌ Нет');
-            console.log('Начальный баланс:', gameState.balance);
+            // Проверяем, если игра была запущена по реферальной ссылке
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if (refCode) {
+                // Здесь можно добавить логику обработки рефералов
+                console.log('Реферальный код:', refCode);
+            }
         });
     </script>
 </body>
