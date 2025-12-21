@@ -206,6 +206,27 @@
             height: 100%;
             background: linear-gradient(90deg, #00c853, #00e676);
             transition: width 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .limit-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0) 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .pvp-arena {
@@ -585,10 +606,6 @@
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <h3>БАЛАНС</h3>
-                    <div class="value" id="balance">0 ₿</div>
-                </div>
-                <div class="stat-card">
                     <h3>ЗА КЛИК</h3>
                     <div class="value" id="per-click">1 ₿</div>
                 </div>
@@ -599,6 +616,10 @@
                 <div class="stat-card">
                     <h3>АВТО-ДОХОД</h3>
                     <div class="value" id="passive-income">0 ₿/сек</div>
+                </div>
+                <div class="stat-card">
+                    <h3>БАЛАНС</h3>
+                    <div class="value" id="balance">0 ₿</div>
                 </div>
             </div>
 
@@ -809,7 +830,7 @@
             <div class="upgrade-card">
                 <h3>Ваш реферальный код:</h3>
                 <div style="font-size: 2rem; letter-spacing: 3px; background: rgba(79, 195, 247, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px dashed #4fc3f7;">
-                    <span id="referral-code">CRYPTO123</span>
+                    <span id="referral-code">Загрузка...</span>
                 </div>
                 <button class="btn" onclick="copyReferralCode()">Копировать код</button>
                 <button class="btn btn-warning" onclick="openModal('referral-input-modal')" style="margin-top: 10px;">
@@ -854,6 +875,16 @@
             tg.setHeaderColor('#0a1929');
         }
 
+        // ====== ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ РЕФЕРАЛЬНОГО КОДА ======
+        function generateNewReferralCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
         // ====== СОСТОЯНИЕ ИГРЫ ======
         let gameState = {
             balance: 1,
@@ -865,7 +896,7 @@
             
             click_limit: 50,
             click_limit_used: 0,
-            click_limit_reset: Date.now() + 120000,
+            last_reset_time: Date.now(),
             
             upgrades: {
                 basic_rig: 0,
@@ -880,7 +911,7 @@
             nfts: [],
             nft_boost: 1,
             
-            referral_code: generateReferralCode(),
+            referral_code: "",
             referrals: [],
             referral_earnings: 0,
             used_referral_code: null,
@@ -911,10 +942,7 @@
             version: "1.0.0"
         };
 
-        // ====== СИСТЕМА АВТОСОХРАНЕНИЯ В JSON ======
-        const API_URL = window.location.origin; // Используем текущий домен
-        
-        // Генерируем ID пользователя
+        // ====== СИСТЕМА АВТОСОХРАНЕНИЯ ======
         function getUserId() {
             if (tg?.initDataUnsafe?.user?.id) {
                 return 'tg_' + tg.initDataUnsafe.user.id;
@@ -928,40 +956,10 @@
             return userId;
         }
 
-        // Сохраняем игру
         async function saveGame() {
             try {
                 const userId = getUserId();
-                
-                // Сохраняем локально как запасной вариант
                 localStorage.setItem('cryptoKombat_save_' + userId, JSON.stringify(gameState));
-                
-                // Отправляем на сервер
-                const saveData = {
-                    userId: userId,
-                    gameData: gameState,
-                    timestamp: Date.now()
-                };
-                
-                // Пробуем отправить на сервер
-                try {
-                    const response = await fetch('/api/save', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(saveData)
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error('Server error');
-                    }
-                    
-                    console.log('Game saved to server');
-                } catch (serverError) {
-                    console.log('Server save failed, using local storage');
-                }
-                
                 return true;
             } catch (error) {
                 console.error('Save error:', error);
@@ -969,34 +967,19 @@
             }
         }
 
-        // Загружаем игру
         async function loadGame() {
             try {
                 const userId = getUserId();
-                
-                // Пробуем загрузить с сервера
-                try {
-                    const response = await fetch(`/api/load?userId=${encodeURIComponent(userId)}`);
-                    
-                    if (response.ok) {
-                        const serverData = await response.json();
-                        
-                        // Проверяем, что данные корректны
-                        if (serverData && serverData.balance !== undefined) {
-                            Object.assign(gameState, serverData);
-                            console.log('Game loaded from server');
-                            return true;
-                        }
-                    }
-                } catch (serverError) {
-                    console.log('Server load failed, trying local storage');
-                }
-                
-                // Пробуем загрузить из локального хранилища
                 const localSave = localStorage.getItem('cryptoKombat_save_' + userId);
                 if (localSave) {
                     const loadedData = JSON.parse(localSave);
                     Object.assign(gameState, loadedData);
+                    
+                    if (!gameState.referral_code || gameState.referral_code === "CRYPTO123") {
+                        gameState.referral_code = generateNewReferralCode();
+                        await saveGame();
+                    }
+                    
                     console.log('Game loaded from local storage');
                     return true;
                 }
@@ -1010,17 +993,28 @@
 
         // ====== ОСНОВНЫЕ ФУНКЦИИ ======
         async function initGame() {
-            // Загружаем игру
             const loaded = await loadGame();
-            if (loaded) {
-                showNotification('Прогресс загружен!', 'success');
-            } else {
+            
+            if (!loaded) {
+                gameState.referral_code = generateNewReferralCode();
+                gameState.last_reset_time = Date.now();
+                await saveGame();
                 showNotification('Новая игра начата!', 'success');
+            } else {
+                const now = Date.now();
+                const timeSinceLastReset = now - gameState.last_reset_time;
+                
+                if (timeSinceLastReset >= 120000) {
+                    gameState.click_limit_used = 0;
+                    gameState.last_reset_time = now;
+                    showNotification('Клики восстановлены за время отсутствия!', 'success');
+                }
+                
+                showNotification('Прогресс загружен!', 'success');
             }
             
             updateUI();
             renderUpgrades();
-            loadNFTInventory();
             updateReferralUI();
             updateClanUI();
             startPassiveIncome();
@@ -1028,7 +1022,6 @@
             
             checkDailyBonus();
             
-            // Автосохранение каждые 30 секунд
             setInterval(async () => {
                 await saveGame();
             }, 30000);
@@ -1053,7 +1046,7 @@
         // ====== СИСТЕМА КЛИКОВ ======
         document.getElementById('click-btn').addEventListener('click', async function() {
             if (gameState.click_limit_used >= gameState.click_limit) {
-                showNotification('Лимит кликов исчерпан!', 'error');
+                showNotification('Лимит кликов исчерпан! Ждите восстановления (2 минуты)', 'error');
                 return;
             }
             
@@ -1090,10 +1083,11 @@
         function updateClickLimitUI() {
             const used = gameState.click_limit_used;
             const total = gameState.click_limit;
-            const percentage = Math.max(0, ((total - used) / total) * 100);
+            const available = Math.max(0, total - used);
+            const percentage = (available / total) * 100;
             
             document.getElementById('limit-fill').style.width = percentage + '%';
-            document.getElementById('current-clicks').textContent = total - used;
+            document.getElementById('current-clicks').textContent = available;
             document.getElementById('max-clicks').textContent = total;
             
             const resetBtn = document.getElementById('reset-btn');
@@ -1107,20 +1101,37 @@
         }
 
         function startClickLimitTimer() {
-            setInterval(() => {
+            console.log('Таймер восстановления кликов запущен');
+            
+            setInterval(async () => {
                 const now = Date.now();
-                if (now >= gameState.click_limit_reset) {
+                const timeSinceLastReset = now - gameState.last_reset_time;
+                
+                if (timeSinceLastReset >= 120000) {
+                    console.log('Восстанавливаем клики! Прошло времени: ' + timeSinceLastReset + 'мс');
+                    
                     gameState.click_limit_used = 0;
-                    gameState.click_limit_reset = now + 120000;
+                    gameState.last_reset_time = now;
+                    
                     updateClickLimitUI();
+                    updateUI();
+                    await saveGame();
+                    
+                    showNotification('Лимит кликов восстановлен!', 'success');
+                    
+                    if (tg?.HapticFeedback) {
+                        tg.HapticFeedback.impactOccurred('light');
+                    }
                 }
                 
-                const timeLeft = Math.max(0, gameState.click_limit_reset - now);
+                const timeUntilNextReset = 120000 - timeSinceLastReset;
+                const timeLeft = Math.max(0, timeUntilNextReset);
                 const minutes = Math.floor(timeLeft / 60000);
                 const seconds = Math.floor((timeLeft % 60000) / 1000);
+                
                 document.getElementById('reset-time').textContent = 
                     'Восстановление: ' + minutes + ':' + seconds.toString().padStart(2, '0');
-                    
+                
                 gameState.statistics.play_time++;
                     
             }, 1000);
@@ -1141,11 +1152,17 @@
             gameState.balance -= cost;
             gameState.statistics.total_spent += cost;
             gameState.click_limit_used = 0;
-            gameState.click_limit_reset = Date.now() + 120000;
+            gameState.last_reset_time = Date.now();
+            
             updateClickLimitUI();
             updateUI();
             await saveGame();
+            
             showNotification('Лимит кликов восстановлен!', 'success');
+            
+            if (tg?.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('heavy');
+            }
         }
 
         // ====== УЛУЧШЕНИЯ ======
@@ -1220,345 +1237,36 @@
             });
         }
 
-        // ====== НОВЫЕ МИНИ-ИГРЫ ======
-        function startBubbleGame() {
-            const container = document.getElementById('minigame-container');
+        // ====== МИНИ-ИГРЫ ======
+        function startClickerGame(container) {
+            let clicks = 0;
+            let timeLeft = 10;
+            let gameActive = true;
+            
             container.innerHTML = `
                 <div class="header">
-                    <h2>Лопай крипту</h2>
-                    <p>Кликай на крипто-пузыри, пока не закончится время!</p>
-                    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
-                        <div>
-                            <div style="font-size: 2rem; color: #ff9800;" id="bubble-timer">30</div>
-                            <div>Время</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 2rem; color: #00e676;" id="bubble-score">0</div>
-                            <div>Счет</div>
-                        </div>
+                    <h2>Кликай</h2>
+                    <p>Кликай как можно быстрее за 10 секунд!</p>
+                    <div id="clicker-timer" style="font-size: 2rem; color: #ff9800;">${timeLeft}</div>
+                    <div id="clicker-count" style="font-size: 3rem; color: #00e676; margin: 20px 0;">0</div>
+                    <button class="click-btn" id="clicker-btn">КЛИКАЙ!</button>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-warning" onclick="backToMinigames()">← Назад к играм</button>
                     </div>
-                    <div class="game-field" id="bubble-field"></div>
-                    <button class="btn btn-warning" onclick="backToMinigames()" style="margin-top: 20px;">
-                        Назад к играм
-                    </button>
                 </div>
             `;
             
-            document.querySelector('.minigame-container').style.display = 'none';
-            container.style.display = 'block';
+            const timerElement = container.querySelector('#clicker-timer');
+            const countElement = container.querySelector('#clicker-count');
+            const button = container.querySelector('#clicker-btn');
             
-            let score = 0;
-            let timeLeft = 30;
-            let gameActive = true;
-            const bubbleField = document.getElementById('bubble-field');
-            const scoreElement = document.getElementById('bubble-score');
-            const timerElement = document.getElementById('bubble-timer');
-            
-            const cryptoTypes = [
-                { class: 'bubble-btc', value: 10, symbol: '₿' },
-                { class: 'bubble-eth', value: 15, symbol: 'Ξ' },
-                { class: 'bubble-doge', value: 5, symbol: 'Ð' },
-                { class: 'bubble-sol', value: 20, symbol: '◎' },
-                { class: 'bubble-bonus', value: 50, symbol: '★' }
-            ];
-            
-            function createBubble() {
+            button.onclick = () => {
                 if (!gameActive) return;
+                clicks++;
+                countElement.textContent = clicks;
                 
-                const crypto = cryptoTypes[Math.floor(Math.random() * cryptoTypes.length)];
-                const bubble = document.createElement('div');
-                bubble.className = 'crypto-bubble ' + crypto.class;
-                bubble.textContent = crypto.symbol;
-                bubble.dataset.value = crypto.value;
-                
-                const size = 40 + Math.random() * 30;
-                bubble.style.width = size + 'px';
-                bubble.style.height = size + 'px';
-                
-                const x = Math.random() * (bubbleField.clientWidth - size);
-                const y = Math.random() * (bubbleField.clientHeight - size);
-                bubble.style.left = x + 'px';
-                bubble.style.top = y + 'px';
-                
-                bubble.onclick = function() {
-                    if (!gameActive) return;
-                    
-                    score += parseInt(this.dataset.value);
-                    scoreElement.textContent = score;
-                    
-                    this.style.transform = 'scale(1.5)';
-                    this.style.opacity = '0';
-                    
-                    setTimeout(() => bubbleField.removeChild(this), 200);
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                };
-                
-                bubbleField.appendChild(bubble);
-                
-                setTimeout(() => {
-                    if (bubbleField.contains(bubble)) {
-                        bubbleField.removeChild(bubble);
-                    }
-                }, 2000 + Math.random() * 2000);
-            }
-            
-            const bubbleInterval = setInterval(createBubble, 500);
-            
-            const timer = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    gameActive = false;
-                    clearInterval(bubbleInterval);
-                    clearInterval(timer);
-                    
-                    const reward = Math.min(score, 200);
-                    gameState.balance += reward;
-                    gameState.statistics.total_earned += reward;
-                    
-                    if (score > gameState.minigame_stats.bubble.best) {
-                        gameState.minigame_stats.bubble.best = score;
-                    }
-                    
-                    container.innerHTML += `
-                        <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                            <h3>Игра окончена!</h3>
-                            <p>Ваш счет: ${score}</p>
-                            <p>Выигрыш: ${reward} ₿</p>
-                            <p>Рекорд: ${gameState.minigame_stats.bubble.best}</p>
-                            <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
-                        </div>
-                    `;
-                    
-                    updateUI();
-                    saveGame();
-                }
-            }, 1000);
-            
-            for (let i = 0; i < 5; i++) {
-                setTimeout(createBubble, i * 100);
-            }
-        }
-
-        function startMemoryGame() {
-            const container = document.getElementById('minigame-container');
-            container.innerHTML = `
-                <div class="header">
-                    <h2>Игра на память</h2>
-                    <p>Найди все пары карточек!</p>
-                    <div style="display: flex; justify-content: space-around; margin: 20px 0;">
-                        <div>
-                            <div style="font-size: 2rem; color: #ff9800;" id="memory-moves">0</div>
-                            <div>Ходы</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 2rem; color: #00e676;" id="memory-pairs">0/8</div>
-                            <div>Пары</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 2rem; color: #4fc3f7;" id="memory-time">60</div>
-                            <div>Время</div>
-                        </div>
-                    </div>
-                    <div class="memory-grid" id="memory-grid"></div>
-                    <button class="btn btn-warning" onclick="backToMinigames()" style="margin-top: 20px;">
-                        Назад к играм
-                    </button>
-                </div>
-            `;
-            
-            document.querySelector('.minigame-container').style.display = 'none';
-            container.style.display = 'block';
-            
-            const symbols = ['₿', 'Ξ', 'Ð', '◎', '★', '⚡', '💰', '🎯'];
-            let cards = [...symbols, ...symbols];
-            let flippedCards = [];
-            let matchedPairs = 0;
-            let moves = 0;
-            let timeLeft = 60;
-            let gameActive = true;
-            
-            cards = cards.sort(() => Math.random() - 0.5);
-            
-            const grid = document.getElementById('memory-grid');
-            const movesElement = document.getElementById('memory-moves');
-            const pairsElement = document.getElementById('memory-pairs');
-            const timeElement = document.getElementById('memory-time');
-            
-            cards.forEach((symbol, index) => {
-                const card = document.createElement('div');
-                card.className = 'memory-card';
-                card.dataset.index = index;
-                card.dataset.symbol = symbol;
-                card.innerHTML = '?';
-                
-                card.onclick = function() {
-                    if (!gameActive || flippedCards.length >= 2 || 
-                        this.classList.contains('flipped') || 
-                        this.classList.contains('matched')) return;
-                    
-                    this.classList.add('flipped');
-                    this.textContent = symbol;
-                    flippedCards.push(this);
-                    
-                    if (flippedCards.length === 2) {
-                        moves++;
-                        movesElement.textContent = moves;
-                        
-                        const [card1, card2] = flippedCards;
-                        if (card1.dataset.symbol === card2.dataset.symbol) {
-                            setTimeout(() => {
-                                card1.classList.add('matched');
-                                card2.classList.add('matched');
-                                matchedPairs++;
-                                pairsElement.textContent = matchedPairs + '/8';
-                                
-                                if (matchedPairs === 8) {
-                                    endMemoryGame(true);
-                                }
-                            }, 500);
-                        } else {
-                            setTimeout(() => {
-                                card1.classList.remove('flipped');
-                                card2.classList.remove('flipped');
-                                card1.textContent = '?';
-                                card2.textContent = '?';
-                            }, 1000);
-                        }
-                        
-                        flippedCards = [];
-                    }
-                };
-                
-                grid.appendChild(card);
-            });
-            
-            const timer = setInterval(() => {
-                if (!gameActive) {
-                    clearInterval(timer);
-                    return;
-                }
-                
-                timeLeft--;
-                timeElement.textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    endMemoryGame(false);
-                }
-            }, 1000);
-            
-            function endMemoryGame(win) {
-                gameActive = false;
-                clearInterval(timer);
-                
-                const baseReward = win ? 250 : Math.floor(matchedPairs * 20);
-                const timeBonus = win ? Math.floor(timeLeft * 2) : 0;
-                const movesBonus = win ? Math.max(0, 50 - moves * 2) : 0;
-                const totalReward = Math.min(baseReward + timeBonus + movesBonus, 250);
-                
-                gameState.balance += totalReward;
-                gameState.statistics.total_earned += totalReward;
-                
-                if (win && moves < gameState.minigame_stats.memory.best || gameState.minigame_stats.memory.best === 0) {
-                    gameState.minigame_stats.memory.best = moves;
-                }
-                
-                container.innerHTML += `
-                    <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                        <h3>${win ? 'Победа!' : 'Время вышло!'}</h3>
-                        <p>Найдено пар: ${matchedPairs}/8</p>
-                        <p>Сделано ходов: ${moves}</p>
-                        <p>Время: ${60 - timeLeft} сек</p>
-                        <p>Выигрыш: ${totalReward} ₿</p>
-                        ${win ? '<p>Рекорд: ' + gameState.minigame_stats.memory.best + ' ходов</p>' : ''}
-                        <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
-                    </div>
-                `;
-                
-                updateUI();
-                saveGame();
-            }
-        }
-
-        function startTypingGame() {
-            const container = document.getElementById('minigame-container');
-            container.innerHTML = `
-                <div class="header">
-                    <h2>Крипто-печать</h2>
-                    <p>Напечатай крипто-слово как можно быстрее!</p>
-                    <div class="typing-game">
-                        <div class="typing-word" id="typing-word">BITCOIN</div>
-                        <input type="text" class="typing-input" id="typing-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                        <div class="typing-stats">
-                            <div>
-                                <div style="font-size: 1.5rem; color: #ff9800;" id="typing-time">60</div>
-                                <div>Время</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 1.5rem; color: #00e676;" id="typing-score">0</div>
-                                <div>Слов</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 1.5rem; color: #4fc3f7;" id="typing-wpm">0</div>
-                                <div>WPM</div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-warning" onclick="backToMinigames()" style="margin-top: 20px;">
-                        Назад к играм
-                    </button>
-                </div>
-            `;
-            
-            document.querySelector('.minigame-container').style.display = 'none';
-            container.style.display = 'block';
-            
-            const cryptoWords = [
-                'BITCOIN', 'ETHEREUM', 'SOLANA', 'CARDANO', 'POLKADOT',
-                'AVALANCHE', 'POLYGON', 'CHAINLINK', 'UNISWAP', 'SHIBAINU',
-                'DOGECOIN', 'LITECOIN', 'RIPPLE', 'MONERO', 'STELLAR'
-            ];
-            
-            let score = 0;
-            let timeLeft = 60;
-            let gameActive = true;
-            let startTime = Date.now();
-            let currentWord = '';
-            
-            const wordElement = document.getElementById('typing-word');
-            const inputElement = document.getElementById('typing-input');
-            const scoreElement = document.getElementById('typing-score');
-            const timeElement = document.getElementById('typing-time');
-            const wpmElement = document.getElementById('typing-wpm');
-            
-            function newWord() {
-                currentWord = cryptoWords[Math.floor(Math.random() * cryptoWords.length)];
-                wordElement.textContent = currentWord;
-                inputElement.value = '';
-                inputElement.focus();
-            }
-            
-            inputElement.oninput = function() {
-                if (!gameActive) return;
-                
-                if (this.value.toUpperCase() === currentWord) {
-                    score++;
-                    scoreElement.textContent = score;
-                    
-                    const timeTaken = (Date.now() - startTime) / 1000 / 60;
-                    const wpm = Math.round((currentWord.length / 5) / timeTaken);
-                    wpmElement.textContent = wpm;
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                    
-                    startTime = Date.now();
-                    newWord();
+                if (tg?.HapticFeedback) {
+                    tg.HapticFeedback.impactOccurred('light');
                 }
             };
             
@@ -1569,26 +1277,26 @@
                 }
                 
                 timeLeft--;
-                timeElement.textContent = timeLeft;
+                timerElement.textContent = timeLeft;
                 
                 if (timeLeft <= 0) {
                     gameActive = false;
                     clearInterval(timer);
+                    button.disabled = true;
                     
-                    const reward = Math.min(score * 20, 300);
+                    const reward = Math.min(clicks * 1, 150);
                     gameState.balance += reward;
                     gameState.statistics.total_earned += reward;
                     
-                    if (score > gameState.minigame_stats.typing.best) {
-                        gameState.minigame_stats.typing.best = score;
+                    if (clicks > gameState.minigame_stats.clicker.best) {
+                        gameState.minigame_stats.clicker.best = clicks;
                     }
                     
                     container.innerHTML += `
                         <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
                             <h3>Игра окончена!</h3>
-                            <p>Напечатано слов: ${score}</p>
+                            <p>Кликов: ${clicks}</p>
                             <p>Выигрыш: ${reward} ₿</p>
-                            <p>Рекорд: ${gameState.minigame_stats.typing.best} слов</p>
                             <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
                         </div>
                     `;
@@ -1597,20 +1305,19 @@
                     saveGame();
                 }
             }, 1000);
-            
-            newWord();
         }
 
+        // ====== ИСПРАВЛЕННАЯ ИГРА "КРИПТО-РАНЕР" ======
         function startRunnerGame() {
             const container = document.getElementById('minigame-container');
             container.innerHTML = `
                 <div class="header">
                     <h2>Крипто-ранер</h2>
-                    <p>Прыгай (кликай) и собирай монеты!</p>
+                    <p>Прыгай (кликай) и собирай монеты! Избегай препятствий!</p>
                     <div style="display: flex; justify-content: space-around; margin: 20px 0;">
                         <div>
-                            <div style="font-size: 2rem; color: #ff9800;" id="runner-distance">0</div>
-                            <div>Дистанция</div>
+                            <div style="font-size: 2rem; color: #ff9800;" id="runner-time">30</div>
+                            <div>Время</div>
                         </div>
                         <div>
                             <div style="font-size: 2rem; color: #00e676;" id="runner-coins">0</div>
@@ -1624,7 +1331,7 @@
                     <div class="crypto-runner" id="runner-game">
                         <div class="runner-character" id="runner-character"></div>
                     </div>
-                    <p style="text-align:center; margin-top:10px;">Кликай в любом месте чтобы прыгнуть!</p>
+                    <p style="text-align:center; margin-top:10px; color:#4fc3f7;">Кликай в любом месте чтобы прыгнуть!</p>
                     <button class="btn btn-warning" onclick="backToMinigames()" style="margin-top: 20px;">
                         Назад к играм
                     </button>
@@ -1636,19 +1343,22 @@
             
             const gameContainer = document.getElementById('runner-game');
             const character = document.getElementById('runner-character');
-            const distanceElement = document.getElementById('runner-distance');
+            const timeElement = document.getElementById('runner-time');
             const coinsElement = document.getElementById('runner-coins');
             const speedElement = document.getElementById('runner-speed');
             
-            let distance = 0;
             let coins = 0;
             let speed = 1.0;
+            let timeLeft = 30;
             let isJumping = false;
             let gameActive = true;
             let obstacles = [];
             let coinItems = [];
             let gameInterval;
+            let obstacleTimer;
+            let coinTimer;
             
+            // Клик для прыжка
             document.addEventListener('click', jump);
             
             function jump() {
@@ -1670,6 +1380,8 @@
             }
             
             function createObstacle() {
+                if (!gameActive) return;
+                
                 const obstacle = document.createElement('div');
                 obstacle.className = 'runner-obstacle';
                 obstacle.style.right = '-50px';
@@ -1678,7 +1390,7 @@
             }
             
             function createCoin() {
-                if (Math.random() > 0.3) return;
+                if (!gameActive) return;
                 
                 const coin = document.createElement('div');
                 coin.className = 'runner-coin';
@@ -1691,19 +1403,25 @@
             function updateGame() {
                 if (!gameActive) return;
                 
-                distance += speed;
-                distanceElement.textContent = Math.floor(distance);
-                
-                if (distance % 100 === 0) {
-                    speed += 0.1;
-                    speedElement.textContent = speed.toFixed(1) + 'x';
-                }
-                
                 obstacles.forEach((obstacle, index) => {
                     const currentRight = parseFloat(obstacle.style.right);
-                    obstacle.style.right = (currentRight + speed * 5) + 'px';
+                    obstacle.style.right = (currentRight + speed * 3) + 'px';
                     
-                    if (currentRight > 50 && currentRight < 110 && !isJumping) {
+                    // Проверка столкновения
+                    const charLeft = 50;
+                    const charWidth = 60;
+                    const charBottom = parseInt(character.style.bottom);
+                    const charHeight = 80;
+                    
+                    const obstacleLeft = gameContainer.clientWidth - currentRight;
+                    const obstacleWidth = 40;
+                    const obstacleBottom = 20;
+                    const obstacleHeight = 40;
+                    
+                    // Проверяем пересечение
+                    if (obstacleLeft < charLeft + charWidth &&
+                        obstacleLeft + obstacleWidth > charLeft &&
+                        !isJumping) {
                         endRunnerGame();
                     }
                     
@@ -1715,13 +1433,23 @@
                 
                 coinItems.forEach((coin, index) => {
                     const currentRight = parseFloat(coin.style.right);
-                    coin.style.right = (currentRight + speed * 5) + 'px';
+                    coin.style.right = (currentRight + speed * 3) + 'px';
                     
+                    const charLeft = 50;
+                    const charWidth = 60;
                     const charBottom = parseInt(character.style.bottom);
-                    const coinBottom = parseInt(coin.style.bottom);
+                    const charHeight = 80;
                     
-                    if (currentRight > 50 && currentRight < 110 && 
-                        Math.abs(charBottom - coinBottom) < 40) {
+                    const coinLeft = gameContainer.clientWidth - currentRight;
+                    const coinWidth = 30;
+                    const coinBottom = parseInt(coin.style.bottom);
+                    const coinHeight = 30;
+                    
+                    // Сбор монет
+                    if (coinLeft < charLeft + charWidth &&
+                        coinLeft + coinWidth > charLeft &&
+                        coinBottom < charBottom + charHeight &&
+                        coinBottom + coinHeight > charBottom) {
                         coins++;
                         coinsElement.textContent = coins;
                         gameContainer.removeChild(coin);
@@ -1738,34 +1466,39 @@
                     }
                 });
                 
-                if (Math.random() > 0.98) createObstacle();
-                if (Math.random() > 0.95) createCoin();
+                // Увеличение скорости
+                if (Math.random() > 0.995) {
+                    speed += 0.1;
+                    speedElement.textContent = speed.toFixed(1) + 'x';
+                }
             }
             
             function endRunnerGame() {
                 gameActive = false;
                 clearInterval(gameInterval);
+                clearInterval(obstacleTimer);
+                clearInterval(coinTimer);
                 document.removeEventListener('click', jump);
                 
-                const distanceReward = Math.floor(distance / 10);
                 const coinsReward = coins * 5;
-                const totalReward = Math.min(distanceReward + coinsReward, 400);
+                const timeBonus = Math.floor(timeLeft * 2);
+                const totalReward = Math.min(coinsReward + timeBonus, 400);
                 
                 gameState.balance += totalReward;
                 gameState.statistics.total_earned += totalReward;
                 
-                if (distance > gameState.minigame_stats.runner.best) {
-                    gameState.minigame_stats.runner.best = Math.floor(distance);
+                if (coins > gameState.minigame_stats.runner.best) {
+                    gameState.minigame_stats.runner.best = coins;
                 }
                 
                 container.innerHTML += `
                     <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
-                        <h3>Конец игры!</h3>
-                        <p>Пройдено дистанции: ${Math.floor(distance)}</p>
+                        <h3>Игра окончена!</h3>
                         <p>Собрано монет: ${coins}</p>
+                        <p>Оставшееся время: ${timeLeft} сек</p>
                         <p>Максимальная скорость: ${speed.toFixed(1)}x</p>
                         <p>Выигрыш: ${totalReward} ₿</p>
-                        <p>Рекорд: ${gameState.minigame_stats.runner.best}</p>
+                        <p>Рекорд: ${gameState.minigame_stats.runner.best} монет</p>
                         <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
                     </div>
                 `;
@@ -1774,11 +1507,73 @@
                 saveGame();
             }
             
+            // Таймер игры
+            const timeInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(timeInterval);
+                    return;
+                }
+                
+                timeLeft--;
+                timeElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    gameActive = false;
+                    clearInterval(timeInterval);
+                    
+                    const coinsReward = coins * 5;
+                    const totalReward = Math.min(coinsReward, 400);
+                    
+                    gameState.balance += totalReward;
+                    gameState.statistics.total_earned += totalReward;
+                    
+                    if (coins > gameState.minigame_stats.runner.best) {
+                        gameState.minigame_stats.runner.best = coins;
+                    }
+                    
+                    container.innerHTML += `
+                        <div style="text-align:center; margin-top:20px; padding:20px; background:rgba(255,255,255,0.05); border-radius:15px;">
+                            <h3>Время вышло!</h3>
+                            <p>Собрано монет: ${coins}</p>
+                            <p>Максимальная скорость: ${speed.toFixed(1)}x</p>
+                            <p>Выигрыш: ${totalReward} ₿</p>
+                            <p>Рекорд: ${gameState.minigame_stats.runner.best} монет</p>
+                            <button class="btn" onclick="backToMinigames()">Вернуться к играм</button>
+                        </div>
+                    `;
+                    
+                    updateUI();
+                    saveGame();
+                }
+            }, 1000);
+            
+            // Создаем препятствия каждые 1.5 секунды
+            obstacleTimer = setInterval(() => {
+                if (!gameActive) return;
+                createObstacle();
+            }, 1500);
+            
+            // Создаем монеты каждые 1 секунду
+            coinTimer = setInterval(() => {
+                if (!gameActive) return;
+                createCoin();
+            }, 1000);
+            
+            // Игровой цикл
             gameInterval = setInterval(updateGame, 50);
-            createObstacle();
+            
+            // Первое препятствие через 2 секунды
+            setTimeout(() => {
+                if (gameActive) createObstacle();
+            }, 2000);
+            
+            // Первая монета через 1 секунду
+            setTimeout(() => {
+                if (gameActive) createCoin();
+            }, 1000);
         }
 
-        async function startMinigame(type) {
+        function startMinigame(type) {
             const container = document.getElementById('minigame-container');
             
             document.querySelector('.minigame-container').style.display = 'none';
@@ -1793,23 +1588,19 @@
                 case 'clicker':
                     startClickerGame(container);
                     break;
-                case 'bubble':
-                    startBubbleGame();
-                    break;
-                case 'memory':
-                    startMemoryGame();
-                    break;
-                case 'typing':
-                    startTypingGame();
-                    break;
                 case 'runner':
                     startRunnerGame();
                     break;
-                case 'number':
-                    startNumberGame(container);
-                    break;
                 default:
-                    backToMinigames();
+                    container.innerHTML = `
+                        <div class="header">
+                            <h2>Скоро будет!</h2>
+                            <p>Эта мини-игра еще в разработке.</p>
+                            <button class="btn btn-warning" onclick="backToMinigames()" style="margin-top: 20px;">
+                                Назад к играм
+                            </button>
+                        </div>
+                    `;
             }
         }
 
@@ -1824,16 +1615,19 @@
             }
         }
 
-        // ====== ОСТАЛЬНЫЕ ФУНКЦИИ ======
-        function generateReferralCode() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 8; i++) {
-                code += chars.charAt(Math.floor(Math.random() * chars.length));
+        // ====== РЕФЕРАЛЬНАЯ СИСТЕМА ======
+        function updateReferralUI() {
+            if (!gameState.referral_code || gameState.referral_code === "CRYPTO123") {
+                gameState.referral_code = generateNewReferralCode();
+                saveGame();
             }
-            return code;
+            
+            document.getElementById('referral-code').textContent = gameState.referral_code;
+            document.getElementById('referrals-count').textContent = gameState.referrals.length;
+            document.getElementById('referral-earnings').textContent = formatNumber(gameState.referral_earnings) + ' ₿';
         }
 
+        // ====== ОСТАЛЬНЫЕ ФУНКЦИИ ======
         function showNotification(message, type = 'success') {
             const notification = document.getElementById('notification');
             notification.textContent = message;
@@ -1870,8 +1664,6 @@
             }
             
             if (sectionId === 'upgrades') renderUpgrades();
-            if (sectionId === 'nft') loadNFTInventory();
-            if (sectionId === 'clans') updateClanUI();
             if (sectionId === 'referral') updateReferralUI();
         }
 
@@ -1952,6 +1744,16 @@
             }
         }
 
+        function loadNFTInventory() {
+            document.getElementById('nft-inventory').innerHTML = 
+                '<p style="text-align:center;opacity:0.7;">У вас пока нет NFT</p>';
+        }
+
+        function updateClanUI() {
+            document.getElementById('clan-info').style.display = 'none';
+            document.getElementById('no-clan').style.display = 'block';
+        }
+
         // ====== ГЛОБАЛЬНЫЕ ФУНКЦИИ ======
         window.buyUpgrade = buyUpgrade;
         window.showSection = showSection;
@@ -1961,6 +1763,34 @@
         window.activatePromocode = activatePromocode;
         window.startMinigame = startMinigame;
         window.backToMinigames = backToMinigames;
+        window.copyReferralCode = function() {
+            navigator.clipboard.writeText(gameState.referral_code);
+            showNotification('Реферальный код скопирован!', 'success');
+        };
+        window.useReferralCode = function() {
+            showNotification('Функция в разработке', 'warning');
+            closeModal('referral-input-modal');
+        };
+        window.createClan = function() {
+            showNotification('Функция в разработке', 'warning');
+            closeModal('create-clan-modal');
+        };
+        window.joinClan = function() {
+            showNotification('Функция в разработке', 'warning');
+            closeModal('join-clan-modal');
+        };
+        window.leaveClan = function() {
+            showNotification('Функция в разработке', 'warning');
+        };
+        window.buyNftBox = function(type) {
+            showNotification('Функция NFT в разработке', 'warning');
+        };
+        window.startPvPBattle = function(type) {
+            showNotification('Функция PvP в разработке', 'warning');
+        };
+        window.pvpClick = function() {
+            showNotification('Функция PvP в разработке', 'warning');
+        };
 
         // ====== ЗАПУСК ИГРЫ ======
         document.addEventListener('DOMContentLoaded', async () => {
