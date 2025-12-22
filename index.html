@@ -104,7 +104,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .stat-card, .upgrade-card, .nft-card, .game-card, .clan-card {
+        .stat-card, .upgrade-card, .nft-card, .game-card {
             background: rgba(255, 255, 255, 0.08);
             padding: 15px;
             border-radius: 15px;
@@ -283,24 +283,6 @@
         .rare { background: rgba(33, 150, 243, 0.3); color: #2196f3; }
         .epic { background: rgba(156, 39, 176, 0.3); color: #9c27b0; }
         .legendary { background: rgba(255, 215, 0, 0.3); color: #ffd700; }
-
-        .clan-members {
-            margin-top: 15px;
-        }
-
-        .clan-member {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-
-        .clan-role {
-            color: #4fc3f7;
-            font-weight: bold;
-        }
 
         .modal {
             display: none;
@@ -553,30 +535,6 @@
         </div>
     </div>
 
-    <div class="modal" id="create-clan-modal">
-        <div class="modal-content">
-            <h3>Создать клан</h3>
-            <input type="text" id="clan-name-input" placeholder="Название клана" class="modal-input">
-            <input type="text" id="clan-tag-input" placeholder="Тег клана (3-5 символов)" class="modal-input">
-            <textarea id="clan-description-input" placeholder="Описание клана" class="modal-input" rows="3"></textarea>
-            <div style="display:flex;gap:10px;">
-                <button class="btn" onclick="createClan()">Создать (1000 ₿)</button>
-                <button class="btn btn-danger" onclick="closeModal('create-clan-modal')">Отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="join-clan-modal">
-        <div class="modal-content">
-            <h3>Вступить в клан</h3>
-            <input type="text" id="join-clan-input" placeholder="Введите тег клана" class="modal-input">
-            <div style="display:flex;gap:10px;">
-                <button class="btn" onclick="joinClan()">Вступить</button>
-                <button class="btn btn-danger" onclick="closeModal('join-clan-modal')">Отмена</button>
-            </div>
-        </div>
-    </div>
-
     <div class="modal" id="nft-open-modal">
         <div class="modal-content">
             <h3>Открыть NFT</h3>
@@ -596,7 +554,6 @@
         <button onclick="showSection('upgrades')">Улучшения</button>
         <button onclick="showSection('nft')">NFT</button>
         <button onclick="showSection('minigames')">Мини-игры</button>
-        <button onclick="showSection('clans')">Кланы</button>
         <button onclick="showSection('referral')">Рефералы</button>
     </div>
 
@@ -604,7 +561,7 @@
         <div id="main-section" class="section active">
             <div class="header">
                 <h1>SUHARI KOMBAT</h1>
-                <p>Тыкай получай монети и становись богатi!</p>
+                <p>Кликай, майни и стань богачом!</p>
                 <div style="margin-top: 10px;">
                     <button class="btn btn-warning" onclick="openModal('promocode-modal')" style="width:auto;padding:8px 15px;margin-right:10px;">
                         Промокод
@@ -767,68 +724,6 @@
             <div id="minigame-container" style="display:none;"></div>
         </div>
 
-        <div id="clans-section" class="section">
-            <div class="header">
-                <h1>КЛАНЫ</h1>
-                <p>Объединяйся с другими игроками!</p>
-            </div>
-
-            <div id="clan-info" style="display:none;">
-                <div class="clan-card">
-                    <h3 id="current-clan-name">Название клана</h3>
-                    <div style="background: rgba(79, 195, 247, 0.2); padding: 5px 15px; border-radius: 20px; display: inline-block; margin: 10px 0;">
-                        <strong id="current-clan-tag">#TAG</strong>
-                    </div>
-                    <p id="current-clan-description">Описание клана</p>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <h3>Участники</h3>
-                            <div class="value" id="clan-members-count">1</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Общая сила</h3>
-                            <div class="value" id="clan-total-power">0 ₿</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Клан Уровень</h3>
-                            <div class="value" id="clan-level">1</div>
-                        </div>
-                        <div class="stat-card">
-                            <h3>Ваша роль</h3>
-                            <div class="value" id="clan-user-role">Участник</div>
-                        </div>
-                    </div>
-
-                    <div class="clan-members" id="clan-members-list"></div>
-
-                    <div style="margin-top: 20px;">
-                        <button class="btn btn-danger" onclick="leaveClan()">Покинуть клан</button>
-                        <button class="btn btn-warning" onclick="openClanSettings()" style="margin-top:10px;">Настройки клана</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="no-clan">
-                <div class="upgrade-card">
-                    <h3>Создать клан</h3>
-                    <p>Создайте свой клан и приглашайте друзей!</p>
-                    <p style="color:#ff9800;margin:10px 0;">Стоимость: 1000 ₿</p>
-                    <p style="font-size:0.9rem;opacity:0.8;">Бонусы клана: +5% к доходу за каждого участника, общие достижения, клановые бои</p>
-                    <button class="btn" onclick="openModal('create-clan-modal')">Создать клан</button>
-                </div>
-
-                <div class="upgrade-card">
-                    <h3>Вступить в клан</h3>
-                    <p>Вступите в существующий клан по приглашению</p>
-                    <button class="btn" onclick="openModal('join-clan-modal')">Вступить в клан</button>
-                </div>
-
-                <h3 style="margin: 30px 0 15px 0;">Топ кланов:</h3>
-                <div id="top-clans-list"></div>
-            </div>
-        </div>
-
         <div id="referral-section" class="section">
             <div class="header">
                 <h1>РЕФЕРАЛЬНАЯ СИСТЕМА</h1>
@@ -928,9 +823,6 @@
             referral_bonus: 1,
             referral_daily_earnings: {},
             
-            clan: null,
-            clan_invites: [],
-            
             used_promocodes: [],
             
             minigame_stats: {
@@ -967,14 +859,6 @@
             rare: { multiplier: 0.5, color: "#2196f3", price: 500 },
             epic: { multiplier: 1, color: "#9c27b0", price: 1000 },
             legendary: { multiplier: 2, color: "#ffd700", price: 2500 }
-        };
-
-        // ====== КЛАНЫ ======
-        const clansData = {
-            "CRYPTO": { name: "Крипто-Воины", tag: "CRYPTO", members: 15, total_power: 15000, level: 3 },
-            "BTC": { name: "Биткоин Элита", tag: "BTC", members: 8, total_power: 12000, level: 2 },
-            "ETH": { name: "Эфириум Гильдия", tag: "ETH", members: 12, total_power: 18000, level: 4 },
-            "DOGE": { name: "Дождики", tag: "DOGE", members: 25, total_power: 22000, level: 5 }
         };
 
         // ====== МИНИ-ИГРЫ ======
@@ -1054,6 +938,7 @@
             
             if (!loaded) {
                 gameState.referral_code = generateNewReferralCode();
+                gameState.click_limit_used = 0;
                 gameState.last_reset_time = Date.now();
                 await saveGame();
                 showNotification('Новая игра начата!', 'success');
@@ -1061,6 +946,7 @@
                 const now = Date.now();
                 const timeSinceLastReset = now - gameState.last_reset_time;
                 
+                // Если прошло 2 минуты, сбрасываем клики
                 if (timeSinceLastReset >= 120000) {
                     gameState.click_limit_used = 0;
                     gameState.last_reset_time = now;
@@ -1071,10 +957,10 @@
             }
             
             updateUI();
+            updateClickLimitUI();
             renderUpgrades();
             loadNFTInventory();
             updateReferralUI();
-            updateClanUI();
             startPassiveIncome();
             startClickLimitTimer();
             
@@ -1099,7 +985,11 @@
             document.getElementById('click-value').textContent = Math.floor(gameState.per_click * totalBoost);
             document.getElementById('level').textContent = gameState.level;
             document.getElementById('passive-income').textContent = gameState.passive_per_sec.toFixed(2) + ' ₿/сек';
-            document.getElementById('reset-cost').textContent = 100 * gameState.level;
+            
+            // Рассчитываем цену восстановления с учетом уровня и улучшений
+            const resetCost = calculateResetCost();
+            document.getElementById('reset-cost').textContent = formatNumber(resetCost);
+            
             document.getElementById('nft-boost').textContent = '+' + Math.floor((totalBoost - 1) * 100) + '%';
             document.getElementById('nft-count').textContent = gameState.nfts.length;
             document.getElementById('equipped-nft').textContent = gameState.equipped_nfts.length;
@@ -1112,8 +1002,22 @@
 
         // ====== СИСТЕМА КЛИКОВ ======
         document.getElementById('click-btn').addEventListener('click', async function() {
-            if (gameState.click_limit_used >= gameState.click_limit) {
-                showNotification('Лимит кликов исчерпан! Ждите восстановления (2 минуты)', 'error');
+            // Рассчитываем максимальное количество кликов
+            const maxClicks = calculateMaxClicks();
+            
+            // Если прошло 2 минуты, сбрасываем клики
+            const timeSinceReset = Date.now() - gameState.last_reset_time;
+            if (timeSinceReset >= 120000) {
+                gameState.click_limit_used = 0;
+                gameState.last_reset_time = Date.now();
+            }
+            
+            // Проверяем лимит кликов
+            if (gameState.click_limit_used >= maxClicks) {
+                const timeLeft = 120000 - timeSinceReset;
+                const minutes = Math.floor(Math.max(0, timeLeft) / 60000);
+                const seconds = Math.floor((Math.max(0, timeLeft) % 60000) / 1000);
+                showNotification(`Лимит кликов исчерпан! Восстановление через ${minutes}:${seconds.toString().padStart(2, '0')}`, 'error');
                 return;
             }
             
@@ -1160,76 +1064,97 @@
             }
             
             updateUI();
+            updateClickLimitUI();
             await saveGame();
         });
 
+        function calculateMaxClicks() {
+            return gameState.click_limit + (gameState.upgrades.click_limit_boost || 0) * 10;
+        }
+
+        function calculateResetCost() {
+            const baseCost = 100;
+            const levelMultiplier = gameState.level;
+            const upgradeMultiplier = 1 + (gameState.upgrades.click_speed || 0) * 0.5;
+            return Math.floor(baseCost * levelMultiplier * upgradeMultiplier);
+        }
+
         // ====== ЛИМИТ КЛИКОВ ======
         function updateClickLimitUI() {
-            const used = gameState.click_limit_used;
-            const total = gameState.click_limit;
-            const available = Math.max(0, total - used);
-            const percentage = (available / total) * 100;
+            const maxClicks = calculateMaxClicks();
+            
+            // Если прошло 2 минуты, сбрасываем клики
+            const timeSinceReset = Date.now() - gameState.last_reset_time;
+            if (timeSinceReset >= 120000) {
+                gameState.click_limit_used = 0;
+                gameState.last_reset_time = Date.now();
+            }
+            
+            const used = Math.min(gameState.click_limit_used, maxClicks);
+            const available = Math.max(0, maxClicks - used);
+            const percentage = (available / maxClicks) * 100;
             
             document.getElementById('limit-fill').style.width = percentage + '%';
             document.getElementById('current-clicks').textContent = available;
-            document.getElementById('max-clicks').textContent = total;
+            document.getElementById('max-clicks').textContent = maxClicks;
             
             const resetBtn = document.getElementById('reset-btn');
-            if (used >= total) {
+            if (used >= maxClicks) {
                 resetBtn.style.display = 'block';
                 document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #ff4444, #ff9800)';
             } else {
                 resetBtn.style.display = 'none';
                 document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #00c853, #00e676)';
             }
+            
+            // Обновляем таймер восстановления
+            const timeUntilReset = 120000 - timeSinceReset;
+            const minutes = Math.floor(Math.max(0, timeUntilReset) / 60000);
+            const seconds = Math.floor((Math.max(0, timeUntilReset) % 60000) / 1000);
+            
+            if (used >= maxClicks) {
+                document.getElementById('reset-time').textContent = 
+                    `Восстановление через ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                document.getElementById('reset-time').textContent = 
+                    `Восстановление: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }
         }
 
         function startClickLimitTimer() {
-            console.log('Таймер восстановления кликов запущен');
-            
-            setInterval(async () => {
-                const now = Date.now();
-                const timeSinceLastReset = now - gameState.last_reset_time;
+            setInterval(() => {
+                updateClickLimitUI();
                 
-                if (timeSinceLastReset >= 120000) {
-                    console.log('Восстанавливаем клики! Прошло времени: ' + timeSinceLastReset + 'мс');
-                    
+                // Автоматически сбрасываем клики каждые 2 минуты
+                const timeSinceReset = Date.now() - gameState.last_reset_time;
+                if (timeSinceReset >= 120000) {
                     gameState.click_limit_used = 0;
-                    gameState.last_reset_time = now;
+                    gameState.last_reset_time = Date.now();
                     
-                    updateClickLimitUI();
-                    updateUI();
-                    await saveGame();
-                    
-                    showNotification('Лимит кликов восстановлен!', 'success');
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
+                    if (gameState.click_limit_used > 0) {
+                        showNotification('Лимит кликов восстановлен!', 'success');
+                        
+                        if (tg?.HapticFeedback) {
+                            tg.HapticFeedback.impactOccurred('light');
+                        }
                     }
                 }
                 
-                const timeUntilNextReset = 120000 - timeSinceLastReset;
-                const timeLeft = Math.max(0, timeUntilNextReset);
-                const minutes = Math.floor(timeLeft / 60000);
-                const seconds = Math.floor((timeLeft % 60000) / 1000);
-                
-                document.getElementById('reset-time').textContent = 
-                    'Восстановление: ' + minutes + ':' + seconds.toString().padStart(2, '0');
-                
                 gameState.statistics.play_time++;
-                    
             }, 1000);
         }
 
         async function resetClickLimit() {
-            if (gameState.click_limit_used < gameState.click_limit) {
+            const maxClicks = calculateMaxClicks();
+            
+            if (gameState.click_limit_used < maxClicks) {
                 showNotification('Лимит еще не исчерпан!', 'warning');
                 return;
             }
             
-            const cost = 100 * gameState.level;
+            const cost = calculateResetCost();
             if (gameState.balance < cost) {
-                showNotification('Недостаточно средств! Нужно ' + cost + ' ₿', 'error');
+                showNotification('Недостаточно средств! Нужно ' + formatNumber(cost) + ' ₿', 'error');
                 return;
             }
             
@@ -1350,6 +1275,7 @@
             }
             
             updateUI();
+            updateClickLimitUI();
             renderUpgrades();
             await saveGame();
             
@@ -1595,15 +1521,17 @@
                 equippedContainer.innerHTML = '';
                 gameState.equipped_nfts.forEach(nft => {
                     const equippedCard = document.createElement('div');
-                    equippedCard.className = 'clan-member';
+                    equippedCard.className = 'stat-card';
                     equippedCard.style.cursor = 'pointer';
                     equippedCard.onclick = () => showNFT(nft);
                     equippedCard.innerHTML = `
-                        <div>
-                            <strong>${nft.name}</strong>
-                            <div style="font-size:0.8rem;color:${nft.color}">${nft.rarity}</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                                <strong>${nft.name}</strong>
+                                <div style="font-size:0.8rem;color:${nft.color}">${nft.rarity}</div>
+                            </div>
+                            <div style="color:#00e676;">+${Math.floor(nft.multiplier * 100)}%</div>
                         </div>
-                        <div style="color:#00e676;">+${Math.floor(nft.multiplier * 100)}%</div>
                     `;
                     equippedContainer.appendChild(equippedCard);
                 });
@@ -1761,7 +1689,6 @@
         function startBubbleGame() {
             let timeLeft = 30;
             let score = 0;
-            let bubbles = [];
             
             const gameContainer = document.getElementById('minigame-container');
             gameContainer.innerHTML = `
@@ -1826,7 +1753,6 @@
                 });
                 
                 field.appendChild(bubble);
-                bubbles.push(bubble);
                 
                 setTimeout(() => {
                     if (bubble.parentNode) {
@@ -2342,236 +2268,19 @@
             container.innerHTML = '';
             gameState.referrals.forEach((ref, index) => {
                 const refEl = document.createElement('div');
-                refEl.className = 'clan-member';
+                refEl.className = 'stat-card';
                 refEl.innerHTML = `
-                    <div>
-                        <strong>Реферал ${index + 1}</strong>
-                        <div style="font-size:0.8rem;opacity:0.7;">Код: ${ref.code}</div>
-                        <div style="font-size:0.8rem;opacity:0.7;">Приглашен: ${new Date(ref.date).toLocaleDateString()}</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <strong>Реферал ${index + 1}</strong>
+                            <div style="font-size:0.8rem;opacity:0.7;">Код: ${ref.code}</div>
+                            <div style="font-size:0.8rem;opacity:0.7;">Приглашен: ${new Date(ref.date).toLocaleDateString()}</div>
+                        </div>
+                        <div style="color:#00e676;">+${formatNumber(ref.earned || 0)} ₿</div>
                     </div>
-                    <div style="color:#00e676;">+${formatNumber(ref.earned || 0)} ₿</div>
                 `;
                 container.appendChild(refEl);
             });
-        }
-
-        // ====== СИСТЕМА КЛАНОВ ======
-        async function createClan() {
-            const nameInput = document.getElementById('clan-name-input');
-            const tagInput = document.getElementById('clan-tag-input');
-            const descInput = document.getElementById('clan-description-input');
-            
-            const name = nameInput.value.trim();
-            const tag = tagInput.value.trim().toUpperCase();
-            const description = descInput.value.trim();
-            
-            if (!name || !tag || !description) {
-                showNotification('Заполните все поля!', 'error');
-                return;
-            }
-            
-            if (tag.length < 3 || tag.length > 5) {
-                showNotification('Тег клана должен быть от 3 до 5 символов!', 'error');
-                return;
-            }
-            
-            const cost = 1000;
-            if (gameState.balance < cost) {
-                showNotification('Недостаточно средств! Нужно ' + cost + ' ₿', 'error');
-                return;
-            }
-            
-            // Проверяем, существует ли уже клан с таким тегом
-            if (clansData[tag]) {
-                showNotification('Клан с таким тегом уже существует!', 'error');
-                return;
-            }
-            
-            gameState.balance -= cost;
-            gameState.statistics.total_spent += cost;
-            
-            gameState.clan = {
-                id: Date.now(),
-                name: name,
-                tag: tag,
-                description: description,
-                creator_id: getUserId(),
-                members: [
-                    { 
-                        user_id: getUserId(), 
-                        username: getUsername(), 
-                        role: 'creator', 
-                        join_date: Date.now(),
-                        contribution: 0
-                    }
-                ],
-                created_at: Date.now(),
-                level: 1,
-                total_power: gameState.balance,
-                settings: {
-                    join_type: 'invite', // invite, open, closed
-                    min_level: 1
-                }
-            };
-            
-            nameInput.value = '';
-            tagInput.value = '';
-            descInput.value = '';
-            
-            closeModal('create-clan-modal');
-            updateClanUI();
-            await saveGame();
-            
-            showNotification('Клан успешно создан!', 'success');
-        }
-
-        function getUsername() {
-            if (tg?.initDataUnsafe?.user?.username) {
-                return '@' + tg.initDataUnsafe.user.username;
-            }
-            if (tg?.initDataUnsafe?.user?.first_name) {
-                return tg.initDataUnsafe.user.first_name;
-            }
-            return 'Игрок';
-        }
-
-        async function joinClan() {
-            const input = document.getElementById('join-clan-input');
-            const tag = input.value.trim().toUpperCase();
-            
-            if (!tag) {
-                showNotification('Введите тег клана!', 'error');
-                return;
-            }
-            
-            if (gameState.clan) {
-                showNotification('Вы уже состоите в клане!', 'error');
-                return;
-            }
-            
-            // Проверяем существование клана
-            const clan = clansData[tag];
-            if (!clan) {
-                showNotification('Клан не найден!', 'error');
-                return;
-            }
-            
-            // В реальном приложении здесь была бы проверка с сервером
-            gameState.clan = {
-                id: Date.now(),
-                name: clan.name,
-                tag: clan.tag,
-                description: 'Примерный клан для демонстрации',
-                creator_id: 'system',
-                members: [
-                    { user_id: getUserId(), username: getUsername(), role: 'member', join_date: Date.now(), contribution: 0 }
-                ],
-                created_at: Date.now() - 86400000,
-                level: clan.level,
-                total_power: clan.total_power,
-                settings: {
-                    join_type: 'invite',
-                    min_level: 1
-                }
-            };
-            
-            input.value = '';
-            closeModal('join-clan-modal');
-            updateClanUI();
-            await saveGame();
-            
-            showNotification(`Вы вступили в клан ${clan.name}!`, 'success');
-        }
-
-        async function leaveClan() {
-            if (!gameState.clan) return;
-            
-            if (gameState.clan.creator_id === getUserId()) {
-                showNotification('Создатель клана не может его покинуть!', 'error');
-                return;
-            }
-            
-            gameState.clan = null;
-            updateClanUI();
-            await saveGame();
-            
-            showNotification('Вы покинули клан!', 'success');
-        }
-
-        function updateClanUI() {
-            const clanInfo = document.getElementById('clan-info');
-            const noClan = document.getElementById('no-clan');
-            const topClans = document.getElementById('top-clans-list');
-            
-            if (gameState.clan) {
-                clanInfo.style.display = 'block';
-                noClan.style.display = 'none';
-                
-                document.getElementById('current-clan-name').textContent = gameState.clan.name;
-                document.getElementById('current-clan-tag').textContent = '#' + gameState.clan.tag;
-                document.getElementById('current-clan-description').textContent = gameState.clan.description;
-                document.getElementById('clan-members-count').textContent = gameState.clan.members.length;
-                document.getElementById('clan-total-power').textContent = formatNumber(gameState.clan.total_power) + ' ₿';
-                document.getElementById('clan-level').textContent = gameState.clan.level;
-                
-                // Определяем роль пользователя
-                const currentUser = gameState.clan.members.find(m => m.user_id === getUserId());
-                document.getElementById('clan-user-role').textContent = currentUser?.role === 'creator' ? 'Создатель' : 'Участник';
-                
-                // Список участников
-                const membersList = document.getElementById('clan-members-list');
-                membersList.innerHTML = '';
-                gameState.clan.members.forEach(member => {
-                    const memberEl = document.createElement('div');
-                    memberEl.className = 'clan-member';
-                    memberEl.innerHTML = `
-                        <div>
-                            <strong>${member.username || 'Игрок'}</strong>
-                            <div style="font-size:0.8rem;opacity:0.7;">${member.role === 'creator' ? 'Создатель' : 'Участник'}</div>
-                            <div style="font-size:0.8rem;opacity:0.7;">Вклад: ${formatNumber(member.contribution || 0)} ₿</div>
-                        </div>
-                        <div class="clan-role">${member.role === 'creator' ? '👑' : '👤'}</div>
-                    `;
-                    membersList.appendChild(memberEl);
-                });
-            } else {
-                clanInfo.style.display = 'none';
-                noClan.style.display = 'block';
-            }
-            
-            // Топ кланов
-            topClans.innerHTML = '';
-            Object.values(clansData).forEach(clan => {
-                const clanEl = document.createElement('div');
-                clanEl.className = 'clan-card';
-                clanEl.innerHTML = `
-                    <h3>${clan.name} <span style="color:#4fc3f7;">#${clan.tag}</span></h3>
-                    <div style="display:flex;justify-content:space-between;margin-top:10px;">
-                        <div>
-                            <div style="font-size:0.9rem;">Участники: ${clan.members}</div>
-                            <div style="font-size:0.9rem;">Общая сила: ${formatNumber(clan.total_power)} ₿</div>
-                        </div>
-                        <div style="text-align:right;">
-                            <div style="font-size:1.2rem;color:#00e676;">Уровень ${clan.level}</div>
-                            <button class="btn" onclick="sendClanRequest('${clan.tag}')" style="margin-top:5px;padding:5px 10px;font-size:0.8rem;">
-                                Вступить
-                            </button>
-                        </div>
-                    </div>
-                `;
-                topClans.appendChild(clanEl);
-            });
-        }
-
-        function sendClanRequest(tag) {
-            if (gameState.clan) {
-                showNotification('Вы уже состоите в клане!', 'error');
-                return;
-            }
-            
-            document.getElementById('join-clan-input').value = tag;
-            openModal('join-clan-modal');
-            showNotification(`Запрос на вступление в клан #${tag} отправлен!`, 'success');
         }
 
         // ====== ОСТАЛЬНЫЕ ФУНКЦИИ ======
@@ -2612,7 +2321,6 @@
             
             if (sectionId === 'upgrades') renderUpgrades();
             if (sectionId === 'nft') loadNFTInventory();
-            if (sectionId === 'clans') updateClanUI();
             if (sectionId === 'referral') updateReferralUI();
         }
 
@@ -2624,13 +2332,15 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
+        // ====== ПРОМОКОДЫ (добавлен промокод на 500 миллионов) ======
         const promocodes = {
             'CRYPTO100': { reward: 100, uses: 9999 },
             'WELCOME50': { reward: 50, uses: 9999 },
             'FIRST200': { reward: 200, uses: 9999 },
             'BONUS300': { reward: 300, uses: 9999 },
             'NEWPLAYER': { reward: 500, uses: 1 },
-            'NFTLOVER': { reward: 1000, uses: 1, nft_bonus: true }
+            'NFTLOVER': { reward: 1000, uses: 1, nft_bonus: true },
+            'SUHARI500M': { reward: 500000000, uses: 1 } // ← ПРОМОКОД НА 500 МИЛЛИОНОВ
         };
 
         async function activatePromocode() {
@@ -2715,13 +2425,10 @@
         window.backToMinigames = backToMinigames;
         window.copyReferralCode = copyReferralCode;
         window.useReferralCode = useReferralCode;
-        window.createClan = createClan;
-        window.joinClan = joinClan;
-        window.leaveClan = leaveClan;
-        window.sendClanRequest = sendClanRequest;
         window.buyNftBox = buyNftBox;
         window.equipNFT = equipNFT;
         window.sellNFT = sellNFT;
+        window.guessNumber = guessNumber;
 
         // ====== ЗАПУСК ИГРЫ ======
         document.addEventListener('DOMContentLoaded', async () => {
