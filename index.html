@@ -2,287 +2,294 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <title>SUHARI KOMBAT</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Clicker - Игра-кликер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-user-select: none;
-            user-select: none;
         }
 
         :root {
-            --primary: #1a73e8;
-            --secondary: #0d47a1;
-            --accent: #00c853;
-            --danger: #ff4444;
-            --warning: #ff9800;
-            --dark: #121212;
+            --primary: #2d5bff;
+            --secondary: #00d4ff;
+            --accent: #ff6b6b;
+            --dark: #121826;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --warning: #ffc107;
+            --gray: #6c757d;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --border: #334155;
         }
 
         body {
-            background: linear-gradient(135deg, #0a1929, #1a237e);
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
+            background-color: var(--dark-bg);
+            color: var(--light);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: #4fc3f7;
-            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
-        }
-
-        .nav-tabs {
+        header {
             display: flex;
-            overflow-x: auto;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin: -20px -20px 20px -20px;
-            gap: 5px;
-        }
-
-        .nav-tabs button {
-            flex: 1;
-            min-width: 70px;
-            padding: 12px 8px;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
         }
 
-        .nav-tabs button.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .stat-card, .upgrade-card, .nft-card, .game-card {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 15px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card h3 {
-            color: #4fc3f7;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .stat-card .value {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 1.8rem;
-            font-weight: bold;
-            color: #00e676;
+            font-weight: 700;
+            color: var(--secondary);
         }
 
-        .click-btn {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: 5px solid #4fc3f7;
-            color: white;
+        .logo i {
+            font-size: 2.2rem;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            min-width: 200px;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
             font-size: 1.5rem;
-            font-weight: bold;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .clicker-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .clicker-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .clicker-display {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 30px 0;
+            color: var(--light);
+            text-shadow: 0 0 10px rgba(45, 91, 255, 0.5);
+        }
+
+        .click-button {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
             cursor: pointer;
-            transition: all 0.1s;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            margin: 0 auto 30px auto;
-            box-shadow: 0 10px 30px rgba(26, 115, 232, 0.4);
+            align-items: center;
+            gap: 10px;
         }
 
-        .click-btn:active {
+        .click-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .click-button:active {
             transform: scale(0.95);
         }
 
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--accent), #00e676);
-            border: none;
+        .click-button i {
+            font-size: 3.5rem;
+        }
+
+        .click-limit {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .click-limit-value {
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .sections-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.3rem;
+        }
+
+        .upgrade-item, .nft-item, .game-item {
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             transition: all 0.3s;
-            margin-top: 10px;
         }
 
-        .btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+        .upgrade-item:hover, .nft-item:hover, .game-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
+        .upgrade-info h3, .nft-info h3, .game-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .upgrade-info p, .nft-info p, .game-info p {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .upgrade-price, .nft-price {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .buy-button, .game-button, .promo-button, .referral-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .buy-button:hover, .game-button:hover, .promo-button:hover, .referral-button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .buy-button:disabled {
+            background: var(--gray);
             cursor: not-allowed;
-            background: #666;
         }
 
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), #ff6b6b);
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), #ffb74d);
+        .input-group input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            font-size: 1rem;
         }
 
-        .limit-container {
-            background: rgba(0, 0, 0, 0.3);
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .promo-success {
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .promo-error {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .referral-code {
+            background: rgba(255, 255, 255, 0.05);
             padding: 15px;
             border-radius: 10px;
-            margin: 20px 0;
+            margin-top: 15px;
+            word-break: break-all;
+            font-family: monospace;
+            color: var(--secondary);
         }
 
-        .limit-bar {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 8px;
+        .referral-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
         }
-
-        .limit-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00c853, #00e676);
-            transition: width 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .limit-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, 
-                rgba(255,255,255,0) 0%, 
-                rgba(255,255,255,0.3) 50%, 
-                rgba(255,255,255,0) 100%);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .minigame-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .minigame {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .minigame:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .nft-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .nft-card {
-            text-align: center;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .nft-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .nft-rarity {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .common { background: rgba(117, 117, 117, 0.3); color: #fff; }
-        .uncommon { background: rgba(76, 175, 80, 0.3); color: #4caf50; }
-        .rare { background: rgba(33, 150, 243, 0.3); color: #2196f3; }
-        .epic { background: rgba(156, 39, 176, 0.3); color: #9c27b0; }
-        .legendary { background: rgba(255, 215, 0, 0.3); color: #ffd700; }
 
         .modal {
             display: none;
@@ -293,94 +300,64 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
-            align-items: center;
             justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
-            background: #1a237e;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 90%;
-            border: 2px solid #4fc3f7;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #4fc3f7;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: rgba(0, 200, 83, 0.9);
-            color: white;
-            border-radius: 10px;
-            transform: translateX(150%);
-            transition: transform 0.3s;
-            z-index: 1001;
-            font-weight: bold;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.error {
-            background: rgba(244, 67, 54, 0.9);
-        }
-
-        .notification.warning {
-            background: rgba(255, 152, 0, 0.9);
-        }
-
-        .game-field {
-            width: 100%;
-            height: 300px;
-            background: rgba(0, 0, 0, 0.3);
+            background: var(--card-bg);
             border-radius: 15px;
-            margin: 20px 0;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border);
             position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(79, 195, 247, 0.3);
         }
 
-        .crypto-bubble {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .modal-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s;
-            animation: float 2s infinite ease-in-out;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .game-container {
+            text-align: center;
+            padding: 20px;
         }
 
-        .bubble-btc { background: radial-gradient(circle, #f7931a, #ff9800); }
-        .bubble-eth { background: radial-gradient(circle, #627eea, #8a9ef5); }
-        .bubble-doge { background: radial-gradient(circle, #c2a633, #e6c951); }
-        .bubble-sol { background: radial-gradient(circle, #00ffa3, #00e676); }
-        .bubble-bonus { background: radial-gradient(circle, #ff4081, #ff79b0); }
+        .game-instructions {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
 
-        .memory-grid {
+        .game-display {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .game-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+
+        .memory-game {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
@@ -388,542 +365,614 @@
         }
 
         .memory-card {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #1a237e, #283593);
-            border-radius: 10px;
+            background: var(--primary);
+            height: 70px;
+            border-radius: 8px;
             display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            align-items: center;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
-            transform-style: preserve-3d;
         }
 
         .memory-card.flipped {
-            background: linear-gradient(135deg, #00c853, #00e676);
-            transform: rotateY(180deg);
+            background: var(--secondary);
+            color: var(--dark);
         }
 
         .memory-card.matched {
-            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            background: var(--success);
             cursor: default;
         }
 
-        .typing-game {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .typing-word {
-            font-size: 2.5rem;
-            color: #4fc3f7;
-            margin: 20px 0;
-            letter-spacing: 3px;
-        }
-
-        .typing-input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #4fc3f7;
-            border-radius: 10px;
+        .save-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
             color: white;
-            text-align: center;
-        }
-
-        .typing-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-
-        .crypto-runner {
-            position: relative;
-            height: 200px;
-            background: linear-gradient(180deg, #0a1929 0%, #1a237e 100%);
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .runner-character {
-            position: absolute;
-            bottom: 20px;
-            left: 50px;
-            width: 60px;
-            height: 80px;
-            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            padding: 15px 25px;
             border-radius: 10px;
-            transition: bottom 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 100;
         }
 
-        .runner-obstacle {
-            position: absolute;
-            bottom: 20px;
-            right: -50px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ff4444, #ff6b6b);
-            border-radius: 5px;
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--gray);
+            font-size: 0.9rem;
         }
 
-        .runner-coin {
-            position: absolute;
-            bottom: 100px;
-            right: -30px;
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle, #ffd700, #ff9800);
-            border-radius: 50%;
-        }
-
-        .minigame-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .minigame-timer {
-            font-size: 2rem;
-            color: #ff9800;
-            font-weight: bold;
-        }
-
-        .minigame-score {
-            font-size: 2rem;
-            color: #00e676;
-            font-weight: bold;
-        }
-
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .click-btn { width: 150px; height: 150px; font-size: 1.3rem; }
-            .nav-tabs button { min-width: 60px; font-size: 0.8rem; }
-            .minigame-container { grid-template-columns: 1fr; }
-            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .stat-box {
+                width: 100%;
+            }
+            
+            .click-button {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .sections-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="notification" id="notification"></div>
-
-    <div class="modal" id="promocode-modal">
-        <div class="modal-content">
-            <h3>Активировать промокод</h3>
-            <input type="text" id="promocode-input" placeholder="Введите промокод" class="modal-input">
-            <div style="display:flex;gap:10px;">
-                <button class="btn" onclick="activatePromocode()">Активировать</button>
-                <button class="btn btn-danger" onclick="closeModal('promocode-modal')">Закрыть</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="referral-input-modal">
-        <div class="modal-content">
-            <h3>Ввести реферальный код</h3>
-            <input type="text" id="referral-input" placeholder="Введите код друга" class="modal-input">
-            <div style="display:flex;gap:10px;">
-                <button class="btn" onclick="useReferralCode()">Активировать</button>
-                <button class="btn btn-danger" onclick="closeModal('referral-input-modal')">Закрыть</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="nft-open-modal">
-        <div class="modal-content">
-            <h3>Открыть NFT</h3>
-            <div id="nft-preview" style="text-align:center;margin:20px 0;">
-                <!-- NFT будет отображаться здесь -->
-            </div>
-            <div id="nft-buttons" style="display:flex;gap:10px;">
-                <button class="btn" onclick="equipNFT()">Надеть</button>
-                <button class="btn btn-danger" onclick="sellNFT()">Продать</button>
-                <button class="btn btn-warning" onclick="closeModal('nft-open-modal')">Закрыть</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="nav-tabs">
-        <button onclick="showSection('main')" class="active">Тапать</button>
-        <button onclick="showSection('upgrades')">Улучшения</button>
-        <button onclick="showSection('nft')">NFT</button>
-        <button onclick="showSection('minigames')">Мини-игры</button>
-        <button onclick="showSection('referral')">Рефералы</button>
-    </div>
-
     <div class="container">
-        <div id="main-section" class="section active">
-            <div class="header">
-                <h1>SUHARI KOMBAT</h1>
-                <p>Кликай, майни и стань богачом!</p>
-                <div style="margin-top: 10px;">
-                    <button class="btn btn-warning" onclick="openModal('promocode-modal')" style="width:auto;padding:8px 15px;margin-right:10px;">
-                        Промокод
-                    </button>
-                    <button class="btn btn-warning" onclick="openModal('referral-input-modal')" style="width:auto;padding:8px 15px;">
-                        Ввести реферал
-                    </button>
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>Crypto Clicker</span>
+            </div>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-title">Токены</div>
+                    <div class="stat-value" id="tokenCount">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Токенов в секунду</div>
+                    <div class="stat-value" id="tokensPerSecond">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Всего заработано</div>
+                    <div class="stat-value" id="totalTokens">0</div>
                 </div>
             </div>
+        </header>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>ЗА КЛИК</h3>
-                    <div class="value" id="per-click">1 ₿</div>
-                </div>
-                <div class="stat-card">
-                    <h3>УРОВЕНЬ</h3>
-                    <div class="value" id="level">1</div>
-                </div>
-                <div class="stat-card">
-                    <h3>АВТО-ДОХОД</h3>
-                    <div class="value" id="passive-income">0 ₿/сек</div>
-                </div>
-                <div class="stat-card">
-                    <h3>БАЛАНС</h3>
-                    <div class="value" id="balance">0 ₿</div>
-                </div>
-            </div>
-
-            <div class="limit-container">
-                <div class="limit-bar">
-                    <div class="limit-fill" id="limit-fill" style="width: 100%"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                    <span>Кликов: <strong id="current-clicks">50</strong>/<strong id="max-clicks">50</strong></span>
-                    <span id="reset-time">Восстановление: 2:00</span>
-                </div>
-                <button class="btn btn-warning" id="reset-btn" onclick="resetClickLimit()" style="display:none;">
-                    Восстановить лимит (<span id="reset-cost">100</span> ₿)
+        <main>
+            <section class="clicker-section">
+                <h1 class="clicker-title">Кликни чтобы заработать!</h1>
+                <div class="clicker-display" id="clickerDisplay">0 токенов</div>
+                <button class="click-button" id="clickButton">
+                    <i class="fas fa-hand-pointer"></i>
+                    КЛИК!
                 </button>
-            </div>
-
-            <button class="click-btn" id="click-btn">
-                Тыкать
-                <div style="font-size: 1rem; margin-top: 10px; color: #00e676;">
-                    +<span id="click-value">1</span> ₿ за клик
+                <div class="click-limit">
+                    Использовано кликов: <span id="clicksUsed">0</span> / <span id="clickLimit" class="click-limit-value">100</span>
                 </div>
-            </button>
+                <p>Улучшите лимит кликов в разделе "Улучшения"</p>
+            </section>
 
-            <div style="text-align: center;">
-                <button class="btn" onclick="showSection('upgrades')">
-                    СМОТРЕТЬ УЛУЧШЕНИЯ
-                </button>
+            <div class="sections-container">
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-arrow-up"></i> Улучшения</h2>
+                    <div id="upgradesList">
+                        <!-- Улучшения будут добавляться с помощью JavaScript -->
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-gem"></i> NFT Коллекция</h2>
+                    <div id="nftList">
+                        <!-- NFT будут добавляться с помощью JavaScript -->
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-gamepad"></i> Мини-игры</h2>
+                    <div id="gamesList">
+                        <!-- Мини-игры будут добавляться с помощью JavaScript -->
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Промокод</h2>
+                    <p>Введите промокод для получения бонусных токенов</p>
+                    <div class="input-group">
+                        <input type="text" id="promoInput" placeholder="Введите промокод">
+                        <button class="promo-button" id="promoButton">Активировать</button>
+                    </div>
+                    <div class="promo-success" id="promoSuccess">Промокод успешно активирован!</div>
+                    <div class="promo-error" id="promoError">Неверный промокод или он уже использован!</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);">Промокод на 500M токенов: <strong>CRYPTO500</strong> (можно использовать 30 раз)</p>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-users"></i> Реферальная система</h2>
+                    <p>Приглашайте друзей и получайте бонусы!</p>
+                    <div class="referral-code" id="referralCode">Загрузка...</div>
+                    <div class="referral-stats">
+                        <div>
+                            <div class="stat-title">Приглашено друзей</div>
+                            <div class="stat-value" id="referralCount">0</div>
+                        </div>
+                        <div>
+                            <div class="stat-title">Бонусных токенов</div>
+                            <div class="stat-value" id="referralBonus">0</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px;">Введите реферальный код друга:</p>
+                    <div class="input-group">
+                        <input type="text" id="referralInput" placeholder="Введите реферальный код">
+                        <button class="referral-button" id="referralButton">Активировать</button>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2 class="section-title"><i class="fas fa-save"></i> Сохранение игры</h2>
+                    <p>Игра автоматически сохраняется в вашем браузере</p>
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        <button class="game-button" id="saveButton"><i class="fas fa-save"></i> Сохранить вручную</button>
+                        <button class="game-button" id="loadButton"><i class="fas fa-download"></i> Загрузить сохранение</button>
+                        <button class="game-button" id="exportButton"><i class="fas fa-file-export"></i> Экспорт в JSON</button>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <textarea id="importTextarea" placeholder="Вставьте JSON для импорта сохранения" style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border);"></textarea>
+                        <button class="game-button" id="importButton" style="margin-top: 10px;">Импортировать сохранение</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p>Crypto Clicker &copy; 2023 | Игра использует localStorage для сохранения прогресса</p>
+            <p>Разработано для хостинга на Vercel</p>
+        </footer>
+    </div>
+
+    <!-- Модальные окна для мини-игр -->
+    <div class="modal" id="game1Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Угадай число</h3>
+                <button class="close-modal" data-modal="game1Modal">&times;</button>
+            </div>
+            <div class="game-container">
+                <p class="game-instructions">Я загадал число от 1 до 100. Угадай его за минимальное количество попыток!</p>
+                <div class="game-display" id="game1Display">Введите число от 1 до 100</div>
+                <div class="input-group">
+                    <input type="number" id="guessInput" min="1" max="100" placeholder="Ваше число">
+                    <button class="game-button" id="guessButton">Угадать</button>
+                </div>
+                <p id="game1Feedback" style="margin-top: 15px;"></p>
+                <p>Попыток: <span id="game1Attempts">0</span></p>
+                <button class="game-button" id="startGame1Button">Начать игру</button>
             </div>
         </div>
+    </div>
 
-        <div id="upgrades-section" class="section">
-            <div class="header">
-                <h1>УЛУЧШЕНИЯ</h1>
-                <p>Улучшай свою ферму и лимиты!</p>
+    <div class="modal" id="game2Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Кликни по цели</h3>
+                <button class="close-modal" data-modal="game2Modal">&times;</button>
             </div>
-            <div id="upgrades-container"></div>
+            <div class="game-container">
+                <p class="game-instructions">Кликай по движущейся цели как можно быстрее за 10 секунд!</p>
+                <div class="game-display" id="game2Display">Осталось времени: 10</div>
+                <div style="position: relative; width: 100%; height: 200px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; margin: 20px 0;">
+                    <div id="game2Target" style="position: absolute; width: 60px; height: 60px; background: var(--accent); border-radius: 50%; cursor: pointer; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+                <p>Кликов по цели: <span id="game2Score">0</span></p>
+                <button class="game-button" id="startGame2Button">Начать игру</button>
+            </div>
         </div>
+    </div>
 
-        <div id="nft-section" class="section">
-            <div class="header">
-                <h1>NFT КОЛЛЕКЦИЯ</h1>
-                <p>Коллекционируй уникальные предметы!</p>
+    <div class="modal" id="game3Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Быстрые клики</h3>
+                <button class="close-modal" data-modal="game3Modal">&times;</button>
             </div>
-            
-            <div class="nft-grid" id="nft-shop">
-                <div class="nft-card" onclick="buyNftBox('basic')">
-                    <h3>БАЗОВЫЙ</h3>
-                    <div class="nft-rarity common">обычный</div>
-                    <p>Стоимость: 1,000 ₿</p>
-                    <p style="font-size:0.8rem;">Шансы: обычный 70%, редкий 25%, эпический 5%</p>
-                    <button class="btn">Купить</button>
-                </div>
-                <div class="nft-card" onclick="buyNftBox('premium')">
-                    <h3>ПРЕМИУМ</h3>
-                    <div class="nft-rarity rare">редкий</div>
-                    <p>Стоимость: 5,000 ₿</p>
-                    <p style="font-size:0.8rem;">Шансы: обычный 50%, редкий 30%, эпический 15%, легендарный 5%</p>
-                    <button class="btn">Купить</button>
-                </div>
-                <div class="nft-card" onclick="buyNftBox('legendary')">
-                    <h3>ЛЕГЕНДАРНЫЙ</h3>
-                    <div class="nft-rarity legendary">легендарный</div>
-                    <p>Стоимость: 10,000 ₿</p>
-                    <p style="font-size:0.8rem;">Шансы: редкий 40%, эпический 35%, легендарный 25%</p>
-                    <button class="btn">Купить</button>
-                </div>
+            <div class="game-container">
+                <p class="game-instructions">Кликай по кнопке как можно больше раз за 5 секунд!</p>
+                <div class="game-display" id="game3Display">Осталось времени: 5</div>
+                <button class="click-button" id="game3Button" style="width: 150px; height: 150px; margin: 20px auto;">КЛИК!</button>
+                <p>Кликов: <span id="game3Score">0</span></p>
+                <button class="game-button" id="startGame3Button">Начать игру</button>
             </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>NFT БУСТ</h3>
-                    <div class="value" id="nft-boost">+0%</div>
-                </div>
-                <div class="stat-card">
-                    <h3>NFT В ИНВЕНТАРЕ</h3>
-                    <div class="value" id="nft-count">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>НАДЕТО NFT</h3>
-                    <div class="value" id="equipped-nft">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>СТОИМОСТЬ NFT</h3>
-                    <div class="value" id="nft-value">0 ₿</div>
-                </div>
-            </div>
-
-            <h3 style="margin: 20px 0 10px 0;">Надетые NFT:</h3>
-            <div id="equipped-nfts-container"></div>
-
-            <h3 style="margin: 20px 0 10px 0;">Ваши NFT:</h3>
-            <div id="nft-inventory"></div>
         </div>
+    </div>
 
-        <div id="minigames-section" class="section">
-            <div class="header">
-                <h1>МИНИ-ИГРЫ</h1>
-                <p>Зарабатывай токены разными способами!</p>
+    <div class="modal" id="game4Modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Игра на память</h3>
+                <button class="close-modal" data-modal="game4Modal">&times;</button>
             </div>
-
-            <div class="minigame-container">
-                <div class="minigame" onclick="startMinigame('clicker')">
-                    <h3>Кликай</h3>
-                    <p>Кликай как можно быстрее за 10 секунд!</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 150 ₿</div>
+            <div class="game-container">
+                <p class="game-instructions">Запомни последовательность карточек и повтори ее!</p>
+                <div class="game-display" id="game4Display">Запоминай последовательность</div>
+                <div class="memory-game" id="memoryGame">
+                    <!-- Карточки будут добавлены с помощью JavaScript -->
                 </div>
-                <div class="minigame" onclick="startMinigame('bubble')">
-                    <h3>Лопай крипту</h3>
-                    <p>Кликай на появляющиеся крипто-пузыри!</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 200 ₿</div>
-                </div>
-                <div class="minigame" onclick="startMinigame('memory')">
-                    <h3>Память</h3>
-                    <p>Найди пары одинаковых карточек</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 250 ₿</div>
-                </div>
-                <div class="minigame" onclick="startMinigame('typing')">
-                    <h3>Крипто-печать</h3>
-                    <p>Печатай крипто-слова на скорость</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 300 ₿</div>
-                </div>
-                <div class="minigame" onclick="startMinigame('runner')">
-                    <h3>Крипто-ранер</h3>
-                    <p>Прыгай через препятствия и собирай монеты</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 400 ₿</div>
-                </div>
-                <div class="minigame" onclick="startMinigame('number')">
-                    <h3>Угадай число</h3>
-                    <p>Угадай число от 1 до 100 за 5 попыток</p>
-                    <div style="color: #00e676; margin-top: 10px;">Приз: до 200 ₿</div>
-                </div>
+                <p>Уровень: <span id="game4Level">1</span></p>
+                <button class="game-button" id="startGame4Button">Начать игру</button>
             </div>
-
-            <div id="minigame-container" style="display:none;"></div>
         </div>
+    </div>
 
-        <div id="referral-section" class="section">
-            <div class="header">
-                <h1>РЕФЕРАЛЬНАЯ СИСТЕМА</h1>
-                <p>Приглашай друзей и получай бонусы!</p>
-            </div>
-
-            <div class="upgrade-card">
-                <h3>Ваш реферальный код:</h3>
-                <div style="font-size: 2rem; letter-spacing: 3px; background: rgba(79, 195, 247, 0.2); padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px dashed #4fc3f7;">
-                    <span id="referral-code">Загрузка...</span>
-                </div>
-                <button class="btn" onclick="copyReferralCode()">Копировать код</button>
-                <button class="btn btn-warning" onclick="openModal('referral-input-modal')" style="margin-top: 10px;">
-                    Ввести код друга
-                </button>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Приглашено друзей</h3>
-                    <div class="value" id="referrals-count">0</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Заработано с рефералов</h3>
-                    <div class="value" id="referral-earnings">0 ₿</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Реферальный бонус</h3>
-                    <div class="value" id="referral-bonus">+0%</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Доход за 24ч</h3>
-                    <div class="value" id="referral-daily">0 ₿</div>
-                </div>
-            </div>
-
-            <div class="upgrade-card">
-                <h3>Бонусы за приглашения:</h3>
-                <ul style="padding-left: 20px; margin-top: 10px;">
-                    <li>1 друг: +10% к доходу за клик</li>
-                    <li>3 друга: +1 к лимиту кликов</li>
-                    <li>5 друзей: +25% к доходу за клик</li>
-                    <li>10 друзей: ×2 к призам в мини-играх</li>
-                    <li>25 друзей: +50% к пассивному доходу</li>
-                    <li>50 друзей: ×3 к шансу на редкие NFT</li>
-                </ul>
-            </div>
-
-            <h3 style="margin: 30px 0 15px 0;">Ваши рефералы:</h3>
-            <div id="referrals-list"></div>
-        </div>
+    <!-- Уведомление о сохранении -->
+    <div class="save-notification" id="saveNotification">
+        Игра сохранена!
     </div>
 
     <script>
-        // ====== ИНИЦИАЛИЗАЦИЯ TELEGRAM ======
-        let tg = window.Telegram?.WebApp || null;
-        
-        if (tg) {
-            tg.ready();
-            tg.expand();
-            tg.setBackgroundColor('#0a1929');
-            tg.setHeaderColor('#0a1929');
-        }
-
-        // ====== СОСТОЯНИЕ ИГРЫ ======
+        // Инициализация состояния игры
         let gameState = {
-            balance: 1,
-            per_click: 1,
-            passive_per_sec: 0,
-            level: 1,
-            experience: 0,
-            total_clicks: 0,
-            
-            click_limit: 50,
-            click_limit_used: 0,
-            last_reset_time: Date.now(),
-            
+            tokens: 0,
+            totalTokens: 0,
+            tokensPerSecond: 0,
+            clicksUsed: 0,
+            clickLimit: 100,
             upgrades: {
-                basic_rig: 0,
-                gpu_farm: 0,
-                asic_miner: 0,
-                mining_pool: 0,
-                click_limit_boost: 0,
-                click_speed: 0,
-                referral_boost: 0
+                clickPower: { level: 1, cost: 100, multiplier: 1 },
+                autoClicker: { level: 0, cost: 500, multiplier: 1 },
+                limitBoost: { level: 0, cost: 1000, multiplier: 100 }
             },
-            
             nfts: [],
-            equipped_nfts: [],
-            nft_boost: 1,
-            selected_nft: null,
-            
-            referral_code: "",
-            referrals: [],
-            referral_earnings: 0,
-            used_referral_code: null,
-            referral_bonus: 1,
-            referral_daily_earnings: {},
-            
-            used_promocodes: [],
-            
-            minigame_stats: {
-                clicker: { played: 0, best: 0 },
-                bubble: { played: 0, best: 0 },
-                memory: { played: 0, best: 0 },
-                typing: { played: 0, best: 0 },
-                runner: { played: 0, best: 0 },
-                number: { played: 0, wins: 0 }
-            },
-            
-            statistics: {
-                total_earned: 0,
-                total_spent: 0,
-                play_time: 0,
-                first_play: Date.now()
-            },
-            
-            version: "1.0.0"
+            usedPromoCodes: [],
+            referralCode: generateReferralCode(),
+            referrals: 0,
+            referralBonus: 0,
+            gamesPlayed: { game1: 0, game2: 0, game3: 0, game4: 0 }
         };
 
-        // ====== NFT СИСТЕМА ======
-        const nftTypes = {
-            click_boost: { name: "Бустер клика", description: "Увеличивает доход за клик" },
-            passive_boost: { name: "Генератор", description: "Увеличивает пассивный доход" },
-            limit_boost: { name: "Расширитель", description: "Увеличивает лимит кликов" },
-            luck_boost: { name: "Амулет удачи", description: "Увеличивает шанс на бонус" },
-            referral_boost: { name: "Реферальный магнит", description: "Увеличивает доход с рефералов" }
-        };
-
-        const nftRarities = {
-            common: { multiplier: 0.1, color: "#9e9e9e", price: 100 },
-            uncommon: { multiplier: 0.25, color: "#4caf50", price: 250 },
-            rare: { multiplier: 0.5, color: "#2196f3", price: 500 },
-            epic: { multiplier: 1, color: "#9c27b0", price: 1000 },
-            legendary: { multiplier: 2, color: "#ffd700", price: 2500 }
-        };
-
-        // ====== МИНИ-ИГРЫ ======
-        let currentGame = null;
-        let gameInterval = null;
-        let gameTimeout = null;
-
-        // Слова для игры в печать
-        const cryptoWords = [
-            "BITCOIN", "ETHEREUM", "SOLANA", "POLKADOT", "CARDANO",
-            "AVALANCHE", "POLYGON", "ARBITRUM", "OPTIMISM", "COSMOS",
-            "NEAR", "ALGORAND", "TEZOS", "FLOW", "HARMONY"
+        // Данные об улучшениях
+        const upgradesData = [
+            { id: 'clickPower', name: 'Усиление клика', description: 'Увеличивает количество токенов за клик', icon: 'fa-bolt' },
+            { id: 'autoClicker', name: 'Авто-кликер', description: 'Автоматически кликает каждую секунду', icon: 'fa-robot' },
+            { id: 'limitBoost', name: 'Увеличение лимита', description: 'Увеличивает лимит кликов', icon: 'fa-chart-line' }
         ];
 
-        // ====== СИСТЕМА АВТОСОХРАНЕНИЯ ======
-        function getUserId() {
-            if (tg?.initDataUnsafe?.user?.id) {
-                return 'tg_' + tg.initDataUnsafe.user.id;
+        // Данные об NFT
+        const nftsData = [
+            { id: 'nft1', name: 'Биткоин NFT', description: 'Дает +10% к доходу', price: 10000, bonus: 'incomeMultiplier', value: 1.1, icon: 'fa-bitcoin' },
+            { id: 'nft2', name: 'Эфириум NFT', description: 'Увеличивает лимит кликов на 50', price: 25000, bonus: 'clickLimit', value: 50, icon: 'fa-ethereum' },
+            { id: 'nft3', name: 'Доджкоин NFT', description: 'Увеличивает силу клика на 2', price: 50000, bonus: 'clickPower', value: 2, icon: 'fa-dog' },
+            { id: 'nft4', name: 'Крипто-кит', description: 'Дает +20 токенов в секунду', price: 100000, bonus: 'autoClicker', value: 20, icon: 'fa-cat' }
+        ];
+
+        // Данные о мини-играх
+        const gamesData = [
+            { id: 'game1', name: 'Угадай число', description: 'Угадай число от 1 до 100', reward: 5000, icon: 'fa-question' },
+            { id: 'game2', name: 'Кликни по цели', description: 'Попади по движущейся цели', reward: 8000, icon: 'fa-bullseye' },
+            { id: 'game3', name: 'Быстрые клики', description: 'Кликай как можно быстрее', reward: 10000, icon: 'fa-running' },
+            { id: 'game4', name: 'Игра на память', description: 'Запомни последовательность', reward: 15000, icon: 'fa-brain' }
+        ];
+
+        // Промокоды
+        const promoCodes = {
+            'CRYPTO500': { tokens: 500000000, usesLeft: 30 }
+        };
+
+        // Переменные для мини-игр
+        let currentGame1Number = 0;
+        let game1Attempts = 0;
+        let game1Active = false;
+
+        let game2TimeLeft = 10;
+        let game2Score = 0;
+        let game2Active = false;
+        let game2Interval;
+
+        let game3TimeLeft = 5;
+        let game3Score = 0;
+        let game3Active = false;
+        let game3Interval;
+
+        let game4Sequence = [];
+        let game4PlayerSequence = [];
+        let game4Level = 1;
+        let game4Active = false;
+        let game4Showing = false;
+
+        // Загрузка состояния игры из localStorage
+        function loadGameState() {
+            const savedState = localStorage.getItem('cryptoClickerSave');
+            if (savedState) {
+                try {
+                    const parsed = JSON.parse(savedState);
+                    // Объединяем сохраненное состояние с текущим (для совместимости с новыми версиями)
+                    gameState = { ...gameState, ...parsed };
+                    console.log('Игра загружена из сохранения');
+                } catch (e) {
+                    console.error('Ошибка при загрузке сохранения:', e);
+                }
             }
+            updateUI();
+        }
+
+        // Сохранение состояния игры в localStorage
+        function saveGameState() {
+            try {
+                localStorage.setItem('cryptoClickerSave', JSON.stringify(gameState));
+                showNotification('Игра сохранена!');
+                console.log('Игра сохранена');
+            } catch (e) {
+                console.error('Ошибка при сохранении игры:', e);
+            }
+        }
+
+        // Показать уведомление
+        function showNotification(message) {
+            const notification = document.getElementById('saveNotification');
+            notification.textContent = message;
+            notification.style.display = 'block';
             
-            let userId = localStorage.getItem('cryptoKombat_userId');
-            if (!userId) {
-                userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('cryptoKombat_userId', userId);
-            }
-            return userId;
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
 
-        async function saveGame() {
-            try {
-                const userId = getUserId();
-                localStorage.setItem('cryptoKombat_save_' + userId, JSON.stringify(gameState));
-                return true;
-            } catch (error) {
-                console.error('Save error:', error);
-                return false;
-            }
+        // Обновление интерфейса
+        function updateUI() {
+            // Обновляем счетчики токенов
+            document.getElementById('tokenCount').textContent = formatNumber(gameState.tokens);
+            document.getElementById('totalTokens').textContent = formatNumber(gameState.totalTokens);
+            document.getElementById('tokensPerSecond').textContent = formatNumber(gameState.tokensPerSecond);
+            
+            // Обновляем лимит кликов
+            document.getElementById('clicksUsed').textContent = gameState.clicksUsed;
+            document.getElementById('clickLimit').textContent = gameState.clickLimit;
+            
+            // Обновляем отображение кликов
+            document.getElementById('clickerDisplay').textContent = formatNumber(gameState.tokens) + ' токенов';
+            
+            // Обновляем список улучшений
+            updateUpgradesUI();
+            
+            // Обновляем список NFT
+            updateNFTsUI();
+            
+            // Обновляем список игр
+            updateGamesUI();
+            
+            // Обновляем реферальную систему
+            updateReferralUI();
         }
 
-        async function loadGame() {
-            try {
-                const userId = getUserId();
-                const localSave = localStorage.getItem('cryptoKombat_save_' + userId);
-                if (localSave) {
-                    const loadedData = JSON.parse(localSave);
-                    Object.assign(gameState, loadedData);
-                    
-                    // Генерируем новый реферальный код если его нет
-                    if (!gameState.referral_code) {
-                        gameState.referral_code = generateNewReferralCode();
-                        await saveGame();
-                    }
-                    
-                    console.log('Game loaded from local storage');
-                    return true;
+        // Форматирование чисел
+        function formatNumber(num) {
+            if (num >= 1000000000) {
+                return (num / 1000000000).toFixed(2) + 'B';
+            }
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(2) + 'M';
+            }
+            if (num >= 1000) {
+                return (num / 1000).toFixed(2) + 'K';
+            }
+            return Math.floor(num);
+        }
+
+        // Обновление интерфейса улучшений
+        function updateUpgradesUI() {
+            const upgradesList = document.getElementById('upgradesList');
+            upgradesList.innerHTML = '';
+            
+            upgradesData.forEach(upgrade => {
+                const upg = gameState.upgrades[upgrade.id];
+                const upgradeItem = document.createElement('div');
+                upgradeItem.className = 'upgrade-item';
+                
+                const canAfford = gameState.tokens >= upg.cost;
+                
+                upgradeItem.innerHTML = `
+                    <div class="upgrade-info">
+                        <h3><i class="fas ${upgrade.icon}"></i> ${upgrade.name} Ур.${upg.level}</h3>
+                        <p>${upgrade.description}</p>
+                        <p>Текущий бонус: ${upgrade.id === 'clickPower' ? upg.multiplier + 'x' : 
+                                          upgrade.id === 'autoClicker' ? upg.multiplier + ' токенов/сек' : 
+                                          upg.multiplier + ' к лимиту'}</p>
+                    </div>
+                    <div>
+                        <div class="upgrade-price">${formatNumber(upg.cost)} токенов</div>
+                        <button class="buy-button" data-upgrade="${upgrade.id}" ${canAfford ? '' : 'disabled'}>
+                            ${canAfford ? 'Купить' : 'Недостаточно'}
+                        </button>
+                    </div>
+                `;
+                
+                upgradesList.appendChild(upgradeItem);
+            });
+            
+            // Добавляем обработчики событий для кнопок покупки
+            document.querySelectorAll('.buy-button[data-upgrade]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const upgradeId = this.getAttribute('data-upgrade');
+                    buyUpgrade(upgradeId);
+                });
+            });
+        }
+
+        // Покупка улучшения
+        function buyUpgrade(upgradeId) {
+            const upgrade = gameState.upgrades[upgradeId];
+            
+            if (gameState.tokens >= upgrade.cost) {
+                gameState.tokens -= upgrade.cost;
+                
+                // Увеличиваем уровень улучшения
+                upgrade.level++;
+                
+                // Увеличиваем стоимость для следующего уровня
+                upgrade.cost = Math.floor(upgrade.cost * 1.5);
+                
+                // Увеличиваем множитель в зависимости от типа улучшения
+                if (upgradeId === 'clickPower') {
+                    upgrade.multiplier = upgrade.level;
+                } else if (upgradeId === 'autoClicker') {
+                    upgrade.multiplier = upgrade.level * 5;
+                } else if (upgradeId === 'limitBoost') {
+                    upgrade.multiplier = upgrade.level * 100;
+                    gameState.clickLimit = 100 + upgrade.multiplier;
                 }
                 
-                return false;
-            } catch (error) {
-                console.error('Load error:', error);
-                return false;
+                // Обновляем токены в секунду
+                updateTokensPerSecond();
+                
+                // Обновляем интерфейс и сохраняем игру
+                updateUI();
+                saveGameState();
+                
+                showNotification(`Улучшение куплено!`);
             }
         }
 
-        function generateNewReferralCode() {
+        // Обновление токенов в секунду
+        function updateTokensPerSecond() {
+            let tps = gameState.upgrades.autoClicker.multiplier;
+            
+            // Добавляем бонусы от NFT
+            gameState.nfts.forEach(nftId => {
+                const nft = nftsData.find(n => n.id === nftId);
+                if (nft && nft.bonus === 'autoClicker') {
+                    tps += nft.value;
+                }
+            });
+            
+            gameState.tokensPerSecond = tps;
+        }
+
+        // Обновление интерфейса NFT
+        function updateNFTsUI() {
+            const nftList = document.getElementById('nftList');
+            nftList.innerHTML = '';
+            
+            nftsData.forEach(nft => {
+                const isOwned = gameState.nfts.includes(nft.id);
+                const canAfford = gameState.tokens >= nft.price && !isOwned;
+                
+                const nftItem = document.createElement('div');
+                nftItem.className = 'nft-item';
+                nftItem.innerHTML = `
+                    <div class="nft-info">
+                        <h3><i class="fas ${nft.icon}"></i> ${nft.name} ${isOwned ? '(Куплено)' : ''}</h3>
+                        <p>${nft.description}</p>
+                        <p>Бонус: ${nft.bonus === 'incomeMultiplier' ? '+10% к доходу' : 
+                                  nft.bonus === 'clickLimit' ? '+50 к лимиту кликов' :
+                                  nft.bonus === 'clickPower' ? '+2 к силе клика' :
+                                  '+20 токенов/сек'}</p>
+                    </div>
+                    <div>
+                        <div class="nft-price">${formatNumber(nft.price)} токенов</div>
+                        <button class="buy-button" data-nft="${nft.id}" ${isOwned ? 'disabled' : canAfford ? '' : 'disabled'}>
+                            ${isOwned ? 'Куплено' : canAfford ? 'Купить' : 'Недостаточно'}
+                        </button>
+                    </div>
+                `;
+                
+                nftList.appendChild(nftItem);
+            });
+            
+            // Добавляем обработчики событий для кнопок покупки NFT
+            document.querySelectorAll('.buy-button[data-nft]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const nftId = this.getAttribute('data-nft');
+                    buyNFT(nftId);
+                });
+            });
+        }
+
+        // Покупка NFT
+        function buyNFT(nftId) {
+            const nft = nftsData.find(n => n.id === nftId);
+            
+            if (!nft) return;
+            
+            if (gameState.tokens >= nft.price && !gameState.nfts.includes(nftId)) {
+                gameState.tokens -= nft.price;
+                gameState.nfts.push(nftId);
+                
+                // Применяем бонус NFT
+                applyNFTBonus(nft);
+                
+                // Обновляем интерфейс и сохраняем игру
+                updateUI();
+                saveGameState();
+                
+                showNotification(`NFT "${nft.name}" куплено!`);
+            }
+        }
+
+        // Применение бонуса NFT
+        function applyNFTBonus(nft) {
+            if (nft.bonus === 'incomeMultiplier') {
+                // Бонус уже учтен в расчетах
+            } else if (nft.bonus === 'clickLimit') {
+                gameState.clickLimit += nft.value;
+            } else if (nft.bonus === 'clickPower') {
+                gameState.upgrades.clickPower.multiplier += nft.value;
+            } else if (nft.bonus === 'autoClicker') {
+                updateTokensPerSecond();
+            }
+        }
+
+        // Обновление интерфейса мини-игр
+        function updateGamesUI() {
+            const gamesList = document.getElementById('gamesList');
+            gamesList.innerHTML = '';
+            
+            gamesData.forEach(game => {
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+                gameItem.innerHTML = `
+                    <div class="game-info">
+                        <h3><i class="fas ${game.icon}"></i> ${game.name}</h3>
+                        <p>${game.description}</p>
+                        <p>Награда: ${formatNumber(game.reward)} токенов</p>
+                    </div>
+                    <button class="game-button" data-game="${game.id}">Играть</button>
+                `;
+                
+                gamesList.appendChild(gameItem);
+            });
+            
+            // Добавляем обработчики событий для кнопок мини-игр
+            document.querySelectorAll('.game-button[data-game]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const gameId = this.getAttribute('data-game');
+                    openGameModal(gameId);
+                });
+            });
+        }
+
+        // Обновление реферального интерфейса
+        function updateReferralUI() {
+            document.getElementById('referralCode').textContent = gameState.referralCode;
+            document.getElementById('referralCount').textContent = gameState.referrals;
+            document.getElementById('referralBonus').textContent = formatNumber(gameState.referralBonus);
+        }
+
+        // Генерация реферального кода
+        function generateReferralCode() {
+            if (gameState.referralCode) return gameState.referralCode;
+            
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let code = '';
             for (let i = 0; i < 8; i++) {
@@ -932,1508 +981,596 @@
             return code;
         }
 
-        // ====== ОСНОВНЫЕ ФУНКЦИИ ======
-        async function initGame() {
-            const loaded = await loadGame();
-            
-            if (!loaded) {
-                gameState.referral_code = generateNewReferralCode();
-                gameState.click_limit_used = 0;
-                gameState.last_reset_time = Date.now();
-                await saveGame();
-                showNotification('Новая игра начата!', 'success');
-            } else {
-                const now = Date.now();
-                const timeSinceLastReset = now - gameState.last_reset_time;
-                
-                // Если прошло 2 минуты, сбрасываем клики
-                if (timeSinceLastReset >= 120000) {
-                    gameState.click_limit_used = 0;
-                    gameState.last_reset_time = now;
-                    showNotification('Клики восстановлены за время отсутствия!', 'success');
-                }
-                
-                showNotification('Прогресс загружен!', 'success');
-            }
-            
-            updateUI();
-            updateClickLimitUI();
-            renderUpgrades();
-            loadNFTInventory();
-            updateReferralUI();
-            startPassiveIncome();
-            startClickLimitTimer();
-            
-            checkDailyBonus();
-            updateReferralBonuses();
-            
-            setInterval(async () => {
-                await saveGame();
-            }, 30000);
-            
-            console.log('Игра инициализирована');
-        }
-        
-        function updateUI() {
-            // Рассчитываем общий буст
-            let totalBoost = 1;
-            if (gameState.nft_boost > 1) totalBoost *= gameState.nft_boost;
-            if (gameState.referral_bonus > 1) totalBoost *= gameState.referral_bonus;
-            
-            document.getElementById('balance').textContent = formatNumber(gameState.balance) + ' ₿';
-            document.getElementById('per-click').textContent = formatNumber(gameState.per_click * totalBoost) + ' ₿';
-            document.getElementById('click-value').textContent = Math.floor(gameState.per_click * totalBoost);
-            document.getElementById('level').textContent = gameState.level;
-            document.getElementById('passive-income').textContent = gameState.passive_per_sec.toFixed(2) + ' ₿/сек';
-            
-            // Рассчитываем цену восстановления с учетом уровня и улучшений
-            const resetCost = calculateResetCost();
-            document.getElementById('reset-cost').textContent = formatNumber(resetCost);
-            
-            document.getElementById('nft-boost').textContent = '+' + Math.floor((totalBoost - 1) * 100) + '%';
-            document.getElementById('nft-count').textContent = gameState.nfts.length;
-            document.getElementById('equipped-nft').textContent = gameState.equipped_nfts.length;
-            document.getElementById('nft-value').textContent = formatNumber(calculateNFTValue()) + ' ₿';
-        }
-
-        function formatNumber(num) {
-            return Math.floor(num).toLocaleString('ru-RU');
-        }
-
-        // ====== СИСТЕМА КЛИКОВ ======
-        document.getElementById('click-btn').addEventListener('click', async function() {
-            // Рассчитываем максимальное количество кликов
-            const maxClicks = calculateMaxClicks();
-            
-            // Если прошло 2 минуты, сбрасываем клики
-            const timeSinceReset = Date.now() - gameState.last_reset_time;
-            if (timeSinceReset >= 120000) {
-                gameState.click_limit_used = 0;
-                gameState.last_reset_time = Date.now();
-            }
-            
-            // Проверяем лимит кликов
-            if (gameState.click_limit_used >= maxClicks) {
-                const timeLeft = 120000 - timeSinceReset;
-                const minutes = Math.floor(Math.max(0, timeLeft) / 60000);
-                const seconds = Math.floor((Math.max(0, timeLeft) % 60000) / 1000);
-                showNotification(`Лимит кликов исчерпан! Восстановление через ${minutes}:${seconds.toString().padStart(2, '0')}`, 'error');
+        // Обработка клика по основной кнопке
+        function handleClick() {
+            if (gameState.clicksUsed >= gameState.clickLimit) {
+                showNotification('Лимит кликов исчерпан! Улучшите лимит в разделе улучшений.');
                 return;
             }
             
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => this.style.transform = 'scale(1)', 100);
-            
-            if (tg?.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('light');
-            }
-            
-            // Рассчитываем бусты
-            let totalBoost = 1;
-            if (gameState.nft_boost > 1) totalBoost *= gameState.nft_boost;
-            if (gameState.referral_bonus > 1) totalBoost *= gameState.referral_bonus;
-            
-            // Шанс на критический удар (5%)
-            let clickMultiplier = 1;
-            if (Math.random() < 0.05) {
-                clickMultiplier = 2;
-                showNotification('Критический удар! x2 к доходу!', 'success');
-            }
-            
-            const clickValue = Math.floor(gameState.per_click * totalBoost * clickMultiplier);
-            gameState.balance += clickValue;
-            gameState.total_clicks++;
-            gameState.statistics.total_earned += clickValue;
-            gameState.click_limit_used++;
-            gameState.experience++;
-            
-            // Добавляем опыт за рефералов
-            if (gameState.referrals.length > 0) {
-                gameState.experience += Math.floor(gameState.referrals.length / 2);
-            }
-            
-            if (gameState.experience >= gameState.level * 100) {
-                gameState.level++;
-                gameState.experience = 0;
-                gameState.per_click += Math.floor(gameState.level / 2);
-                showNotification('Уровень ' + gameState.level + '! +' + Math.floor(gameState.level / 2) + ' к клику', 'success');
-                
-                if (tg?.HapticFeedback) {
-                    tg.HapticFeedback.impactOccurred('heavy');
-                }
-            }
-            
-            updateUI();
-            updateClickLimitUI();
-            await saveGame();
-        });
-
-        function calculateMaxClicks() {
-            return gameState.click_limit + (gameState.upgrades.click_limit_boost || 0) * 10;
-        }
-
-        function calculateResetCost() {
-            const baseCost = 100;
-            const levelMultiplier = gameState.level;
-            const upgradeMultiplier = 1 + (gameState.upgrades.click_speed || 0) * 0.5;
-            return Math.floor(baseCost * levelMultiplier * upgradeMultiplier);
-        }
-
-        // ====== ЛИМИТ КЛИКОВ ======
-        function updateClickLimitUI() {
-            const maxClicks = calculateMaxClicks();
-            
-            // Если прошло 2 минуты, сбрасываем клики
-            const timeSinceReset = Date.now() - gameState.last_reset_time;
-            if (timeSinceReset >= 120000) {
-                gameState.click_limit_used = 0;
-                gameState.last_reset_time = Date.now();
-            }
-            
-            const used = Math.min(gameState.click_limit_used, maxClicks);
-            const available = Math.max(0, maxClicks - used);
-            const percentage = (available / maxClicks) * 100;
-            
-            document.getElementById('limit-fill').style.width = percentage + '%';
-            document.getElementById('current-clicks').textContent = available;
-            document.getElementById('max-clicks').textContent = maxClicks;
-            
-            const resetBtn = document.getElementById('reset-btn');
-            if (used >= maxClicks) {
-                resetBtn.style.display = 'block';
-                document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #ff4444, #ff9800)';
-            } else {
-                resetBtn.style.display = 'none';
-                document.getElementById('limit-fill').style.background = 'linear-gradient(90deg, #00c853, #00e676)';
-            }
-            
-            // Обновляем таймер восстановления
-            const timeUntilReset = 120000 - timeSinceReset;
-            const minutes = Math.floor(Math.max(0, timeUntilReset) / 60000);
-            const seconds = Math.floor((Math.max(0, timeUntilReset) % 60000) / 1000);
-            
-            if (used >= maxClicks) {
-                document.getElementById('reset-time').textContent = 
-                    `Восстановление через ${minutes}:${seconds.toString().padStart(2, '0')}`;
-            } else {
-                document.getElementById('reset-time').textContent = 
-                    `Восстановление: ${minutes}:${seconds.toString().padStart(2, '0')}`;
-            }
-        }
-
-        function startClickLimitTimer() {
-            setInterval(() => {
-                updateClickLimitUI();
-                
-                // Автоматически сбрасываем клики каждые 2 минуты
-                const timeSinceReset = Date.now() - gameState.last_reset_time;
-                if (timeSinceReset >= 120000) {
-                    gameState.click_limit_used = 0;
-                    gameState.last_reset_time = Date.now();
-                    
-                    if (gameState.click_limit_used > 0) {
-                        showNotification('Лимит кликов восстановлен!', 'success');
-                        
-                        if (tg?.HapticFeedback) {
-                            tg.HapticFeedback.impactOccurred('light');
-                        }
-                    }
-                }
-                
-                gameState.statistics.play_time++;
-            }, 1000);
-        }
-
-        async function resetClickLimit() {
-            const maxClicks = calculateMaxClicks();
-            
-            if (gameState.click_limit_used < maxClicks) {
-                showNotification('Лимит еще не исчерпан!', 'warning');
-                return;
-            }
-            
-            const cost = calculateResetCost();
-            if (gameState.balance < cost) {
-                showNotification('Недостаточно средств! Нужно ' + formatNumber(cost) + ' ₿', 'error');
-                return;
-            }
-            
-            gameState.balance -= cost;
-            gameState.statistics.total_spent += cost;
-            gameState.click_limit_used = 0;
-            gameState.last_reset_time = Date.now();
-            
-            updateClickLimitUI();
-            updateUI();
-            await saveGame();
-            
-            showNotification('Лимит кликов восстановлен!', 'success');
-            
-            if (tg?.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('heavy');
-            }
-        }
-
-        // ====== УЛУЧШЕНИЯ ======
-        const upgrades = [
-            { 
-                id: 'basic_rig', 
-                name: 'Базовый минимум', 
-                desc: 'Простая видеокарта', 
-                cost: 10, 
-                click: 1, 
-                passive: 0.01,
-                max_level: 10
-            },
-            { 
-                id: 'gpu_farm', 
-                name: 'GPU Ферма', 
-                desc: 'Несколько видеокарт', 
-                cost: 50, 
-                click: 5, 
-                passive: 0.05,
-                max_level: 5
-            },
-            { 
-                id: 'asic_miner', 
-                name: 'Майнер', 
-                desc: 'Специализированный процессор', 
-                cost: 200, 
-                click: 20, 
-                passive: 0.2,
-                max_level: 3
-            },
-            { 
-                id: 'mining_pool', 
-                name: 'Супер ферма', 
-                desc: 'Объединенная мощность', 
-                cost: 500, 
-                click: 50, 
-                passive: 0.5,
-                max_level: 2
-            },
-            { 
-                id: 'click_limit_boost', 
-                name: 'Улучшение лимита', 
-                desc: '+10 к лимиту кликов', 
-                cost: 100, 
-                limit_bonus: 10,
-                max_level: 5
-            },
-            { 
-                id: 'click_speed', 
-                name: 'Скорость клика', 
-                desc: '+5 к силе клика', 
-                cost: 500, 
-                click: 5,
-                max_level: 10
-            },
-            { 
-                id: 'referral_boost', 
-                name: 'Реферальный буст', 
-                desc: '+10% к реферальному доходу', 
-                cost: 300, 
-                referral_bonus: 0.1,
-                max_level: 5
-            }
-        ];
-
-        async function buyUpgrade(upgradeId) {
-            const upgrade = upgrades.find(u => u.id === upgradeId);
-            if (!upgrade) return;
-            
-            const currentLevel = gameState.upgrades[upgradeId] || 0;
-            
-            // Проверка максимального уровня
-            if (upgrade.max_level && currentLevel >= upgrade.max_level) {
-                showNotification('Максимальный уровень достигнут!', 'warning');
-                return;
-            }
-            
-            const cost = Math.floor(upgrade.cost * Math.pow(1.5, currentLevel));
-            
-            if (gameState.balance < cost) {
-                showNotification('Недостаточно средств!', 'error');
-                return;
-            }
-            
-            gameState.balance -= cost;
-            gameState.statistics.total_spent += cost;
-            gameState.upgrades[upgradeId] = currentLevel + 1;
-            
-            if (upgrade.click) {
-                gameState.per_click += upgrade.click;
-            }
-            if (upgrade.passive) {
-                gameState.passive_per_sec += upgrade.passive;
-            }
-            if (upgrade.limit_bonus) {
-                gameState.click_limit += upgrade.limit_bonus;
-            }
-            if (upgrade.referral_bonus) {
-                gameState.referral_bonus += upgrade.referral_bonus;
-            }
-            
-            updateUI();
-            updateClickLimitUI();
-            renderUpgrades();
-            await saveGame();
-            
-            showNotification('Куплено: ' + upgrade.name, 'success');
-        }
-
-        function renderUpgrades() {
-            const container = document.getElementById('upgrades-container');
-            container.innerHTML = '';
-            
-            upgrades.forEach(upgrade => {
-                const currentLevel = gameState.upgrades[upgrade.id] || 0;
-                const cost = Math.floor(upgrade.cost * Math.pow(1.5, currentLevel));
-                const canBuy = gameState.balance >= cost;
-                const isMaxLevel = upgrade.max_level && currentLevel >= upgrade.max_level;
-                
-                const card = document.createElement('div');
-                card.className = 'upgrade-card';
-                card.innerHTML = `
-                    <h3>${upgrade.name} (${currentLevel}${upgrade.max_level ? '/' + upgrade.max_level : ''})</h3>
-                    <p>${upgrade.desc}</p>
-                    <div style="color: #00e676; margin: 10px 0;">
-                        ${upgrade.click ? '+' + upgrade.click + ' к клику' : ''}
-                        ${upgrade.passive ? '<br>+' + upgrade.passive + ' ₿/сек' : ''}
-                        ${upgrade.limit_bonus ? '<br>+' + upgrade.limit_bonus + ' к лимиту' : ''}
-                        ${upgrade.referral_bonus ? '<br>+' + (upgrade.referral_bonus * 100) + '% к рефералам' : ''}
-                    </div>
-                    <button class="btn" onclick="buyUpgrade('${upgrade.id}')" ${!canBuy || isMaxLevel ? 'disabled' : ''}>
-                        ${isMaxLevel ? 'МАКСИМУМ' : (currentLevel === 0 ? 'КУПИТЬ' : 'УЛУЧШИТЬ')} ЗА ${formatNumber(cost)} ₿
-                    </button>
-                    ${isMaxLevel ? '<div style="color:#ff9800;margin-top:10px;">Максимальный уровень достигнут!</div>' : ''}
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // ====== NFT СИСТЕМА ======
-        function generateNFT(type, rarity) {
-            const nftType = nftTypes[type] || nftTypes.click_boost;
-            const nftRarity = nftRarities[rarity] || nftRarities.common;
-            
-            return {
-                id: Date.now() + Math.random().toString(36).substr(2, 9),
-                type: type,
-                name: nftType.name,
-                description: nftType.description,
-                rarity: rarity,
-                multiplier: nftRarity.multiplier,
-                value: nftRarity.price,
-                color: nftRarity.color,
-                created: Date.now(),
-                equipped: false
-            };
-        }
-
-        async function buyNftBox(type) {
-            const prices = {
-                'basic': 1000,
-                'premium': 5000,
-                'legendary': 10000
-            };
-            
-            const price = prices[type];
-            if (gameState.balance < price) {
-                showNotification(`Недостаточно средств! Нужно ${price} ₿`, 'error');
-                return;
-            }
-            
-            gameState.balance -= price;
-            gameState.statistics.total_spent += price;
-            
-            // Определяем шансы в зависимости от типа бокса
-            let rarityChances = {};
-            if (type === 'basic') {
-                rarityChances = { common: 0.7, uncommon: 0.25, rare: 0.05, epic: 0, legendary: 0 };
-            } else if (type === 'premium') {
-                rarityChances = { common: 0.5, uncommon: 0.3, rare: 0.15, epic: 0.04, legendary: 0.01 };
-            } else if (type === 'legendary') {
-                rarityChances = { common: 0, uncommon: 0.4, rare: 0.35, epic: 0.2, legendary: 0.05 };
-            }
-            
-            // Выбираем редкость
-            const rand = Math.random();
-            let rarity = 'common';
-            if (rand < rarityChances.common) rarity = 'common';
-            else if (rand < rarityChances.common + rarityChances.uncommon) rarity = 'uncommon';
-            else if (rand < rarityChances.common + rarityChances.uncommon + rarityChances.rare) rarity = 'rare';
-            else if (rand < rarityChances.common + rarityChances.uncommon + rarityChances.rare + rarityChances.epic) rarity = 'epic';
-            else rarity = 'legendary';
-            
-            // Выбираем тип NFT
-            const nftTypesArray = Object.keys(nftTypes);
-            const nftType = nftTypesArray[Math.floor(Math.random() * nftTypesArray.length)];
-            
-            // Создаем NFT
-            const nft = generateNFT(nftType, rarity);
-            gameState.nfts.push(nft);
-            
-            updateUI();
-            await saveGame();
-            
-            // Показываем NFT
-            showNFT(nft);
-            showNotification(`Вы получили ${rarity} NFT: ${nft.name}!`, 'success');
-        }
-
-        function showNFT(nft) {
-            gameState.selected_nft = nft;
-            const modal = document.getElementById('nft-open-modal');
-            const preview = document.getElementById('nft-preview');
-            
-            preview.innerHTML = `
-                <div style="background: ${nft.color}20; padding: 20px; border-radius: 15px; border: 2px solid ${nft.color}; margin-bottom: 20px;">
-                    <h3 style="color:${nft.color}">${nft.name}</h3>
-                    <div class="nft-rarity" style="background:${nft.color}30;color:${nft.color}">${nft.rarity}</div>
-                    <p>${nft.description}</p>
-                    <p style="margin-top:10px;color:#00e676;">Буст: +${Math.floor(nft.multiplier * 100)}%</p>
-                    <p style="color:#ff9800;">Стоимость: ${formatNumber(nft.value)} ₿</p>
-                </div>
-            `;
-            
-            modal.style.display = 'flex';
-        }
-
-        async function equipNFT() {
-            if (!gameState.selected_nft) return;
-            
-            const nft = gameState.selected_nft;
-            
-            // Проверяем, не надет ли уже NFT такого типа
-            const alreadyEquipped = gameState.equipped_nfts.find(n => n.type === nft.type);
-            if (alreadyEquipped) {
-                showNotification(`NFT типа "${nftTypes[nft.type].name}" уже надет!`, 'warning');
-                return;
-            }
-            
-            nft.equipped = true;
-            gameState.equipped_nfts.push(nft);
-            
-            // Применяем буст
-            applyNFTBoost(nft);
-            
-            updateUI();
-            loadNFTInventory();
-            await saveGame();
-            
-            showNotification(`NFT "${nft.name}" надет!`, 'success');
-            closeModal('nft-open-modal');
-        }
-
-        async function sellNFT() {
-            if (!gameState.selected_nft) return;
-            
-            const nft = gameState.selected_nft;
-            const sellPrice = Math.floor(nft.value * 0.7); // 70% от стоимости
-            
-            // Удаляем NFT из инвентаря
-            const nftIndex = gameState.nfts.findIndex(n => n.id === nft.id);
-            if (nftIndex !== -1) {
-                gameState.nfts.splice(nftIndex, 1);
-            }
-            
-            // Если NFT был надет, снимаем его
-            const equippedIndex = gameState.equipped_nfts.findIndex(n => n.id === nft.id);
-            if (equippedIndex !== -1) {
-                gameState.equipped_nfts.splice(equippedIndex, 1);
-                removeNFTBoost(nft);
-            }
-            
-            gameState.balance += sellPrice;
-            gameState.statistics.total_earned += sellPrice;
-            
-            updateUI();
-            loadNFTInventory();
-            await saveGame();
-            
-            showNotification(`NFT продан за ${formatNumber(sellPrice)} ₿!`, 'success');
-            closeModal('nft-open-modal');
-        }
-
-        function applyNFTBoost(nft) {
-            switch(nft.type) {
-                case 'click_boost':
-                    gameState.nft_boost = 1 + (gameState.equipped_nfts.filter(n => n.type === 'click_boost').reduce((sum, n) => sum + n.multiplier, 0));
-                    break;
-                case 'passive_boost':
-                    gameState.passive_per_sec += nft.multiplier * 0.1;
-                    break;
-                case 'limit_boost':
-                    gameState.click_limit += Math.floor(nft.multiplier * 10);
-                    break;
-                case 'referral_boost':
-                    gameState.referral_bonus += nft.multiplier;
-                    break;
-            }
-        }
-
-        function removeNFTBoost(nft) {
-            switch(nft.type) {
-                case 'click_boost':
-                    gameState.nft_boost = 1 + (gameState.equipped_nfts.filter(n => n.type === 'click_boost').reduce((sum, n) => sum + n.multiplier, 0));
-                    break;
-                case 'passive_boost':
-                    gameState.passive_per_sec -= nft.multiplier * 0.1;
-                    break;
-                case 'limit_boost':
-                    gameState.click_limit -= Math.floor(nft.multiplier * 10);
-                    break;
-                case 'referral_boost':
-                    gameState.referral_bonus -= nft.multiplier;
-                    break;
-            }
-        }
-
-        function loadNFTInventory() {
-            const inventory = document.getElementById('nft-inventory');
-            const equippedContainer = document.getElementById('equipped-nfts-container');
-            
-            if (gameState.nfts.length === 0) {
-                inventory.innerHTML = '<p style="text-align:center;opacity:0.7;">У вас пока нет NFT</p>';
-            } else {
-                inventory.innerHTML = '';
-                gameState.nfts.forEach(nft => {
-                    const nftCard = document.createElement('div');
-                    nftCard.className = 'nft-card';
-                    nftCard.style.cursor = 'pointer';
-                    nftCard.onclick = () => showNFT(nft);
-                    nftCard.innerHTML = `
-                        <h3>${nft.name}</h3>
-                        <div class="nft-rarity" style="background:${nft.color}30;color:${nft.color}">${nft.rarity}</div>
-                        <p>${nft.description}</p>
-                        <p style="color:#00e676;margin-top:5px;">+${Math.floor(nft.multiplier * 100)}%</p>
-                        ${nft.equipped ? '<div style="color:#4fc3f7;margin-top:5px;">✔ Надет</div>' : ''}
-                    `;
-                    inventory.appendChild(nftCard);
-                });
-            }
-            
-            // Надетые NFT
-            if (gameState.equipped_nfts.length === 0) {
-                equippedContainer.innerHTML = '<p style="text-align:center;opacity:0.7;">Нет надетых NFT</p>';
-            } else {
-                equippedContainer.innerHTML = '';
-                gameState.equipped_nfts.forEach(nft => {
-                    const equippedCard = document.createElement('div');
-                    equippedCard.className = 'stat-card';
-                    equippedCard.style.cursor = 'pointer';
-                    equippedCard.onclick = () => showNFT(nft);
-                    equippedCard.innerHTML = `
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <div>
-                                <strong>${nft.name}</strong>
-                                <div style="font-size:0.8rem;color:${nft.color}">${nft.rarity}</div>
-                            </div>
-                            <div style="color:#00e676;">+${Math.floor(nft.multiplier * 100)}%</div>
-                        </div>
-                    `;
-                    equippedContainer.appendChild(equippedCard);
-                });
-            }
-        }
-
-        function calculateNFTValue() {
-            return gameState.nfts.reduce((sum, nft) => sum + nft.value, 0);
-        }
-
-        // ====== МИНИ-ИГРЫ (полная реализация) ======
-        function startMinigame(type) {
-            currentGame = type;
-            const gamesContainer = document.querySelector('.minigame-container');
-            const gameContainer = document.getElementById('minigame-container');
-            
-            gamesContainer.style.display = 'none';
-            gameContainer.style.display = 'block';
-            gameContainer.innerHTML = '';
-            
-            switch(type) {
-                case 'clicker':
-                    startClickerGame();
-                    break;
-                case 'bubble':
-                    startBubbleGame();
-                    break;
-                case 'memory':
-                    startMemoryGame();
-                    break;
-                case 'typing':
-                    startTypingGame();
-                    break;
-                case 'runner':
-                    startRunnerGame();
-                    break;
-                case 'number':
-                    startNumberGame();
-                    break;
-            }
-            
-            gameState.minigame_stats[type].played++;
-        }
-
-        function backToMinigames() {
-            const gamesContainer = document.querySelector('.minigame-container');
-            const gameContainer = document.getElementById('minigame-container');
-            
-            if (gamesContainer && gameContainer) {
-                gamesContainer.style.display = 'grid';
-                gameContainer.style.display = 'none';
-                gameContainer.innerHTML = '';
-                
-                if (gameInterval) clearInterval(gameInterval);
-                if (gameTimeout) clearTimeout(gameTimeout);
-                currentGame = null;
-            }
-        }
-
-        function endMinigame(score) {
-            // Рассчитываем награду в зависимости от игры
-            let baseReward = 0;
-            switch(currentGame) {
-                case 'clicker': baseReward = 150; break;
-                case 'bubble': baseReward = 200; break;
-                case 'memory': baseReward = 250; break;
-                case 'typing': baseReward = 300; break;
-                case 'runner': baseReward = 400; break;
-                case 'number': baseReward = 200; break;
-            }
-            
-            // Награда зависит от результата
-            const reward = Math.floor(baseReward * (score / 100));
-            
-            // Бонус за рефералов
-            if (gameState.referrals.length >= 10) {
-                reward *= 2;
-            }
-            
-            gameState.balance += reward;
-            gameState.statistics.total_earned += reward;
-            
-            updateUI();
-            saveGame();
-            
-            // Показываем результат
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="header">
-                    <h1>Игра окончена!</h1>
-                    <p>Ваш результат: ${score} очков</p>
-                    <div class="value" style="color:#00e676;font-size:2rem;margin:20px 0;">+${reward} ₿</div>
-                    <button class="btn" onclick="startMinigame('${currentGame}')">Играть снова</button>
-                    <button class="btn btn-danger" onclick="backToMinigames()" style="margin-top:10px;">Вернуться</button>
-                </div>
-            `;
-            
-            // Обновляем лучший результат
-            if (score > gameState.minigame_stats[currentGame].best) {
-                gameState.minigame_stats[currentGame].best = score;
-                showNotification('Новый рекорд!', 'success');
-            }
-        }
-
-        // 1. Игра в клики
-        function startClickerGame() {
-            let timeLeft = 10;
-            let clicks = 0;
-            
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="minigame-header">
-                    <div>
-                        <h3>Кликай как можно быстрее!</h3>
-                        <p>У тебя 10 секунд</p>
-                    </div>
-                    <div class="minigame-timer">${timeLeft}</div>
-                </div>
-                <div style="text-align:center;">
-                    <button class="click-btn" id="game-click-btn" style="width:200px;height:200px;">
-                        КЛИКАЙ!
-                        <div style="font-size:1rem;margin-top:10px;">Кликов: <span id="click-count">0</span></div>
-                    </button>
-                </div>
-                <button class="btn btn-danger" onclick="backToMinigames()" style="margin-top:20px;">Назад</button>
-            `;
-            
-            const clickBtn = document.getElementById('game-click-btn');
-            const clickCount = document.getElementById('click-count');
-            const timerDisplay = document.querySelector('.minigame-timer');
-            
-            clickBtn.addEventListener('click', () => {
-                clicks++;
-                clickCount.textContent = clicks;
-                clickBtn.style.transform = 'scale(0.95)';
-                setTimeout(() => clickBtn.style.transform = 'scale(1)', 100);
-                
-                if (tg?.HapticFeedback) {
-                    tg.HapticFeedback.impactOccurred('light');
+            // Базовое количество токенов за клик
+            let clickValue = 1;
+            
+            // Умножаем на силу клика
+            clickValue *= gameState.upgrades.clickPower.multiplier;
+            
+            // Добавляем бонусы от NFT
+            gameState.nfts.forEach(nftId => {
+                const nft = nftsData.find(n => n.id === nftId);
+                if (nft && nft.bonus === 'clickPower') {
+                    clickValue += nft.value;
                 }
             });
             
-            gameInterval = setInterval(() => {
-                timeLeft--;
-                timerDisplay.textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    endMinigame(clicks);
+            // Умножаем на множитель дохода от NFT
+            let incomeMultiplier = 1;
+            gameState.nfts.forEach(nftId => {
+                const nft = nftsData.find(n => n.id === nftId);
+                if (nft && nft.bonus === 'incomeMultiplier') {
+                    incomeMultiplier *= nft.value;
                 }
-            }, 1000);
+            });
+            
+            clickValue *= incomeMultiplier;
+            
+            // Округляем до целого числа
+            clickValue = Math.floor(clickValue);
+            
+            // Добавляем токены
+            gameState.tokens += clickValue;
+            gameState.totalTokens += clickValue;
+            gameState.clicksUsed++;
+            
+            // Обновляем интерфейс
+            updateUI();
         }
 
-        // 2. Игра в пузыри
-        function startBubbleGame() {
-            let timeLeft = 30;
-            let score = 0;
-            
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="minigame-header">
-                    <div>
-                        <h3>Лопай крипто-пузыри!</h3>
-                        <p>Кликай на появляющиеся пузыри</p>
-                    </div>
-                    <div style="display:flex;gap:20px;">
-                        <div class="minigame-score">${score}</div>
-                        <div class="minigame-timer">${timeLeft}</div>
-                    </div>
-                </div>
-                <div class="game-field" id="bubble-field"></div>
-                <button class="btn btn-danger" onclick="backToMinigames()">Назад</button>
-            `;
-            
-            const field = document.getElementById('bubble-field');
-            
-            // Создаем пузыри
-            function createBubble() {
-                if (timeLeft <= 0) return;
-                
-                const bubble = document.createElement('div');
-                bubble.className = 'crypto-bubble';
-                
-                const types = ['btc', 'eth', 'doge', 'sol', 'bonus'];
-                const type = types[Math.floor(Math.random() * types.length)];
-                bubble.classList.add(`bubble-${type}`);
-                
-                const value = type === 'bonus' ? 10 : 
-                             type === 'btc' ? 5 : 
-                             type === 'eth' ? 4 : 
-                             type === 'sol' ? 3 : 2;
-                
-                bubble.textContent = type === 'btc' ? '₿' : 
-                                   type === 'eth' ? 'Ξ' : 
-                                   type === 'doge' ? 'Ð' : 
-                                   type === 'sol' ? '◎' : '✨';
-                
-                const size = 30 + Math.random() * 40;
-                bubble.style.width = size + 'px';
-                bubble.style.height = size + 'px';
-                
-                const x = Math.random() * (field.clientWidth - size);
-                const y = Math.random() * (field.clientHeight - size);
-                bubble.style.left = x + 'px';
-                bubble.style.top = y + 'px';
-                
-                bubble.addEventListener('click', () => {
-                    score += value;
-                    document.querySelector('.minigame-score').textContent = score;
-                    bubble.remove();
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                    
-                    if (type === 'bonus') {
-                        showNotification('Бонус +10 очков!', 'success');
-                    }
-                });
-                
-                field.appendChild(bubble);
-                
-                setTimeout(() => {
-                    if (bubble.parentNode) {
-                        bubble.remove();
-                    }
-                }, 2000);
-            }
-            
-            // Таймер игры
-            gameInterval = setInterval(() => {
-                timeLeft--;
-                document.querySelector('.minigame-timer').textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    clearInterval(bubbleInterval);
-                    endMinigame(score);
-                }
-            }, 1000);
-            
-            // Создаем пузыри каждые 500ms
-            const bubbleInterval = setInterval(createBubble, 500);
-            
-            // Создаем начальные пузыри
-            for (let i = 0; i < 5; i++) {
-                setTimeout(createBubble, i * 200);
+        // Автоматическое начисление токенов от авто-кликера
+        function autoClickerTick() {
+            if (gameState.tokensPerSecond > 0) {
+                gameState.tokens += gameState.tokensPerSecond;
+                gameState.totalTokens += gameState.tokensPerSecond;
+                updateUI();
             }
         }
 
-        // 3. Игра на память
-        function startMemoryGame() {
-            const symbols = ['₿', 'Ξ', 'Ð', '◎', '★', '⚡', '✨', '♠'];
-            const cards = [...symbols, ...symbols];
-            
-            // Перемешиваем карты
-            for (let i = cards.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [cards[i], cards[j]] = [cards[j], cards[i]];
+        // Сброс лимита кликов каждые 5 минут
+        function resetClickLimit() {
+            gameState.clicksUsed = 0;
+            updateUI();
+        }
+
+        // Открытие модального окна мини-игры
+        function openGameModal(gameId) {
+            const modal = document.getElementById(`${gameId}Modal`);
+            if (modal) {
+                modal.style.display = 'flex';
+                
+                // Инициализируем игру
+                if (gameId === 'game1') initGame1();
+                else if (gameId === 'game2') initGame2();
+                else if (gameId === 'game3') initGame3();
+                else if (gameId === 'game4') initGame4();
             }
+        }
+
+        // Инициализация игры "Угадай число"
+        function initGame1() {
+            currentGame1Number = 0;
+            game1Attempts = 0;
+            game1Active = false;
             
-            let flippedCards = [];
-            let matchedPairs = 0;
-            let moves = 0;
+            document.getElementById('game1Display').textContent = 'Введите число от 1 до 100';
+            document.getElementById('game1Feedback').textContent = '';
+            document.getElementById('game1Attempts').textContent = '0';
+            document.getElementById('guessInput').value = '';
+            document.getElementById('guessButton').disabled = true;
+            document.getElementById('startGame1Button').disabled = false;
+        }
+
+        // Инициализация игры "Кликни по цели"
+        function initGame2() {
+            game2TimeLeft = 10;
+            game2Score = 0;
+            game2Active = false;
             
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="minigame-header">
-                    <div>
-                        <h3>Найди пары!</h3>
-                        <p>Найди все пары одинаковых символов</p>
-                    </div>
-                    <div style="display:flex;gap:20px;">
-                        <div class="minigame-score">Ходы: <span id="move-count">0</span></div>
-                    </div>
-                </div>
-                <div class="memory-grid" id="memory-grid"></div>
-                <button class="btn btn-danger" onclick="backToMinigames()" style="margin-top:20px;">Назад</button>
-            `;
+            document.getElementById('game2Display').textContent = 'Осталось времени: 10';
+            document.getElementById('game2Score').textContent = '0';
             
-            const grid = document.getElementById('memory-grid');
-            const moveCount = document.getElementById('move-count');
+            // Размещаем цель в центре
+            const target = document.getElementById('game2Target');
+            target.style.top = '50%';
+            target.style.left = '50%';
+        }
+
+        // Инициализация игры "Быстрые клики"
+        function initGame3() {
+            game3TimeLeft = 5;
+            game3Score = 0;
+            game3Active = false;
             
-            // Создаем карты
-            cards.forEach((symbol, index) => {
+            document.getElementById('game3Display').textContent = 'Осталось времени: 5';
+            document.getElementById('game3Score').textContent = '0';
+        }
+
+        // Инициализация игры "Игра на память"
+        function initGame4() {
+            game4Sequence = [];
+            game4PlayerSequence = [];
+            game4Level = 1;
+            game4Active = false;
+            game4Showing = false;
+            
+            document.getElementById('game4Display').textContent = 'Запоминай последовательность';
+            document.getElementById('game4Level').textContent = '1';
+            
+            // Создаем карточки для игры
+            createMemoryCards();
+        }
+
+        // Создание карточек для игры на память
+        function createMemoryCards() {
+            const memoryGame = document.getElementById('memoryGame');
+            memoryGame.innerHTML = '';
+            
+            const symbols = ['⭐', '🚀', '💎', '💰', '⚡', '🎯', '🏆', '👑'];
+            
+            for (let i = 0; i < 8; i++) {
                 const card = document.createElement('div');
                 card.className = 'memory-card';
-                card.dataset.symbol = symbol;
-                card.dataset.index = index;
-                
-                card.addEventListener('click', () => {
-                    if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) {
-                        return;
-                    }
-                    
-                    card.classList.add('flipped');
-                    card.textContent = symbol;
-                    flippedCards.push(card);
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                    
-                    if (flippedCards.length === 2) {
-                        moves++;
-                        moveCount.textContent = moves;
-                        
-                        const [card1, card2] = flippedCards;
-                        
-                        if (card1.dataset.symbol === card2.dataset.symbol) {
-                            // Нашли пару
-                            setTimeout(() => {
-                                card1.classList.add('matched');
-                                card2.classList.add('matched');
-                                flippedCards = [];
-                                matchedPairs++;
-                                
-                                if (matchedPairs === symbols.length) {
-                                    // Все пары найдены
-                                    const score = Math.max(1, 100 - moves * 5);
-                                    setTimeout(() => endMinigame(score), 500);
-                                }
-                            }, 500);
-                        } else {
-                            // Не совпали
-                            setTimeout(() => {
-                                card1.classList.remove('flipped');
-                                card2.classList.remove('flipped');
-                                card1.textContent = '';
-                                card2.textContent = '';
-                                flippedCards = [];
-                            }, 1000);
-                        }
-                    }
-                });
-                
-                grid.appendChild(card);
-            });
+                card.dataset.index = i;
+                card.textContent = symbols[i];
+                card.addEventListener('click', handleMemoryCardClick);
+                memoryGame.appendChild(card);
+            }
         }
 
-        // 4. Игра в печать
-        function startTypingGame() {
-            let timeLeft = 60;
-            let score = 0;
-            let currentWord = '';
-            let wordsTyped = 0;
+        // Обработка клика по карточке в игре на память
+        function handleMemoryCardClick(e) {
+            if (!game4Active || game4Showing) return;
             
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="typing-game">
-                    <div class="minigame-header">
-                        <div>
-                            <h3>Печатай крипто-слова!</h3>
-                            <p>Вводи слова как можно быстрее</p>
-                        </div>
-                        <div style="display:flex;gap:20px;">
-                            <div class="minigame-score">${score}</div>
-                            <div class="minigame-timer">${timeLeft}</div>
-                        </div>
-                    </div>
-                    <div class="typing-word" id="current-word"></div>
-                    <input type="text" class="typing-input" id="typing-input" placeholder="Введите слово здесь..." autocomplete="off">
-                    <div class="typing-stats">
-                        <div>Набрано слов: <span id="words-count">0</span></div>
-                        <div>Точность: <span id="accuracy">100%</span></div>
-                    </div>
-                    <button class="btn btn-danger" onclick="backToMinigames()" style="margin-top:20px;">Назад</button>
-                </div>
-            `;
+            const index = parseInt(e.target.dataset.index);
+            game4PlayerSequence.push(index);
             
-            const wordDisplay = document.getElementById('current-word');
-            const input = document.getElementById('typing-input');
-            const wordsCount = document.getElementById('words-count');
-            let correctChars = 0;
-            let totalChars = 0;
+            // Показываем карточку
+            e.target.classList.add('flipped');
             
-            function newWord() {
-                currentWord = cryptoWords[Math.floor(Math.random() * cryptoWords.length)];
-                wordDisplay.textContent = currentWord;
-                input.value = '';
-                input.focus();
-            }
-            
-            input.addEventListener('input', () => {
-                totalChars++;
-                
-                if (input.value.toUpperCase() === currentWord) {
-                    // Слово правильно набрано
-                    const wordScore = currentWord.length * 10;
-                    score += wordScore;
-                    correctChars += currentWord.length;
-                    wordsTyped++;
-                    
-                    document.querySelector('.minigame-score').textContent = score;
-                    wordsCount.textContent = wordsTyped;
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                    
-                    newWord();
-                }
-                
-                // Обновляем точность
-                const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
-                document.getElementById('accuracy').textContent = accuracy + '%';
-            });
-            
-            // Таймер игры
-            gameInterval = setInterval(() => {
-                timeLeft--;
-                document.querySelector('.minigame-timer').textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(gameInterval);
-                    const finalScore = score + (wordsTyped * 5);
-                    endMinigame(finalScore);
-                }
-            }, 1000);
-            
-            // Начинаем с первого слова
-            newWord();
+            // Проверяем последовательность
+            setTimeout(() => {
+                e.target.classList.remove('flipped');
+                checkMemorySequence();
+            }, 500);
         }
 
-        // 5. Ранер игра
-        function startRunnerGame() {
-            let score = 0;
-            let isJumping = false;
-            let gameSpeed = 5;
-            let obstacles = [];
-            let coins = [];
-            
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="minigame-header">
-                    <div>
-                        <h3>Крипто-ранер!</h3>
-                        <p>Кликай для прыжка, собирай монеты</p>
-                    </div>
-                    <div class="minigame-score">${score}</div>
-                </div>
-                <div class="crypto-runner" id="runner-game">
-                    <div class="runner-character" id="runner"></div>
-                </div>
-                <div style="text-align:center;margin:20px 0;">
-                    <p>Кликай на экран для прыжка!</p>
-                </div>
-                <button class="btn btn-danger" onclick="backToMinigames()">Назад</button>
-            `;
-            
-            const game = document.getElementById('runner-game');
-            const runner = document.getElementById('runner');
-            
-            // Обработчик прыжка
-            game.addEventListener('click', () => {
-                if (!isJumping) {
-                    isJumping = true;
-                    runner.style.bottom = '100px';
-                    
-                    setTimeout(() => {
-                        runner.style.bottom = '20px';
-                        setTimeout(() => {
-                            isJumping = false;
-                        }, 200);
-                    }, 300);
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                }
-            });
-            
-            // Генерация препятствий
-            function createObstacle() {
-                const obstacle = document.createElement('div');
-                obstacle.className = 'runner-obstacle';
-                obstacle.style.right = '-50px';
-                game.appendChild(obstacle);
-                obstacles.push(obstacle);
-            }
-            
-            // Генерация монет
-            function createCoin() {
-                const coin = document.createElement('div');
-                coin.className = 'runner-coin';
-                coin.style.right = '-30px';
-                coin.style.bottom = (50 + Math.random() * 100) + 'px';
-                game.appendChild(coin);
-                coins.push(coin);
-            }
-            
-            // Игровой цикл
-            let gameTime = 0;
-            gameInterval = setInterval(() => {
-                gameTime++;
-                
-                // Увеличиваем сложность
-                if (gameTime % 20 === 0) {
-                    gameSpeed = Math.min(15, gameSpeed + 0.5);
-                }
-                
-                // Создаем препятствия
-                if (Math.random() < 0.02) {
-                    createObstacle();
-                }
-                
-                // Создаем монеты
-                if (Math.random() < 0.03) {
-                    createCoin();
-                }
-                
-                // Двигаем препятствия
-                obstacles.forEach((obstacle, index) => {
-                    const currentRight = parseFloat(obstacle.style.right);
-                    obstacle.style.right = (currentRight + gameSpeed) + 'px';
-                    
-                    // Проверка столкновения
-                    if (currentRight > 50 && currentRight < 100 && !isJumping) {
-                        // Столкновение
-                        clearInterval(gameInterval);
-                        endMinigame(score);
-                    }
-                    
-                    // Удаляем вышедшие за экран
-                    if (currentRight > game.clientWidth) {
-                        obstacle.remove();
-                        obstacles.splice(index, 1);
-                    }
-                });
-                
-                // Двигаем монеты
-                coins.forEach((coin, index) => {
-                    const currentRight = parseFloat(coin.style.right);
-                    coin.style.right = (currentRight + gameSpeed) + 'px';
-                    
-                    // Проверка сбора
-                    if (currentRight > 50 && currentRight < 100 && 
-                        parseFloat(coin.style.bottom) > 80 && parseFloat(coin.style.bottom) < 120) {
-                        // Собрали монету
-                        score += 10;
-                        document.querySelector('.minigame-score').textContent = score;
-                        coin.remove();
-                        coins.splice(index, 1);
-                        
-                        if (tg?.HapticFeedback) {
-                            tg.HapticFeedback.impactOccurred('light');
-                        }
-                    }
-                    
-                    // Удаляем вышедшие за экран
-                    if (currentRight > game.clientWidth) {
-                        coin.remove();
-                        coins.splice(index, 1);
-                    }
-                });
-                
-                // Завершаем игру через 60 секунд
-                if (gameTime >= 60) {
-                    clearInterval(gameInterval);
-                    endMinigame(score);
-                }
-            }, 50);
-        }
-
-        // 6. Игра "Угадай число"
-        function startNumberGame() {
-            const secretNumber = Math.floor(Math.random() * 100) + 1;
-            let attempts = 5;
-            let gameEnded = false;
-            
-            const gameContainer = document.getElementById('minigame-container');
-            gameContainer.innerHTML = `
-                <div class="header">
-                    <h1>Угадай число!</h1>
-                    <p>Угадай число от 1 до 100 за ${attempts} попыток</p>
-                    <div class="minigame-score" style="margin:20px 0;">Попыток: <span id="attempts-left">${attempts}</span></div>
-                </div>
-                <input type="number" id="number-input" class="modal-input" placeholder="Введите число" min="1" max="100">
-                <button class="btn" onclick="guessNumber()" style="margin-top:10px;">Угадать</button>
-                <div id="number-hint" style="margin-top:20px;min-height:60px;"></div>
-                <button class="btn btn-danger" onclick="backToMinigames()" style="margin-top:20px;">Назад</button>
-            `;
-            
-            window.guessNumber = function() {
-                if (gameEnded) return;
-                
-                const input = document.getElementById('number-input');
-                const guess = parseInt(input.value);
-                const hint = document.getElementById('number-hint');
-                const attemptsLeft = document.getElementById('attempts-left');
-                
-                if (!guess || guess < 1 || guess > 100) {
-                    showNotification('Введите число от 1 до 100!', 'error');
+        // Проверка последовательности в игре на память
+        function checkMemorySequence() {
+            for (let i = 0; i < game4PlayerSequence.length; i++) {
+                if (game4PlayerSequence[i] !== game4Sequence[i]) {
+                    // Неправильная последовательность
+                    document.getElementById('game4Display').textContent = 'Ошибка! Игра окончена';
+                    game4Active = false;
                     return;
                 }
+            }
+            
+            // Если последовательность полностью правильная
+            if (game4PlayerSequence.length === game4Sequence.length) {
+                // Переходим на следующий уровень
+                game4Level++;
+                document.getElementById('game4Level').textContent = game4Level;
+                game4PlayerSequence = [];
                 
-                attempts--;
-                attemptsLeft.textContent = attempts;
-                
-                if (guess === secretNumber) {
-                    // Выиграли
-                    hint.innerHTML = `<div style="color:#00e676;font-size:1.5rem;">🎉 Правильно! Это число ${secretNumber}!</div>`;
-                    gameEnded = true;
-                    gameState.minigame_stats.number.wins++;
-                    
-                    const score = attempts * 20 + 100;
-                    setTimeout(() => endMinigame(score), 1500);
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('heavy');
-                    }
-                } else if (attempts === 0) {
-                    // Проиграли
-                    hint.innerHTML = `<div style="color:#ff4444;font-size:1.5rem;">💔 Попытки закончились! Число было: ${secretNumber}</div>`;
-                    gameEnded = true;
-                    setTimeout(() => endMinigame(0), 1500);
-                } else {
-                    // Даем подсказку
-                    if (guess < secretNumber) {
-                        hint.innerHTML = `<div style="color:#4fc3f7;">🔺 Число больше чем ${guess}</div>`;
-                    } else {
-                        hint.innerHTML = `<div style="color:#4fc3f7;">🔻 Число меньше чем ${guess}</div>`;
-                    }
-                    
-                    if (tg?.HapticFeedback) {
-                        tg.HapticFeedback.impactOccurred('light');
-                    }
-                }
-                
-                input.value = '';
-                input.focus();
-            };
-        }
-
-        // ====== РЕФЕРАЛЬНАЯ СИСТЕМА ======
-        function updateReferralUI() {
-            if (!gameState.referral_code) {
-                gameState.referral_code = generateNewReferralCode();
-                saveGame();
-            }
-            
-            document.getElementById('referral-code').textContent = gameState.referral_code;
-            document.getElementById('referrals-count').textContent = gameState.referrals.length;
-            document.getElementById('referral-earnings').textContent = formatNumber(gameState.referral_earnings) + ' ₿';
-            document.getElementById('referral-bonus').textContent = '+' + Math.floor((gameState.referral_bonus - 1) * 100) + '%';
-            
-            // Рассчитываем доход за 24 часа
-            const now = Date.now();
-            const oneDayAgo = now - (24 * 60 * 60 * 1000);
-            const dailyEarnings = Object.values(gameState.referral_daily_earnings)
-                .filter(entry => entry.timestamp > oneDayAgo)
-                .reduce((sum, entry) => sum + entry.amount, 0);
-            document.getElementById('referral-daily').textContent = formatNumber(dailyEarnings) + ' ₿';
-            
-            updateReferralsList();
-        }
-
-        function updateReferralBonuses() {
-            // Бонусы в зависимости от количества рефералов
-            if (gameState.referrals.length >= 50) {
-                gameState.referral_bonus = 2.5; // +150%
-            } else if (gameState.referrals.length >= 25) {
-                gameState.referral_bonus = 2.0; // +100%
-            } else if (gameState.referrals.length >= 10) {
-                gameState.referral_bonus = 1.75; // +75%
-            } else if (gameState.referrals.length >= 5) {
-                gameState.referral_bonus = 1.5; // +50%
-            } else if (gameState.referrals.length >= 3) {
-                gameState.referral_bonus = 1.25; // +25%
-            } else if (gameState.referrals.length >= 1) {
-                gameState.referral_bonus = 1.1; // +10%
-            } else {
-                gameState.referral_bonus = 1.0;
-            }
-        }
-
-        async function useReferralCode() {
-            const input = document.getElementById('referral-input');
-            const code = input.value.trim().toUpperCase();
-            
-            if (!code) {
-                showNotification('Введите реферальный код!', 'error');
-                return;
-            }
-            
-            if (code === gameState.referral_code) {
-                showNotification('Нельзя использовать свой же код!', 'error');
-                return;
-            }
-            
-            if (gameState.used_referral_code) {
-                showNotification('Вы уже использовали реферальный код!', 'error');
-                return;
-            }
-            
-            // В реальном приложении здесь была бы проверка с сервером
-            // Для демо просто добавляем реферала
-            gameState.used_referral_code = code;
-            gameState.referrals.push({
-                code: code,
-                date: Date.now(),
-                earned: 0
-            });
-            
-            // Награда за использование кода
-            const reward = 500;
-            gameState.balance += reward;
-            gameState.statistics.total_earned += reward;
-            
-            updateReferralBonuses();
-            updateReferralUI();
-            updateUI();
-            input.value = '';
-            closeModal('referral-input-modal');
-            
-            await saveGame();
-            showNotification(`Реферальный код активирован! +${reward} ₿`, 'success');
-        }
-
-        function copyReferralCode() {
-            navigator.clipboard.writeText(gameState.referral_code);
-            showNotification('Реферальный код скопирован!', 'success');
-        }
-
-        function updateReferralsList() {
-            const container = document.getElementById('referrals-list');
-            if (!container) return;
-            
-            if (gameState.referrals.length === 0) {
-                container.innerHTML = '<p style="text-align:center;opacity:0.7;">Пока нет рефералов</p>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            gameState.referrals.forEach((ref, index) => {
-                const refEl = document.createElement('div');
-                refEl.className = 'stat-card';
-                refEl.innerHTML = `
-                    <div style="display:flex;justify-content:space-between;align-items:center;">
-                        <div>
-                            <strong>Реферал ${index + 1}</strong>
-                            <div style="font-size:0.8rem;opacity:0.7;">Код: ${ref.code}</div>
-                            <div style="font-size:0.8rem;opacity:0.7;">Приглашен: ${new Date(ref.date).toLocaleDateString()}</div>
-                        </div>
-                        <div style="color:#00e676;">+${formatNumber(ref.earned || 0)} ₿</div>
-                    </div>
-                `;
-                container.appendChild(refEl);
-            });
-        }
-
-        // ====== ОСТАЛЬНЫЕ ФУНКЦИИ ======
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = 'notification';
-            
-            if (type === 'error') {
-                notification.classList.add('error');
-            } else if (type === 'warning') {
-                notification.classList.add('warning');
-            }
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            document.getElementById(sectionId + '-section').classList.add('active');
-            
-            document.querySelectorAll('.nav-tabs button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            event.target.classList.add('active');
-            
-            if (sectionId !== 'minigames') {
-                backToMinigames();
-            }
-            
-            if (sectionId === 'upgrades') renderUpgrades();
-            if (sectionId === 'nft') loadNFTInventory();
-            if (sectionId === 'referral') updateReferralUI();
-        }
-
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // ====== ПРОМОКОДЫ (добавлен промокод на 500 миллионов) ======
-        const promocodes = {
-            'CRYPTO100': { reward: 100, uses: 9999 },
-            'WELCOME50': { reward: 50, uses: 9999 },
-            'FIRST200': { reward: 200, uses: 9999 },
-            'BONUS300': { reward: 300, uses: 9999 },
-            'NEWPLAYER': { reward: 500, uses: 1 },
-            'NFTLOVER': { reward: 1000, uses: 1, nft_bonus: true },
-            'SUHARI500M': { reward: 500000000, uses: 1 } // ← ПРОМОКОД НА 500 МИЛЛИОНОВ
-        };
-
-        async function activatePromocode() {
-            const input = document.getElementById('promocode-input');
-            const code = input.value.trim().toUpperCase();
-            
-            if (!code) {
-                showNotification('Введите промокод!', 'error');
-                return;
-            }
-            
-            if (gameState.used_promocodes.includes(code)) {
-                showNotification('Этот промокод уже использован!', 'error');
-                return;
-            }
-            
-            if (!promocodes[code]) {
-                showNotification('Неверный промокод!', 'error');
-                return;
-            }
-            
-            const promo = promocodes[code];
-            let reward = promo.reward;
-            
-            // Дополнительные бонусы
-            if (promo.nft_bonus) {
-                const nft = generateNFT('click_boost', 'rare');
-                gameState.nfts.push(nft);
-                showNotification(`Бонус NFT: ${nft.name} получен!`, 'success');
-            }
-            
-            gameState.balance += reward;
-            gameState.statistics.total_earned += reward;
-            gameState.used_promocodes.push(code);
-            
-            input.value = '';
-            closeModal('promocode-modal');
-            
-            showNotification('Промокод активирован! +' + reward + ' ₿', 'success');
-            updateUI();
-            await saveGame();
-        }
-
-        function startPassiveIncome() {
-            setInterval(() => {
-                if (gameState.passive_per_sec > 0) {
-                    const income = gameState.passive_per_sec / 10;
-                    gameState.balance += income;
-                    gameState.statistics.total_earned += income;
-                    updateUI();
-                }
-            }, 100);
-        }
-
-        function checkDailyBonus() {
-            const today = new Date().toDateString();
-            const lastBonus = localStorage.getItem('cryptoKombat_last_bonus');
-            
-            if (lastBonus !== today) {
-                const bonus = 100 + (gameState.daily_streak || 0) * 10;
-                gameState.balance += bonus;
-                gameState.statistics.total_earned += bonus;
-                gameState.daily_streak = (gameState.daily_streak || 0) + 1;
-                localStorage.setItem('cryptoKombat_last_bonus', today);
-                
+                // Показываем следующую последовательность
                 setTimeout(() => {
-                    showNotification('Ежедневный бонус! +' + bonus + ' ₿ (серия: ' + gameState.daily_streak + ' дней)', 'success');
-                    updateUI();
-                    saveGame();
+                    showMemorySequence();
                 }, 1000);
             }
         }
 
-        // ====== ГЛОБАЛЬНЫЕ ФУНКЦИИ ======
-        window.buyUpgrade = buyUpgrade;
-        window.showSection = showSection;
-        window.resetClickLimit = resetClickLimit;
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.activatePromocode = activatePromocode;
-        window.startMinigame = startMinigame;
-        window.backToMinigames = backToMinigames;
-        window.copyReferralCode = copyReferralCode;
-        window.useReferralCode = useReferralCode;
-        window.buyNftBox = buyNftBox;
-        window.equipNFT = equipNFT;
-        window.sellNFT = sellNFT;
-        window.guessNumber = guessNumber;
+        // Показать последовательность в игре на память
+        function showMemorySequence() {
+            game4Showing = true;
+            document.getElementById('game4Display').textContent = 'Запоминай...';
+            
+            // Добавляем новый элемент в последовательность
+            const newIndex = Math.floor(Math.random() * 8);
+            game4Sequence.push(newIndex);
+            
+            // Показываем последовательность по одному элементу
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i >= game4Sequence.length) {
+                    clearInterval(interval);
+                    game4Showing = false;
+                    document.getElementById('game4Display').textContent = 'Повтори последовательность';
+                    return;
+                }
+                
+                const index = game4Sequence[i];
+                const cards = document.querySelectorAll('.memory-card');
+                cards[index].classList.add('flipped');
+                
+                setTimeout(() => {
+                    cards[index].classList.remove('flipped');
+                }, 500);
+                
+                i++;
+            }, 800);
+        }
 
-        // ====== ЗАПУСК ИГРЫ ======
-        document.addEventListener('DOMContentLoaded', async () => {
-            await initGame();
-        });
+        // Награда за мини-игру
+        function awardGameReward(gameId) {
+            const game = gamesData.find(g => g.id === gameId);
+            if (game) {
+                gameState.tokens += game.reward;
+                gameState.totalTokens += game.reward;
+                gameState.gamesPlayed[gameId]++;
+                
+                updateUI();
+                saveGameState();
+                
+                showNotification(`Поздравляем! Вы получили ${formatNumber(game.reward)} токенов!`);
+            }
+        }
+
+        // Активация промокода
+        function activatePromoCode(code) {
+            code = code.toUpperCase();
+            
+            // Проверяем, использовал ли уже пользователь этот промокод
+            if (gameState.usedPromoCodes.includes(code)) {
+                document.getElementById('promoError').textContent = 'Вы уже использовали этот промокод!';
+                document.getElementById('promoError').style.display = 'block';
+                document.getElementById('promoSuccess').style.display = 'none';
+                return;
+            }
+            
+            // Проверяем, существует ли промокод
+            if (promoCodes[code]) {
+                const promo = promoCodes[code];
+                
+                // Проверяем, остались ли использования
+                if (promo.usesLeft > 0) {
+                    // Добавляем токены
+                    gameState.tokens += promo.tokens;
+                    gameState.totalTokens += promo.tokens;
+                    gameState.usedPromoCodes.push(code);
+                    
+                    // Уменьшаем количество использований
+                    promo.usesLeft--;
+                    
+                    // Обновляем интерфейс
+                    updateUI();
+                    saveGameState();
+                    
+                    document.getElementById('promoSuccess').textContent = `Промокод активирован! Вы получили ${formatNumber(promo.tokens)} токенов!`;
+                    document.getElementById('promoSuccess').style.display = 'block';
+                    document.getElementById('promoError').style.display = 'none';
+                    
+                    showNotification(`Промокод "${code}" активирован!`);
+                } else {
+                    document.getElementById('promoError').textContent = 'Промокод больше недействителен!';
+                    document.getElementById('promoError').style.display = 'block';
+                    document.getElementById('promoSuccess').style.display = 'none';
+                }
+            } else {
+                document.getElementById('promoError').textContent = 'Неверный промокод!';
+                document.getElementById('promoError').style.display = 'block';
+                document.getElementById('promoSuccess').style.display = 'none';
+            }
+        }
+
+        // Активация реферального кода
+        function activateReferralCode(code) {
+            if (!code || code === gameState.referralCode) {
+                showNotification('Нельзя использовать свой собственный реферальный код!');
+                return;
+            }
+            
+            // В реальном приложении здесь была бы проверка кода на сервере
+            // Для демо мы просто начисляем бонус
+            const bonus = 10000;
+            gameState.tokens += bonus;
+            gameState.referralBonus += bonus;
+            gameState.referrals++;
+            
+            updateUI();
+            saveGameState();
+            
+            showNotification(`Реферальный код активирован! Вы получили ${formatNumber(bonus)} токенов!`);
+        }
+
+        // Экспорт сохранения в JSON
+        function exportSave() {
+            const saveData = JSON.stringify(gameState, null, 2);
+            const blob = new Blob([saveData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'crypto_clicker_save.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            URL.revokeObjectURL(url);
+            
+            showNotification('Сохранение экспортировано в файл!');
+        }
+
+        // Импорт сохранения из JSON
+        function importSave(jsonString) {
+            try {
+                const importedState = JSON.parse(jsonString);
+                
+                // Проверяем, что импортируемые данные имеют правильную структуру
+                if (importedState && typeof importedState.tokens === 'number') {
+                    gameState = importedState;
+                    
+                    // Убедимся, что у нас есть все необходимые поля
+                    if (!gameState.upgrades) gameState.upgrades = { clickPower: { level: 1, cost: 100, multiplier: 1 }, autoClicker: { level: 0, cost: 500, multiplier: 1 }, limitBoost: { level: 0, cost: 1000, multiplier: 100 } };
+                    if (!gameState.nfts) gameState.nfts = [];
+                    if (!gameState.usedPromoCodes) gameState.usedPromoCodes = [];
+                    if (!gameState.referralCode) gameState.referralCode = generateReferralCode();
+                    if (!gameState.referrals) gameState.referrals = 0;
+                    if (!gameState.referralBonus) gameState.referralBonus = 0;
+                    if (!gameState.gamesPlayed) gameState.gamesPlayed = { game1: 0, game2: 0, game3: 0, game4: 0 };
+                    
+                    updateUI();
+                    saveGameState();
+                    
+                    showNotification('Сохранение успешно импортировано!');
+                } else {
+                    showNotification('Ошибка: Неверный формат сохранения');
+                }
+            } catch (e) {
+                console.error('Ошибка при импорте сохранения:', e);
+                showNotification('Ошибка при импорте сохранения: ' + e.message);
+            }
+        }
+
+        // Инициализация игры
+        function initGame() {
+            // Загружаем сохранение
+            loadGameState();
+            
+            // Обновляем токены в секунду
+            updateTokensPerSecond();
+            
+            // Назначаем обработчики событий
+            document.getElementById('clickButton').addEventListener('click', handleClick);
+            
+            // Промокод
+            document.getElementById('promoButton').addEventListener('click', () => {
+                const code = document.getElementById('promoInput').value.trim();
+                if (code) {
+                    activatePromoCode(code);
+                    document.getElementById('promoInput').value = '';
+                }
+            });
+            
+            // Реферальная система
+            document.getElementById('referralButton').addEventListener('click', () => {
+                const code = document.getElementById('referralInput').value.trim();
+                if (code) {
+                    activateReferralCode(code);
+                    document.getElementById('referralInput').value = '';
+                }
+            });
+            
+            // Сохранение/загрузка
+            document.getElementById('saveButton').addEventListener('click', saveGameState);
+            document.getElementById('loadButton').addEventListener('click', loadGameState);
+            document.getElementById('exportButton').addEventListener('click', exportSave);
+            document.getElementById('importButton').addEventListener('click', () => {
+                const jsonString = document.getElementById('importTextarea').value.trim();
+                if (jsonString) {
+                    importSave(jsonString);
+                    document.getElementById('importTextarea').value = '';
+                }
+            });
+            
+            // Мини-игры
+            // Игра 1: Угадай число
+            document.getElementById('startGame1Button').addEventListener('click', () => {
+                currentGame1Number = Math.floor(Math.random() * 100) + 1;
+                game1Attempts = 0;
+                game1Active = true;
+                
+                document.getElementById('game1Display').textContent = 'Я загадал число от 1 до 100. Угадывай!';
+                document.getElementById('game1Feedback').textContent = '';
+                document.getElementById('game1Attempts').textContent = '0';
+                document.getElementById('guessInput').value = '';
+                document.getElementById('guessButton').disabled = false;
+                document.getElementById('startGame1Button').disabled = true;
+            });
+            
+            document.getElementById('guessButton').addEventListener('click', () => {
+                if (!game1Active) return;
+                
+                const guess = parseInt(document.getElementById('guessInput').value);
+                if (isNaN(guess) || guess < 1 || guess > 100) {
+                    document.getElementById('game1Feedback').textContent = 'Введите число от 1 до 100!';
+                    return;
+                }
+                
+                game1Attempts++;
+                document.getElementById('game1Attempts').textContent = game1Attempts;
+                
+                if (guess === currentGame1Number) {
+                    document.getElementById('game1Display').textContent = `Поздравляем! Вы угадали число ${currentGame1Number} за ${game1Attempts} попыток!`;
+                    document.getElementById('game1Feedback').textContent = '';
+                    document.getElementById('guessButton').disabled = true;
+                    document.getElementById('startGame1Button').disabled = false;
+                    game1Active = false;
+                    
+                    // Награда
+                    awardGameReward('game1');
+                } else if (guess < currentGame1Number) {
+                    document.getElementById('game1Feedback').textContent = 'Мое число больше!';
+                } else {
+                    document.getElementById('game1Feedback').textContent = 'Мое число меньше!';
+                }
+                
+                document.getElementById('guessInput').value = '';
+            });
+            
+            // Игра 2: Кликни по цели
+            document.getElementById('startGame2Button').addEventListener('click', () => {
+                game2TimeLeft = 10;
+                game2Score = 0;
+                game2Active = true;
+                
+                document.getElementById('game2Display').textContent = 'Осталось времени: 10';
+                document.getElementById('game2Score').textContent = '0';
+                
+                // Запускаем таймер
+                game2Interval = setInterval(() => {
+                    if (!game2Active) return;
+                    
+                    game2TimeLeft--;
+                    document.getElementById('game2Display').textContent = `Осталось времени: ${game2TimeLeft}`;
+                    
+                    if (game2TimeLeft <= 0) {
+                        clearInterval(game2Interval);
+                        game2Active = false;
+                        document.getElementById('game2Display').textContent = `Игра окончена! Вы набрали ${game2Score} очков!`;
+                        
+                        // Награда (пропорционально очкам)
+                        if (game2Score > 0) {
+                            awardGameReward('game2');
+                        }
+                    }
+                }, 1000);
+                
+                // Двигаем цель
+                moveTarget();
+            });
+            
+            document.getElementById('game2Target').addEventListener('click', () => {
+                if (!game2Active) return;
+                
+                game2Score++;
+                document.getElementById('game2Score').textContent = game2Score;
+                
+                // Двигаем цель после клика
+                moveTarget();
+            });
+            
+            // Игра 3: Быстрые клики
+            document.getElementById('startGame3Button').addEventListener('click', () => {
+                game3TimeLeft = 5;
+                game3Score = 0;
+                game3Active = true;
+                
+                document.getElementById('game3Display').textContent = 'Осталось времени: 5';
+                document.getElementById('game3Score').textContent = '0';
+                
+                // Запускаем таймер
+                game3Interval = setInterval(() => {
+                    if (!game3Active) return;
+                    
+                    game3TimeLeft--;
+                    document.getElementById('game3Display').textContent = `Осталось времени: ${game3TimeLeft}`;
+                    
+                    if (game3TimeLeft <= 0) {
+                        clearInterval(game3Interval);
+                        game3Active = false;
+                        document.getElementById('game3Display').textContent = `Игра окончена! Вы сделали ${game3Score} кликов!`;
+                        
+                        // Награда (пропорционально кликам)
+                        if (game3Score > 0) {
+                            awardGameReward('game3');
+                        }
+                    }
+                }, 1000);
+            });
+            
+            document.getElementById('game3Button').addEventListener('click', () => {
+                if (!game3Active) return;
+                
+                game3Score++;
+                document.getElementById('game3Score').textContent = game3Score;
+            });
+            
+            // Игра 4: Игра на память
+            document.getElementById('startGame4Button').addEventListener('click', () => {
+                game4Sequence = [];
+                game4PlayerSequence = [];
+                game4Level = 1;
+                game4Active = true;
+                
+                document.getElementById('game4Display').textContent = 'Запоминай последовательность';
+                document.getElementById('game4Level').textContent = '1';
+                
+                // Начинаем игру
+                setTimeout(() => {
+                    showMemorySequence();
+                }, 1000);
+            });
+            
+            // Закрытие модальных окон
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    document.getElementById(modalId).style.display = 'none';
+                    
+                    // Останавливаем игры при закрытии
+                    if (modalId === 'game2Modal' && game2Interval) {
+                        clearInterval(game2Interval);
+                    }
+                    if (modalId === 'game3Modal' && game3Interval) {
+                        clearInterval(game3Interval);
+                    }
+                });
+            });
+            
+            // Закрытие модальных окон при клике вне их
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                    
+                    // Останавливаем игры при закрытии
+                    if (game2Interval) {
+                        clearInterval(game2Interval);
+                    }
+                    if (game3Interval) {
+                        clearInterval(game3Interval);
+                    }
+                }
+            });
+            
+            // Запускаем авто-кликер
+            setInterval(autoClickerTick, 1000);
+            
+            // Сбрасываем лимит кликов каждые 5 минут
+            setInterval(resetClickLimit, 5 * 60 * 1000);
+            
+            // Показываем приветственное сообщение
+            setTimeout(() => {
+                showNotification('Добро пожаловать в Crypto Clicker!');
+            }, 1000);
+        }
+
+        // Функция для движения цели в игре 2
+        function moveTarget() {
+            if (!game2Active) return;
+            
+            const target = document.getElementById('game2Target');
+            const container = target.parentElement;
+            
+            const maxX = container.offsetWidth - target.offsetWidth;
+            const maxY = container.offsetHeight - target.offsetHeight;
+            
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            
+            target.style.left = `${newX}px`;
+            target.style.top = `${newY}px`;
+        }
+
+        // Запускаем игру при загрузке страницы
+        window.addEventListener('DOMContentLoaded', initGame);
     </script>
 </body>
 </html>
