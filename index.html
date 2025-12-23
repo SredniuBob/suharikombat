@@ -41,13 +41,9 @@
         }
 
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid var(--border);
             margin-bottom: 30px;
-            flex-wrap: wrap;
         }
 
         .logo {
@@ -57,6 +53,7 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--secondary);
+            margin-bottom: 20px;
         }
 
         .logo i {
@@ -67,6 +64,7 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .stat-box {
@@ -89,9 +87,51 @@
             color: var(--secondary);
         }
 
+        .nav-menu {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            justify-content: center;
+            padding: 15px 0;
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-button {
+            background: var(--card-bg);
+            color: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
         .clicker-section {
             text-align: center;
-            margin: 40px 0;
             padding: 30px;
             background: var(--card-bg);
             border-radius: 15px;
@@ -167,18 +207,23 @@
             font-weight: 700;
         }
 
-        .sections-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .section {
+        .content-section {
+            display: none;
             background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
             border: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .section-title {
@@ -300,6 +345,13 @@
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid var(--border);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .modal {
@@ -434,8 +486,20 @@
                 height: 150px;
             }
             
-            .sections-container {
+            .games-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 10px;
+            }
+            
+            .nav-button {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+                white-space: nowrap;
             }
         }
     </style>
@@ -445,7 +509,7 @@
         <header>
             <div class="logo">
                 <i class="fas fa-coins"></i>
-                <span>Suhari kombat</span>
+                <span>Suhari Kombat</span>
             </div>
             <div class="stats-container">
                 <div class="stat-box">
@@ -461,10 +525,32 @@
                     <div class="stat-value" id="totalTokens">0</div>
                 </div>
             </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-button active" data-section="mining">
+                    <i class="fas fa-digging"></i> Тыкать
+                </button>
+                <button class="nav-button" data-section="upgrades">
+                    <i class="fas fa-arrow-up"></i> Улучшения
+                </button>
+                <button class="nav-button" data-section="nft">
+                    <i class="fas fa-gem"></i> NFT
+                </button>
+                <button class="nav-button" data-section="games">
+                    <i class="fas fa-gamepad"></i> Мини-игры
+                </button>
+                <button class="nav-button" data-section="referrals">
+                    <i class="fas fa-users"></i> Рефералы
+                </button>
+                <button class="nav-button" data-section="promo">
+                    <i class="fas fa-ticket-alt"></i> Промокод
+                </button>
+            </nav>
         </header>
 
-        <main>
-            <section class="clicker-section">
+        <main class="main-content">
+            <!-- Секция майнинга -->
+            <section class="clicker-section" id="mining-section">
                 <h1 class="clicker-title">Кликни чтобы заработать!</h1>
                 <div class="clicker-display" id="clickerDisplay">0 токенов</div>
                 <button class="click-button" id="clickButton">
@@ -480,64 +566,67 @@
                 <p>Клики восстанавливаются каждые 2.5 минуты</p>
             </section>
 
-            <div class="sections-container">
-                <section class="section">
-                    <h2 class="section-title"><i class="fas fa-arrow-up"></i> Улучшения</h2>
-                    <div id="upgradesList">
-                        <!-- Улучшения будут добавляться с помощью JavaScript -->
-                    </div>
-                </section>
+            <!-- Секция улучшений -->
+            <section id="upgrades-section" class="content-section">
+                <h2 class="section-title"><i class="fas fa-arrow-up"></i> Улучшения</h2>
+                <div id="upgradesList">
+                    <!-- Улучшения будут добавляться с помощью JavaScript -->
+                </div>
+            </section>
 
-                <section class="section">
-                    <h2 class="section-title"><i class="fas fa-gem"></i> NFT Коллекция</h2>
-                    <div id="nftList">
-                        <!-- NFT будут добавляться с помощью JavaScript -->
-                    </div>
-                </section>
+            <!-- Секция NFT -->
+            <section id="nft-section" class="content-section">
+                <h2 class="section-title"><i class="fas fa-gem"></i> NFT Коллекция</h2>
+                <div id="nftList">
+                    <!-- NFT будут добавляться с помощью JavaScript -->
+                </div>
+            </section>
 
-                <section class="section">
-                    <h2 class="section-title"><i class="fas fa-gamepad"></i> Мини-игры</h2>
-                    <div id="gamesList">
-                        <!-- Мини-игры будут добавляться с помощью JavaScript -->
-                    </div>
-                </section>
+            <!-- Секция мини-игр -->
+            <section id="games-section" class="content-section">
+                <h2 class="section-title"><i class="fas fa-gamepad"></i> Мини-игры</h2>
+                <div class="games-grid" id="gamesList">
+                    <!-- Мини-игры будут добавляться с помощью JavaScript -->
+                </div>
+            </section>
 
-                <section class="section">
-                    <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Промокод</h2>
-                    <p>Введите промокод для получения бонусных токенов</p>
-                    <div class="input-group">
-                        <input type="text" id="promoInput" placeholder="Введите промокод">
-                        <button class="promo-button" id="promoButton">Активировать</button>
+            <!-- Секция рефералов -->
+            <section id="referrals-section" class="content-section">
+                <h2 class="section-title"><i class="fas fa-users"></i> Реферальная система</h2>
+                <p>Приглашайте друзей и получайте бонусы!</p>
+                <div class="referral-code" id="referralCode">Загрузка...</div>
+                <div class="referral-stats">
+                    <div>
+                        <div class="stat-title">Приглашено друзей</div>
+                        <div class="stat-value" id="referralCount">0</div>
                     </div>
-                    <div class="promo-success" id="promoSuccess">Промокод успешно активирован!</div>
-                    <div class="promo-error" id="promoError">Неверный промокод или он уже использован!</div>
-                </section>
+                    <div>
+                        <div class="stat-title">Бонусных токенов</div>
+                        <div class="stat-value" id="referralBonus">0</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px;">Введите реферальный код друга:</p>
+                <div class="input-group">
+                    <input type="text" id="referralInput" placeholder="Введите реферальный код">
+                    <button class="referral-button" id="referralButton">Активировать</button>
+                </div>
+            </section>
 
-                <section class="section">
-                    <h2 class="section-title"><i class="fas fa-users"></i> Реферальная система</h2>
-                    <p>Приглашайте друзей и получайте бонусы!</p>
-                    <div class="referral-code" id="referralCode">Загрузка...</div>
-                    <div class="referral-stats">
-                        <div>
-                            <div class="stat-title">Приглашено друзей</div>
-                            <div class="stat-value" id="referralCount">0</div>
-                        </div>
-                        <div>
-                            <div class="stat-title">Бонусных токенов</div>
-                            <div class="stat-value" id="referralBonus">0</div>
-                        </div>
-                    </div>
-                    <p style="margin-top: 15px;">Введите реферальный код друга:</p>
-                    <div class="input-group">
-                        <input type="text" id="referralInput" placeholder="Введите реферальный код">
-                        <button class="referral-button" id="referralButton">Активировать</button>
-                    </div>
-                </section>
-            </div>
+            <!-- Секция промокода -->
+            <section id="promo-section" class="content-section">
+                <h2 class="section-title"><i class="fas fa-ticket-alt"></i> Промокод</h2>
+                <p>Введите промокод для получения бонусных токенов</p>
+                <div class="input-group">
+                    <input type="text" id="promoInput" placeholder="Введите промокод">
+                    <button class="promo-button" id="promoButton">Активировать</button>
+                </div>
+                <div class="promo-success" id="promoSuccess">Промокод успешно активирован!</div>
+                <div class="promo-error" id="promoError">Неверный промокод или он уже использован!</div>
+            </section>
         </main>
 
         <footer>
-            <p>Suhari Kombat &copy; 2025 </p>
+            <p>Crypto Clicker &copy; 2025 | Все права защищены </p>
         </footer>
     </div>
 
@@ -1347,6 +1436,39 @@
             target.style.top = `${newY}px`;
         }
 
+        // Переключение между разделами
+        function switchSection(sectionId) {
+            // Скрываем все разделы
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Убираем активный класс у всех кнопок навигации
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Показываем выбранный раздел
+            const activeSection = document.getElementById(`${sectionId}-section`);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+            
+            // Активируем соответствующую кнопку навигации
+            const activeButton = document.querySelector(`.nav-button[data-section="${sectionId}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Показываем секцию майнинга только для раздела "mining"
+            const miningSection = document.getElementById('mining-section');
+            if (sectionId === 'mining') {
+                miningSection.style.display = 'block';
+            } else {
+                miningSection.style.display = 'none';
+            }
+        }
+
         // Инициализация игры
         function initGame() {
             // Загружаем сохранение
@@ -1374,6 +1496,14 @@
                     activateReferralCode(code);
                     document.getElementById('referralInput').value = '';
                 }
+            });
+            
+            // Навигация по разделам
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-section');
+                    switchSection(sectionId);
+                });
             });
             
             // Мини-игры
